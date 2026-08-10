@@ -81,7 +81,7 @@ func ConvertAll(
 		)
 	default:
 		return fmt.Errorf(
-			"%s format does not supported!",
+			"%s format does not supported.",
 			format.ToString(),
 		)
 	}
