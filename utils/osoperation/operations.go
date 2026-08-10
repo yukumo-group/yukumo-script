@@ -5,13 +5,12 @@ import (
 	"os"
 )
 
-// SaveDataTo saves certain data to certain file
-func SaveDataTo(
+// GetNewFilePath creates new file path
+func GetNewFilePath(
 	targetDirectory string,
 	targetFileName string,
 	suffix string,
-	data []byte,
-) error {
+) (string, error) {
 	targetFilePath := fmt.Sprintf(
 		"%s/%s.%s",
 		targetDirectory,
@@ -23,12 +22,30 @@ func SaveDataTo(
 		if os.IsNotExist(errTargetFileExists) {
 			file, errCreateFile := os.Create(targetFilePath)
 			if errCreateFile != nil {
-				return errCreateFile
+				return "", errCreateFile
 			}
 			file.Close()
 		} else {
-			return errTargetFileExists
+			return "", errTargetFileExists
 		}
+	}
+	return targetFilePath, nil
+}
+
+// SaveDataTo saves certain data to certain file
+func SaveDataTo(
+	targetDirectory string,
+	targetFileName string,
+	suffix string,
+	data []byte,
+) error {
+	targetFilePath, errGetFilePath := GetNewFilePath(
+		targetDirectory,
+		targetFileName,
+		suffix,
+	)
+	if errGetFilePath != nil {
+		return errGetFilePath
 	}
 	errWriteToTargetFile := os.WriteFile(
 		targetFilePath,

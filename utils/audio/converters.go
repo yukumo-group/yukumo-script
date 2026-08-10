@@ -16,39 +16,62 @@ import (
 // As a derivative work, this file is also licensed under the same license.
 func WAV2MP3(
 	wavFileName string,
-) ([]byte, error) {
+	targetDirectory string,
+	targetFileName string,
+) error {
 	// Read wav data
 	wavBytes, errReadWavFile := os.ReadFile(wavFileName)
 	if errReadWavFile != nil {
-		return nil, errReadWavFile
+		return errReadWavFile
 	}
 	wavReader := bytes.NewReader(wavBytes)
 	wavDecoder := wav.NewDecoder(wavReader)
 	wavBuffer, errDecode := wavDecoder.FullPCMBuffer()
 	if errDecode != nil {
-		return nil, errDecode
+		return errDecode
 	}
 	// Convert audio data to int16
 	decodedData := make([]int16, len(wavBuffer.Data))
 	for i, data := range wavBuffer.Data {
 		decodedData[i] = int16(data)
 	}
+	decodedData = UpdateChannelNumberTo2(decodedData)
+	resampledDecodedData, errResample := ResampleWAV(
+		decodedData,
+		2,
+		wavBuffer.Format.SampleRate,
+		16000,
+	)
+	if errResample != nil {
+		return errResample
+	}
 	// Create mp3 encoder
 	mp3Encoder := mp3.NewEncoder(
 		wavBuffer.Format.SampleRate,
-		wavBuffer.Format.NumChannels,
+		2,
 	)
-	var outBuffer bytes.Buffer
-	// Encode to mp3
-	errEncode := mp3Encoder.Write(
-		&outBuffer,
-		decodedData,
+	mp3FilePath, errGetFilePath := osoperation.GetNewFilePath(
+		targetDirectory,
+		targetFileName,
+		"mp3",
 	)
-	if errEncode != nil {
-		return nil, errEncode
+	if errGetFilePath != nil {
+		return errGetFilePath
 	}
-	mp3Data := outBuffer.Bytes()
-	return mp3Data, nil
+	out, errOpen := os.OpenFile(
+		mp3FilePath,
+		os.O_RDWR|os.O_CREATE|os.O_TRUNC,
+		0644,
+	)
+	if errOpen != nil {
+		return errOpen
+	}
+	defer out.Close()
+	errWrite := mp3Encoder.Write(out, resampledDecodedData)
+	if errWrite != nil {
+		return errWrite
+	}
+	return nil
 }
 
 // ConvertAll converts wav to different formats
@@ -67,17 +90,10 @@ func ConvertAll(
 			WAV.ToString(),
 		)
 	case MP3:
-		resultByte, errConvert := WAV2MP3(
+		return WAV2MP3(
 			originalFilePath,
-		)
-		if errConvert != nil {
-			return errConvert
-		}
-		return osoperation.SaveDataTo(
 			targetDirectory,
 			targetFileName,
-			MP3.ToString(),
-			resultByte,
 		)
 	default:
 		return fmt.Errorf(

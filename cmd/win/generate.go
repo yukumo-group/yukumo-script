@@ -157,7 +157,7 @@ generateByFile allows you to generate yukumo audio through phont file directly
 			*newTask.ResultFile,
 		)
 		// Export file
-		if newTask.ResultFile != nil {
+		if newTask.ResultFile == nil {
 			cmdLogger.Error("The directory of the result file cannot be nil")
 			errMessage.Println("The directory of the result file cannot be nil")
 			return
@@ -198,7 +198,7 @@ generateByFile allows you to generate yukumo audio through phont file directly
 				text.Println(format.ToString())
 			}
 			var selectedFormat string
-			fmt.Scan(selectedFormat)
+			fmt.Scan(&selectedFormat)
 			errConvertAudioFormat := audio.ConvertAll(
 				*newTask.ResultFile,
 				exportDirectory,

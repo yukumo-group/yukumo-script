@@ -10,6 +10,7 @@ require (
 	github.com/go-audio/wav v1.1.0
 	github.com/google/uuid v1.6.0
 	github.com/spf13/cobra v1.10.2
+	github.com/zeozeozeo/gomplerate v0.0.0-20250404113140-0fbb236df825
 	golang.org/x/sync v0.22.0
 	golang.org/x/text v0.40.0
 )
