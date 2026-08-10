@@ -5,23 +5,13 @@ import (
 	"os"
 )
 
-// CopyFile copies the file to a new file or overwrite the original file
-func CopyFile(
-	originalFilePath string,
+// SaveDataTo saves certain data to certain file
+func SaveDataTo(
 	targetDirectory string,
 	targetFileName string,
 	suffix string,
+	data []byte,
 ) error {
-	_, errOriginalFileExists := os.Stat(originalFilePath)
-	if errOriginalFileExists != nil {
-		if os.IsNotExist(errOriginalFileExists) {
-			return fmt.Errorf(
-				"%s file does not exists, you cannot copy file that does not exists",
-				originalFilePath,
-			)
-		}
-		return errOriginalFileExists
-	}
 	targetFilePath := fmt.Sprintf(
 		"%s/%s.%s",
 		targetDirectory,
@@ -40,16 +30,45 @@ func CopyFile(
 			return errTargetFileExists
 		}
 	}
+	errWriteToTargetFile := os.WriteFile(
+		targetFilePath,
+		data,
+		0644,
+	)
+	if errWriteToTargetFile != nil {
+		return errWriteToTargetFile
+	}
+	return nil
+}
+
+// CopyFile copies the file to a new file or overwrite the original file
+func CopyFile(
+	originalFilePath string,
+	targetDirectory string,
+	targetFileName string,
+	suffix string,
+) error {
+	_, errOriginalFileExists := os.Stat(originalFilePath)
+	if errOriginalFileExists != nil {
+		if os.IsNotExist(errOriginalFileExists) {
+			return fmt.Errorf(
+				"%s file does not exists, you cannot copy file that does not exists",
+				originalFilePath,
+			)
+		}
+		return errOriginalFileExists
+	}
 	originalContent, errReadOriginalFile := os.ReadFile(
 		originalFilePath,
 	)
 	if errReadOriginalFile != nil {
 		return errReadOriginalFile
 	}
-	errWriteToTargetFile := os.WriteFile(
-		targetFilePath,
+	errWriteToTargetFile := SaveDataTo(
+		targetDirectory,
+		targetFileName,
+		suffix,
 		originalContent,
-		0644,
 	)
 	if errWriteToTargetFile != nil {
 		return errWriteToTargetFile

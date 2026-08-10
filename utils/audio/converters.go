@@ -2,8 +2,10 @@ package audio
 
 import (
 	"bytes"
+	"fmt"
 	"os"
 
+	"github.com/1Vewton/yukumo-script/utils/osoperation"
 	"github.com/braheezy/shine-mp3/pkg/mp3"
 	"github.com/go-audio/wav"
 )
@@ -47,4 +49,40 @@ func WAV2MP3(
 	}
 	mp3Data := outBuffer.Bytes()
 	return mp3Data, nil
+}
+
+// ConvertAll converts wav to different formats
+func ConvertAll(
+	originalFilePath string,
+	targetDirectory string,
+	targetFileName string,
+	format Format,
+) error {
+	switch format {
+	case WAV:
+		return osoperation.CopyFile(
+			originalFilePath,
+			targetDirectory,
+			targetFileName,
+			WAV.ToString(),
+		)
+	case MP3:
+		resultByte, errConvert := WAV2MP3(
+			originalFilePath,
+		)
+		if errConvert != nil {
+			return errConvert
+		}
+		return osoperation.SaveDataTo(
+			targetDirectory,
+			targetFileName,
+			MP3.ToString(),
+			resultByte,
+		)
+	default:
+		return fmt.Errorf(
+			"%s format does not supported!",
+			format.ToString(),
+		)
+	}
 }
