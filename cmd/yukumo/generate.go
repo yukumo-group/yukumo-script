@@ -1,17 +1,17 @@
-package win
+package main
 
 import (
 	"fmt"
 
-	"github.com/yukumo-group/yukumo-script/cmd/cmdinterface"
-	"github.com/yukumo-group/yukumo-script/generator/tasks/singlesentence"
-	"github.com/yukumo-group/yukumo-script/language"
-	"github.com/yukumo-group/yukumo-script/phontsmanager"
-	"github.com/yukumo-group/yukumo-script/utils"
-	"github.com/yukumo-group/yukumo-script/utils/audio"
-	"github.com/yukumo-group/yukumo-script/utils/osoperation"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
+	"github.com/yukumo-group/yukumo-script/internal/cmdinterface"
+	"github.com/yukumo-group/yukumo-script/pkg/generator/tasks/singlesentence"
+	"github.com/yukumo-group/yukumo-script/pkg/language"
+	"github.com/yukumo-group/yukumo-script/pkg/phontsmanager"
+	"github.com/yukumo-group/yukumo-script/pkg/utils"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/audio"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/osoperation"
 )
 
 // SingleSentenceTaskNameByFile defines the name of the task

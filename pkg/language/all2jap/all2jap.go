@@ -3,7 +3,7 @@ package all2jap
 import (
 	"regexp"
 
-	"github.com/yukumo-group/yukumo-script/language/convertnums"
+	"github.com/yukumo-group/yukumo-script/pkg/language/convertnums"
 	kanatrans "github.com/Luigi-Pizzolito/English2KanaTransliteration"
 )
 

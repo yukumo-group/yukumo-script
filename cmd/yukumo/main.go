@@ -6,13 +6,12 @@ package main
 import (
 	"context"
 
-	"github.com/yukumo-group/yukumo-script/cmd/win"
-	"github.com/yukumo-group/yukumo-script/data/characters"
-	"github.com/yukumo-group/yukumo-script/example"
-	"github.com/yukumo-group/yukumo-script/generator/tasks/singlesentence"
-	"github.com/yukumo-group/yukumo-script/phontsmanager"
-	"github.com/yukumo-group/yukumo-script/utils"
-	"github.com/yukumo-group/yukumo-script/utils/logger"
+	"github.com/yukumo-group/yukumo-script/pkg/characters"
+	"github.com/yukumo-group/yukumo-script/pkg/example"
+	"github.com/yukumo-group/yukumo-script/pkg/generator/tasks/singlesentence"
+	"github.com/yukumo-group/yukumo-script/pkg/phontsmanager"
+	"github.com/yukumo-group/yukumo-script/pkg/utils"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/logger"
 )
 
 var cliLogger = logger.NewLogger(
@@ -80,5 +79,5 @@ func init() {
 
 // Main process
 func main() {
-	win.Execute()
+	Execute()
 }

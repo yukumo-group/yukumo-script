@@ -1,9 +1,9 @@
-package win
+package main
 
 import (
-	"github.com/yukumo-group/yukumo-script/utils"
-	"github.com/yukumo-group/yukumo-script/utils/logger"
 	"github.com/spf13/cobra"
+	"github.com/yukumo-group/yukumo-script/pkg/utils"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/logger"
 )
 
 var cmdLogger = logger.NewLogger("CMD", nil)

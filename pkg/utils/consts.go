@@ -2,21 +2,21 @@ package utils
 
 const (
 	// ExampleDir defines the directory to store the example audios
-	ExampleDir string = "examples"
+	ExampleDir string = "runtime/examples"
 	// PhontsDir defines the directory to store the phont files
-	PhontsDir string = "phonts"
+	PhontsDir string = "runtime/phonts"
 	// ResultDir defines the directory to store the generated result files
-	ResultDir string = "result"
+	ResultDir string = "runtime/result"
 	// WavsDir defines the directory to store the generated temporary wav files
-	WavsDir string = "wav"
+	WavsDir string = "runtime/wav"
 	// DatasDir defines the directory to store data such as characters
-	DatasDir string = "datas"
+	DatasDir string = "runtime/datas"
 	// ImagesDir define the directory to store images such as profiles
-	ImagesDir string = "datas/images"
+	ImagesDir string = "runtime/datas/images"
 	// TaskDir define the directory to store task datas
-	TaskDir string = "datas/tasks"
+	TaskDir string = "runtime/datas/tasks"
 	// SingleSentenceDir defines the directory to store tasks of single sentences
-	SingleSentenceDir string = "datas/tasks/single_sentence"
+	SingleSentenceDir string = "runtime/datas/tasks/single_sentence"
 	// SingleSentenceTasksFile defines the file to store the info of tasks to make task management easier
 	SingleSentenceTasksFile string = "single_sentence_tasks.json"
 	// ConfDir defines the path of the conf file

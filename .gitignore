@@ -34,11 +34,11 @@ go.work.sum
 # .idea/
 # .vscode/
 
-lib/*
-phonts/
-wav/
-result/
-datas/
-examples/
+# Native AquesTalk2 binaries (place locally under third_party)
+third_party/aquestalk2/win64/*
 
-generator/generatorwin/AquesTalk2.h
+# Runtime I/O (phonts, wav, result, datas, examples)
+runtime/
+
+# Local AquesTalk2 header next to cgo wrapper
+pkg/generator/generatorwin/AquesTalk2.h

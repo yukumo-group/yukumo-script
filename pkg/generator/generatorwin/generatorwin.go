@@ -1,7 +1,7 @@
 package generatorwin
 
 /*
-#cgo LDFLAGS: -L${SRCDIR}/../../lib/win64 -l:AquesTalk2.lib
+#cgo LDFLAGS: -L${SRCDIR}/../../../third_party/aquestalk2/win64 -l:AquesTalk2.lib
 #include<YukumoGenerator.h>
 */
 import "C"

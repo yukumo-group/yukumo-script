@@ -1,11 +1,11 @@
-package win
+package main
 
 import (
 	"fmt"
 
-	"github.com/yukumo-group/yukumo-script/example"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
+	"github.com/yukumo-group/yukumo-script/pkg/example"
 )
 
 // phontsCMD contains subcommands for managing phonts

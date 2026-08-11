@@ -1,9 +1,9 @@
-package win
+package main
 
 import (
-	"github.com/yukumo-group/yukumo-script/generator/tasks/singlesentence"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
+	"github.com/yukumo-group/yukumo-script/pkg/generator/tasks/singlesentence"
 )
 
 // tasksCMD contains subcommands that manage the tasks
