@@ -90,6 +90,7 @@ func (manager *TaskManager) DeleteTask(
 	manager.Lock()
 	_, exists := manager.Tasks[taskName]
 	if !exists {
+		manager.Unlock()
 		return fmt.Errorf(
 			"Task with name %s does not exists",
 			taskName,
@@ -108,6 +109,7 @@ func (manager *TaskManager) NewTask(
 	manager.Lock()
 	_, exists := manager.Tasks[taskName]
 	if exists {
+		manager.Unlock()
 		return fmt.Errorf(
 			"Task with name %s already exists",
 			taskName,

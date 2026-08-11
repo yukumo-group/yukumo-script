@@ -22,7 +22,20 @@ cli_cross_tags := "noaudio"
 macos_stub_dir := "build/macos-stubs"
 macos_ldflags := "-L" + macos_stub_dir + " -Wl,-undefined,dynamic_lookup"
 
+test_tags := "test noaudio"
+cover_pkgs := "./pkg/language/...,./pkg/utils/...,./pkg/characters,./pkg/phontsmanager,./pkg/api,./pkg/generator/tasks/singlesentence,./pkg/example"
+
 default: build
+
+# Run non-GUI unit tests under tests/ (-tags test skips app.log; noaudio stubs playback).
+test:
+    go test -tags "{{test_tags}}" ./tests/...
+
+# HTML coverage report for packages exercised by tests/ (coverage.out + coverage.html).
+# Quote flags: PowerShell splits on commas and treats ".out" as a property access.
+coverage:
+    go test -tags "{{test_tags}}" ./tests/... "-coverpkg={{cover_pkgs}}" "-coverprofile=coverage.out"
+    go tool cover "-html=coverage.out" "-o=coverage.html"
 
 build: build-clib build-cli
 build-debug: build-clib-debug build-cli-debug
@@ -176,7 +189,9 @@ macos-stubs:
 clean:
     if (Test-Path dist) { Remove-Item -Recurse -Force dist }
     if (Test-Path build) { Remove-Item -Recurse -Force build }
+    if (Test-Path coverage.out) { Remove-Item -Force coverage.out }
+    if (Test-Path coverage.html) { Remove-Item -Force coverage.html }
 
 [unix]
 clean:
-    rm -rf dist build
+    rm -rf dist build coverage.out coverage.html
