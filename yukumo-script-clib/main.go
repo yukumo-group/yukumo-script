@@ -4,7 +4,7 @@ package main
  */
 import "C"
 import (
-	"github.com/1Vewton/yukumo-script/phontsmanager"
+	"github.com/yukumo-group/yukumo-script/phontsmanager"
 )
 
 // InitializePhontNameToFileName initializes phont name to file name
