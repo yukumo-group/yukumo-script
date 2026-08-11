@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/1Vewton/yukumo-script/utils/osoperation"
+	"github.com/yukumo-group/yukumo-script/utils/osoperation"
 	"github.com/braheezy/shine-mp3/pkg/mp3"
 	"github.com/go-audio/wav"
 )

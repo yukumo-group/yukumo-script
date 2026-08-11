@@ -3,13 +3,13 @@ package win
 import (
 	"fmt"
 
-	"github.com/1Vewton/yukumo-script/cmd/cmdinterface"
-	"github.com/1Vewton/yukumo-script/generator/tasks/singlesentence"
-	"github.com/1Vewton/yukumo-script/language"
-	"github.com/1Vewton/yukumo-script/phontsmanager"
-	"github.com/1Vewton/yukumo-script/utils"
-	"github.com/1Vewton/yukumo-script/utils/audio"
-	"github.com/1Vewton/yukumo-script/utils/osoperation"
+	"github.com/yukumo-group/yukumo-script/cmd/cmdinterface"
+	"github.com/yukumo-group/yukumo-script/generator/tasks/singlesentence"
+	"github.com/yukumo-group/yukumo-script/language"
+	"github.com/yukumo-group/yukumo-script/phontsmanager"
+	"github.com/yukumo-group/yukumo-script/utils"
+	"github.com/yukumo-group/yukumo-script/utils/audio"
+	"github.com/yukumo-group/yukumo-script/utils/osoperation"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )

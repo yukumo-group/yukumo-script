@@ -3,7 +3,7 @@ package example
 import (
 	"fmt"
 
-	"github.com/1Vewton/yukumo-script/utils/audio"
+	"github.com/yukumo-group/yukumo-script/utils/audio"
 )
 
 // GetAllExampleFont gets the font name of all available phonts

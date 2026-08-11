@@ -1,7 +1,7 @@
 package win
 
 import (
-	"github.com/1Vewton/yukumo-script/generator/tasks/singlesentence"
+	"github.com/yukumo-group/yukumo-script/generator/tasks/singlesentence"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )

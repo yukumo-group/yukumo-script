@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/1Vewton/yukumo-script/utils/logger"
+	"github.com/yukumo-group/yukumo-script/utils/logger"
 )
 
 var initializeLogger = logger.NewLogger(

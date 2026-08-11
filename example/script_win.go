@@ -11,8 +11,8 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/1Vewton/yukumo-script/generator/generatorwin"
-	"github.com/1Vewton/yukumo-script/language/all2jap"
+	"github.com/yukumo-group/yukumo-script/generator/generatorwin"
+	"github.com/yukumo-group/yukumo-script/language/all2jap"
 	"golang.org/x/sync/errgroup"
 )
 

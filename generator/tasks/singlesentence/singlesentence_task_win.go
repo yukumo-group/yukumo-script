@@ -6,7 +6,7 @@ package singlesentence
 import (
 	"fmt"
 
-	"github.com/1Vewton/yukumo-script/generator/generatorwin"
+	"github.com/yukumo-group/yukumo-script/generator/generatorwin"
 )
 
 // GenerateWin generates the wav file in windows64 system
