@@ -71,7 +71,7 @@ func WAV2MP3(
 	if errOpen != nil {
 		return errOpen
 	}
-	defer out.Close()
+	defer func() { _ = out.Close() }()
 	errWrite := mp3Encoder.Write(out, resampledDecodedData)
 	if errWrite != nil {
 		return errWrite

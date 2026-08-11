@@ -1,3 +1,5 @@
+//go:build !noaudio
+
 package audio
 
 import (
@@ -20,8 +22,10 @@ func PlayWAV(fileName string) (*string, error) {
 	if err != nil {
 		return &fileName, err
 	}
-	defer streamer.Close()
-	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
+	defer func() { _ = streamer.Close() }()
+	if err := speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10)); err != nil {
+		return &fileName, err
+	}
 	speaker.Play(beep.Seq(
 		streamer,
 		beep.Callback(

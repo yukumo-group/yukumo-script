@@ -2,24 +2,32 @@ name: Go Test Workflow
 
 on: [push, pull_request]
 
+permissions:
+  contents: read
+
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
+  golangci:
+    name: lint
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Go
-      uses: actions/setup-go@v5
-      with:
-        go-version-file: go.mod
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
 
-    - name: Download dependencies
-      run: go mod download
-    
-    - name: Install Golint
-      run: go install golang.org/x/lint/golint@latest
-      
-    - name: Run Golint
-      run: golint -set_exit_status ./...
+      - name: Install MinGW (Windows CGO)
+        if: runner.os == 'Windows'
+        run: choco install mingw -y
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v9
+        with:
+          version: v2.12
+        env:
+          CGO_ENABLED: "1"

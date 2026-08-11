@@ -8,10 +8,9 @@ import (
 func ParseWindowsPath(
 	originalPath string,
 ) string {
-	return strings.Replace(
+	return strings.ReplaceAll(
 		originalPath,
 		`\`,
 		"/",
-		-1,
 	)
 }

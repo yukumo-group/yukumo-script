@@ -45,7 +45,7 @@ func (characters *Characters) AddCharacter(
 		_, exists := characters.Data[characterID]
 		if exists {
 			return fmt.Errorf(
-				"Character with Character ID %s already exists",
+				"character with character ID %s already exists",
 				characterID,
 			)
 		}
@@ -53,7 +53,7 @@ func (characters *Characters) AddCharacter(
 		return nil
 	}
 	return errors.New(
-		"This characterID already exists",
+		"this characterID already exists",
 	)
 }
 
@@ -80,7 +80,9 @@ func (characters *Characters) ReadData() error {
 			if errCreate != nil {
 				return errCreate
 			}
-			defer file.Close()
+			if err := file.Close(); err != nil {
+				return err
+			}
 			return characters.saveTo(characters.fileName)
 		}
 		return errExist
@@ -101,7 +103,9 @@ func (characters *Characters) SaveData() error {
 			if errCreate != nil {
 				return errCreate
 			}
-			defer file.Close()
+			if err := file.Close(); err != nil {
+				return err
+			}
 			return characters.saveTo(characters.fileName)
 		}
 		return errExist

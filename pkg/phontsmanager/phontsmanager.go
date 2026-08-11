@@ -45,7 +45,7 @@ func GetPhontFile(phontsDir string, phontName string) (string, error) {
 	)
 	if !exists {
 		return "", fmt.Errorf(
-			"No phont file correspond to %s",
+			"no phont file corresponds to %s",
 			phontName,
 		)
 	}

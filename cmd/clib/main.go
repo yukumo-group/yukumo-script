@@ -1,5 +1,28 @@
 package main
 
+/*
+#include <stdlib.h>
+#include <string.h>
+
+// ErrorMessage manages the result of a golang function for C callers.
+typedef struct ErrorMessage {
+	int code;
+	char* information;
+} ErrorMessage;
+
+static ErrorMessage new_error_message(int code, char* information) {
+	ErrorMessage msg;
+	msg.code = code;
+	msg.information = information;
+	return msg;
+}
+
+// StringList is a NULL-terminated list of C strings allocated by this library.
+typedef struct StringList {
+	char** items;
+	int count;
+} StringList;
+*/
 import "C"
 import (
 	"unsafe"

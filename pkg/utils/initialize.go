@@ -45,7 +45,9 @@ func InitializeFile(fileName string) {
 	} else if os.IsNotExist(errStat) {
 		file, err := os.Create(fileName)
 		if err != nil {
-			defer file.Close()
+			panic(err.Error())
+		}
+		if err := file.Close(); err != nil {
 			panic(err.Error())
 		}
 	} else {

@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/yukumo-group/yukumo-script/pkg/generator/aquestalk2"
 )
 
 // Task defines the task of generating a single sentence
@@ -33,7 +34,7 @@ func NewSingleSentenceTask(
 ) (*Task, error) {
 	if phontName == nil && characterID == nil {
 		return nil, errors.New(
-			"You have to choose at least one of the way to generate the audio",
+			"you have to choose at least one way to generate the audio",
 		)
 	}
 	id := uuid.NewString()
@@ -79,7 +80,7 @@ func (task *Task) GenerateFileName(
 	)
 }
 
-// SaveFile saves the file in the target directory in windows
+// SaveFile saves the file in the target directory.
 func (task *Task) SaveFile(
 	targetDir string,
 ) (string, error) {
@@ -100,4 +101,27 @@ func (task *Task) SaveFile(
 		return "", errWrite
 	}
 	return fileName, nil
+}
+
+// Generate synthesizes the wav file via AquesTalk2.
+func (task *Task) Generate(
+	phontPath string,
+	targetDir string,
+) error {
+	fileName := fmt.Sprintf(
+		"%s/%s_%s_%d.wav",
+		targetDir,
+		task.TaskName,
+		task.ID,
+		task.CreateTime.Unix(),
+	)
+	generator := aquestalk2.NewGenerator(
+		task.Speed,
+		phontPath,
+		fileName,
+		task.Text,
+	)
+	err := generator.GenerateWav()
+	task.ResultFile = &fileName
+	return err
 }

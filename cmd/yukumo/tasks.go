@@ -27,9 +27,9 @@ var showAllSingleSentenceTasksCMD = &cobra.Command{
 		text := color.New(color.Italic)
 		// Show all tasks
 		allTasks := singlesentence.Manager.GetAllTasks()
-		title.Println("Here are all the created tasks")
+		_, _ = title.Println("Here are all the created tasks")
 		for title := range allTasks {
-			text.Println(title)
+			_, _ = text.Println(title)
 		}
 	},
 }

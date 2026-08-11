@@ -25,10 +25,7 @@ func NewCharacter(
 
 // HasProfileImage checks if there is profile image
 func (character *Character) HasProfileImage() bool {
-	if character.ProfileImagePath == nil {
-		return false
-	}
-	return true
+	return character.ProfileImagePath != nil
 }
 
 // ShowInfo shows the info of the character

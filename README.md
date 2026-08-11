@@ -22,27 +22,36 @@ Two independent artifacts (CLI does **not** load the shared library):
 
 | Target | Recipe | Output |
 |--------|--------|--------|
-| CLI | `just build-cli` | `dist/yukumo.exe` (Windows) / `dist/yukumo` |
-| clib | `just build-clib` | `dist/clib/yukumo.dll` + `yukumo.h` (Windows); `.so` / `.dylib` on Unix |
+| CLI | `just build-cli` | `dist/cli/{win64,win32,linux64,linux32,macos}/yukumo[.exe]` |
+| clib | `just build-clib` | `dist/clib/{win64,win32}/yukumo.dll`, `…/linux*/libyukumo.so`, `…/macos/libyukumo.dylib` + `yukumo.h` |
 | both | `just build` | CLI + clib |
 
 ```bash
-just build        # clib then CLI
-just build-cli    # standalone executable only
-just build-clib   # shared library for other programs
-just clean        # remove dist/
+just build              # all platform CLIs + clibs
+just build-cli          # win64/win32 + linux64/linux32 + macos CLI
+just build-clib         # matching shared libraries
+just build-cli-linux64  # single platform (also -win32, -macos, …)
+just clean              # remove dist/ and build/
 ```
 
-Or with plain Go:
+Cross linux/macOS builds use [Zig](https://ziglang.org/) (`ZIG=zig`). Windows 32-bit needs MinGW (`CC32=i686-w64-mingw32-gcc`). Linux/macOS CLI crosses use `-tags noaudio` (playback stubbed; generation still works).
+
+Or with plain Go (host only):
 
 ```bash
-go build -o dist/yukumo.exe ./cmd/yukumo
-go build -buildmode=c-shared -o dist/clib/yukumo.dll ./cmd/clib
+go build -o dist/cli/win64/yukumo.exe ./cmd/yukumo
+go build -tags clib -buildmode=c-shared -o dist/clib/win64/yukumo.dll ./cmd/clib
 ```
 
-### Prerequisites (Windows)
+### Prerequisites (AquesTalk2)
 
-Place AquesTalk2 `.dll` / `.lib` under `third_party/aquestalk2/win64/`. Audio generation (CLI and clib) requires Windows + AquesTalk2. The native DLL is loaded at runtime from `third_party/aquestalk2/win64/AquesTalk2.dll` (working directory should be the repo root).
+Place the AquesTalk2 SDK under `third_party/aquestalk2/{win,linux,mac}/` (vendor layout with `lib` / `lib64` and `phont`). Audio generation loads the matching shared library at runtime from the working directory (repo root):
+
+- Windows amd64: `third_party/aquestalk2/win/lib64/AquesTalk2.dll`
+- Windows 386: `third_party/aquestalk2/win/lib/AquesTalk2.dll`
+- Linux amd64: `third_party/aquestalk2/linux/lib64/libAquesTalk2Eva.so.2.3`
+- Linux 386: `third_party/aquestalk2/linux/lib/libAquesTalk2Eva.so.2.3`
+- macOS: `third_party/aquestalk2/mac/lib/libAquesTalk2Eva.dylib`
 
 ### clib C API
 
@@ -50,7 +59,7 @@ Header is generated next to the library (`dist/clib/yukumo.h`). Exports include:
 
 - `YukumoInit` — runtime dirs, phont map, characters, tasks
 - `YukumoListPhonts` / `YukumoListTasks` — name lists (`StringList`)
-- `YukumoGenerateByPhont` — generate wav by phont (Windows)
+- `YukumoGenerateByPhont` — generate wav by phont
 - `YukumoFreeString` / `YukumoFreeStringList` / `YukumoFreeErrorMessage` — free C memory
 
 Runtime I/O lives under `runtime/` (`data`, `phonts`, `wav`, `result`, `examples`).

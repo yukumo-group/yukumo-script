@@ -12,22 +12,22 @@ func YesOrNoWithColor(
 	question string,
 	defaultChoice bool,
 ) (bool, error) {
-	mainColor.Print(question)
+	_, _ = mainColor.Print(question)
 	fmt.Print(" (")
 	if defaultChoice {
 		colorTrue := color.New(color.FgGreen).Add(color.Bold)
-		colorTrue.Print("Y")
+		_, _ = colorTrue.Print("Y")
 	} else {
 		colorTrue := color.New(color.FgGreen)
-		colorTrue.Print("y")
+		_, _ = colorTrue.Print("y")
 	}
 	fmt.Print("/")
 	if !defaultChoice {
 		colorTrue := color.New(color.FgRed).Add(color.Bold)
-		colorTrue.Print("N")
+		_, _ = colorTrue.Print("N")
 	} else {
 		colorTrue := color.New(color.FgRed)
-		colorTrue.Print("n")
+		_, _ = colorTrue.Print("n")
 	}
 	fmt.Println(") ")
 	var response string

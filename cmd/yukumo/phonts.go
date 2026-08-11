@@ -29,10 +29,10 @@ ShowAvailablePhonts shows all the available phonts that can be used to generate 
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		title := color.New(color.FgGreen).Add(color.Bold)
-		title.Println("Here are the available phonts:")
+		_, _ = title.Println("Here are the available phonts:")
 		text := color.New(color.Italic)
 		for _, phontName := range example.GetAllExampleFont() {
-			text.Println(phontName)
+			_, _ = text.Println(phontName)
 		}
 	},
 }
@@ -48,17 +48,17 @@ var playExampleCMD = &cobra.Command{
 		errMessage := color.New(color.FgRed).Add(color.Bold)
 		text := color.New(color.Italic)
 		// Print info
-		title.Println("Here are the available phonts:")
+		_, _ = title.Println("Here are the available phonts:")
 		for _, phontName := range example.GetAllExampleFont() {
-			text.Println(phontName)
+			_, _ = text.Println(phontName)
 		}
-		title.Println("Input the name of the phont you want to play:")
+		_, _ = title.Println("Input the name of the phont you want to play:")
 		// Input
 		var phontName string
 		_, errInput := fmt.Scan(&phontName)
 		if errInput != nil {
 			cmdLogger.Error(errInput.Error())
-			errMessage.Println(errInput.Error())
+			_, _ = errMessage.Println(errInput.Error())
 			return
 		}
 		// Play
@@ -73,7 +73,7 @@ var playExampleCMD = &cobra.Command{
 					),
 				)
 			}
-			errMessage.Println(err.Error())
+			_, _ = errMessage.Println(err.Error())
 		}
 	},
 }

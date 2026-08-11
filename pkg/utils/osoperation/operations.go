@@ -24,7 +24,9 @@ func GetNewFilePath(
 			if errCreateFile != nil {
 				return "", errCreateFile
 			}
-			file.Close()
+			if err := file.Close(); err != nil {
+				return "", err
+			}
 		} else {
 			return "", errTargetFileExists
 		}

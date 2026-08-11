@@ -50,9 +50,15 @@ func init() {
 		100,
 		"Speed of the audio(default: 100)",
 	)
-	generateByFileCMD.MarkFlagRequired("name")
-	generateByFileCMD.MarkFlagRequired("text")
-	generateByFileCMD.MarkFlagRequired("language")
+	if err := generateByFileCMD.MarkFlagRequired("name"); err != nil {
+		panic(err)
+	}
+	if err := generateByFileCMD.MarkFlagRequired("text"); err != nil {
+		panic(err)
+	}
+	if err := generateByFileCMD.MarkFlagRequired("language"); err != nil {
+		panic(err)
+	}
 	// Add subcommands
 	phontsCMD.AddCommand(
 		showAvailablePhontsCMD,
