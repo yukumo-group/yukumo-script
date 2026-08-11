@@ -61,9 +61,13 @@ func init() {
 	generationCMD.AddCommand(
 		generateByFileCMD,
 	)
+	tasksCMD.AddCommand(
+		showAllSingleSentenceTasksCMD,
+	)
 	rootCMD.AddCommand(
 		phontsCMD,
 		generationCMD,
+		tasksCMD,
 	)
 }
 
