@@ -8,6 +8,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// phontsCMD contains subcommands for managing phonts
+var phontsCMD = &cobra.Command{
+	Use:   "phonts",
+	Short: "phonts contains subcommands for managing phonts",
+	Long: `
+You can manage phonts and play examples here.
+`,
+	Run: func(cmd *cobra.Command, args []string) {
+
+	},
+}
+
 // showAvailablePhontsCMD shows all the available phonts
 var showAvailablePhontsCMD = &cobra.Command{
 	Use:   "showAvailablePhonts",

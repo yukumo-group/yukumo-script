@@ -54,10 +54,16 @@ func init() {
 	generateByFileCMD.MarkFlagRequired("text")
 	generateByFileCMD.MarkFlagRequired("language")
 	// Add subcommands
-	rootCMD.AddCommand(
+	phontsCMD.AddCommand(
 		showAvailablePhontsCMD,
 		playExampleCMD,
+	)
+	generationCMD.AddCommand(
 		generateByFileCMD,
+	)
+	rootCMD.AddCommand(
+		phontsCMD,
+		generationCMD,
 	)
 }
 

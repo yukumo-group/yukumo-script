@@ -26,13 +26,24 @@ var SingleSentenceTaskSpeedByFile int
 // SingleSentenceTaskLanguageByFile defines the language of the audio
 var SingleSentenceTaskLanguageByFile int
 
+// generationCommand contains commands for generation
+var generationCMD = &cobra.Command{
+	Use:   "generation",
+	Short: "generation command contains subcommands that can generate audios through pre-defined characters or phont files",
+	Long: `
+subcommands of generation command allow you to generate your audios
+	`,
+	Run: func(cmd *cobra.Command, args []string) {
+
+	},
+}
+
 // generateByFile generates wav by file
 var generateByFileCMD = &cobra.Command{
 	Use:   "generateByFile",
 	Short: "Generate yukumo audio through the file",
 	Long: `
 generateByFile allows you to generate yukumo audio through phont file directly
-- This is completed through 
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Define the format of the texts
@@ -178,6 +189,7 @@ generateByFile allows you to generate yukumo audio through phont file directly
 		title.Println("Input the directory of the exported file to store")
 		var exportDirectory string
 		fmt.Scan(&exportDirectory)
+		exportDirectory = osoperation.ParseWindowsPath(exportDirectory)
 		title.Println("Input the name of the file to store (no suffix needed)")
 		var exportFileName string
 		fmt.Scan(&exportFileName)

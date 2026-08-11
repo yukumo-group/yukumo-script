@@ -10,6 +10,11 @@ import (
 	"github.com/go-audio/wav"
 )
 
+// wavToMp3TargetSampleRate is the sample rate (Hz) that WAV data is resampled
+// to before MP3 encoding. The encoder MUST be created with this exact rate,
+// otherwise the output plays back at the wrong speed.
+const wavToMp3TargetSampleRate = 16000
+
 // WAV2MP3 converts .wav file to .mp3 file.
 // This function contains code from the shine-mp3 project (https://github.com/braheezy/shine-mp3)
 // Original copyright (c) 2023 braheezy, licensed under the GNU General Public License v2.
@@ -40,14 +45,14 @@ func WAV2MP3(
 		decodedData,
 		2,
 		wavBuffer.Format.SampleRate,
-		16000,
+		wavToMp3TargetSampleRate,
 	)
 	if errResample != nil {
 		return errResample
 	}
-	// Create mp3 encoder
+	// Create mp3 encoder with the resampled sample rate. Using the original sample rate here would make the output play at the wrong speed.
 	mp3Encoder := mp3.NewEncoder(
-		wavBuffer.Format.SampleRate,
+		wavToMp3TargetSampleRate,
 		2,
 	)
 	mp3FilePath, errGetFilePath := osoperation.GetNewFilePath(
