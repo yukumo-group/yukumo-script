@@ -25,6 +25,11 @@ jobs:
         if: runner.os == 'Windows'
         run: choco install mingw -y
 
+      # beep/speaker → oto needs ALSA headers for typecheck with CGO on Linux
+      - name: Install ALSA (Linux CGO)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libasound2-dev
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v9
         with:
