@@ -8,6 +8,9 @@
 *.so
 *.dylib
 
+# Build outputs (CLI + clib)
+dist/
+
 # log
 *log
 

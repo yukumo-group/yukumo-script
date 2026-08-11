@@ -1,6 +1,3 @@
 [submodule "yukumo-script-gui"]
 	path = yukumo-script-gui
 	url = https://github.com/yukumo-group/yukumo-script-gui.git
-[submodule "yukumo-script-lib"]
-	path = yukumo-script-lib
-	url = https://github.com/yukumo-group/yukumo-script-clib.git
