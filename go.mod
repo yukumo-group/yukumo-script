@@ -1,4 +1,4 @@
-module github.com/1Vewton/yukumo-script
+module github.com/yukumo-group/yukumo-script
 
 go 1.25.0
 

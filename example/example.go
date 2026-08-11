@@ -1,8 +1,8 @@
 package example
 
 import (
-	"github.com/1Vewton/yukumo-script/utils/logger"
-	"github.com/1Vewton/yukumo-script/utils/syncutils"
+	"github.com/yukumo-group/yukumo-script/utils/logger"
+	"github.com/yukumo-group/yukumo-script/utils/syncutils"
 )
 
 var scriptLogger = logger.NewLogger("Example", nil)

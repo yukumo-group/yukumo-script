@@ -3,7 +3,7 @@ package win
 import (
 	"fmt"
 
-	"github.com/1Vewton/yukumo-script/example"
+	"github.com/yukumo-group/yukumo-script/example"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )

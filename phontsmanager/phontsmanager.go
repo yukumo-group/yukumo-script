@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/1Vewton/yukumo-script/utils/syncutils"
+	"github.com/yukumo-group/yukumo-script/utils/syncutils"
 )
 
 // PhontNameToFileName creates mapping of phont name and file

@@ -6,13 +6,13 @@ package main
 import (
 	"context"
 
-	"github.com/1Vewton/yukumo-script/cmd/win"
-	"github.com/1Vewton/yukumo-script/data/characters"
-	"github.com/1Vewton/yukumo-script/example"
-	"github.com/1Vewton/yukumo-script/generator/tasks/singlesentence"
-	"github.com/1Vewton/yukumo-script/phontsmanager"
-	"github.com/1Vewton/yukumo-script/utils"
-	"github.com/1Vewton/yukumo-script/utils/logger"
+	"github.com/yukumo-group/yukumo-script/cmd/win"
+	"github.com/yukumo-group/yukumo-script/data/characters"
+	"github.com/yukumo-group/yukumo-script/example"
+	"github.com/yukumo-group/yukumo-script/generator/tasks/singlesentence"
+	"github.com/yukumo-group/yukumo-script/phontsmanager"
+	"github.com/yukumo-group/yukumo-script/utils"
+	"github.com/yukumo-group/yukumo-script/utils/logger"
 )
 
 var cliLogger = logger.NewLogger(

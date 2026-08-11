@@ -3,7 +3,7 @@ package language
 import (
 	"errors"
 
-	"github.com/1Vewton/yukumo-script/language/all2jap"
+	"github.com/yukumo-group/yukumo-script/language/all2jap"
 )
 
 // ConvertText converts text to certain language
