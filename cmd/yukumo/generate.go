@@ -29,9 +29,9 @@ var SingleSentenceTaskLanguageByFile int
 // generationCommand contains commands for generation
 var generationCMD = &cobra.Command{
 	Use:   "generation",
-	Short: "generation command contains subcommands that can generate audios through pre-defined characters or phont files",
+	Short: "generation command contains subcommands that can generate audio through pre-defined characters or phont files",
 	Long: `
-subcommands of generation command allow you to generate your audios
+subcommands of generation command allow you to generate your audio
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
 

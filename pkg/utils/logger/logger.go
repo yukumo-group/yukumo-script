@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-// Logger datastructure create logs for each service
+// Logger datatructure create logs for each service
 type Logger struct {
 	loggerName string
 	testLogger **testing.T

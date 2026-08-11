@@ -9,14 +9,14 @@ const (
 	ResultDir string = "runtime/result"
 	// WavsDir defines the directory to store the generated temporary wav files
 	WavsDir string = "runtime/wav"
-	// DatasDir defines the directory to store data such as characters
-	DatasDir string = "runtime/datas"
+	// DataDir defines the directory to store data such as characters
+	DataDir string = "runtime/data"
 	// ImagesDir define the directory to store images such as profiles
-	ImagesDir string = "runtime/datas/images"
-	// TaskDir define the directory to store task datas
-	TaskDir string = "runtime/datas/tasks"
+	ImagesDir string = "runtime/data/images"
+	// TaskDir define the directory to store task data
+	TaskDir string = "runtime/data/tasks"
 	// SingleSentenceDir defines the directory to store tasks of single sentences
-	SingleSentenceDir string = "runtime/datas/tasks/single_sentence"
+	SingleSentenceDir string = "runtime/data/tasks/single_sentence"
 	// SingleSentenceTasksFile defines the file to store the info of tasks to make task management easier
 	SingleSentenceTasksFile string = "single_sentence_tasks.json"
 	// ConfDir defines the path of the conf file

@@ -25,7 +25,7 @@ func init() {
 	utils.InitializeDirectory(utils.PhontsDir)
 	utils.InitializeDirectory(utils.ResultDir)
 	utils.InitializeDirectory(utils.WavsDir)
-	utils.InitializeDirectory(utils.DatasDir)
+	utils.InitializeDirectory(utils.DataDir)
 	utils.InitializeDirectory(utils.ExampleDir)
 	utils.InitializeDirectory(utils.ImagesDir)
 	utils.InitializeDirectory(utils.TaskDir)
@@ -57,7 +57,7 @@ func init() {
 	}
 	// Config the character list
 	characters.CharacterList.SetTargetFile(
-		utils.DatasDir,
+		utils.DataDir,
 		utils.CharactersFile,
 	)
 	err = characters.CharacterList.ReadData()

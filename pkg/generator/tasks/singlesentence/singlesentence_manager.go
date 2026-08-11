@@ -62,12 +62,25 @@ func (manager *TaskManager) Save() error {
 func (manager *TaskManager) ReadData() error {
 	manager.Lock()
 	defer manager.Unlock()
+	_, errExist := os.Stat(manager.fileName)
+	if errExist != nil {
+		if os.IsNotExist(errExist) {
+			if manager.Tasks == nil {
+				manager.Tasks = make(map[string]string)
+			}
+			data, errMarshal := json.Marshal(manager)
+			if errMarshal != nil {
+				return errMarshal
+			}
+			return os.WriteFile(manager.fileName, data, 0644)
+		}
+		return errExist
+	}
 	data, errRead := os.ReadFile(manager.fileName)
 	if errRead != nil {
 		return errRead
 	}
-	errUnmarshal := json.Unmarshal(data, manager)
-	return errUnmarshal
+	return json.Unmarshal(data, manager)
 }
 
 // DeleteTask deletes certain task
