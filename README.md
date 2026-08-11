@@ -6,7 +6,7 @@ A Go application that generates Yukumo audio from script using AquesTalk2.
 
 ```text
 cmd/yukumo/              CLI entrypoint (standalone)
-cmd/clib/                C shared library exports (-buildmode=c-shared)
+clib/                    C shared library exports (-buildmode=c-shared)
 pkg/api/                 Shared helpers used by CLI and clib
 pkg/                     Shared libraries (also used by yukumo-script-gui)
 internal/cmdinterface/   CLI-only helpers
@@ -40,7 +40,7 @@ Or with plain Go (host only):
 
 ```bash
 go build -o dist/cli/win64/yukumo.exe ./cmd/yukumo
-go build -tags clib -buildmode=c-shared -o dist/clib/win64/yukumo.dll ./cmd/clib
+go build -tags clib -buildmode=c-shared -o dist/clib/win64/yukumo.dll ./clib
 ```
 
 ### Prerequisites (AquesTalk2)
