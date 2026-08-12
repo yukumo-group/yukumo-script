@@ -1,8 +1,9 @@
 package main
 
 import (
+	"yukumo-script-cmd/internal/welcome"
+
 	"github.com/spf13/cobra"
-	"github.com/yukumo-group/yukumo-script/cmd/internal/welcome"
 	"github.com/yukumo-group/yukumo-script/pkg/api"
 )
 

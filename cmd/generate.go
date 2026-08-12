@@ -5,7 +5,6 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
-	"github.com/yukumo-group/yukumo-script/internal/phontsmanager"
 	"github.com/yukumo-group/yukumo-script/pkg/api"
 )
 
@@ -46,7 +45,7 @@ generateByFile allows you to generate yukumo audio through phont file directly
 		text := color.New(color.Italic)
 		// Print info
 		_, _ = title.Println("Here are the available phonts:")
-		for _, phontName := range phontsmanager.PhontNameToFileName.GetAllKeys() {
+		for _, phontName := range api.ListPhonts() {
 			_, _ = text.Println(phontName)
 		}
 		_, _ = title.Println("Input the name of the phont you want to use to generate audio:")
@@ -71,14 +70,14 @@ generateByFile allows you to generate yukumo audio through phont file directly
 			ProcessError(errPrepareGeneration)
 			return
 		}
-		_, errRegisterGeneratedTask := api.RegisterGeneratedTask(newTask)
-		if errRegisterGeneratedTask != nil {
-			ProcessError(errRegisterGeneratedTask)
-			return
-		}
 		result, errGenerate := api.GenerateByPhont(newGenerationParam)
 		if errGenerate != nil {
 			ProcessError(errGenerate)
+			return
+		}
+		_, errRegisterGeneratedTask := api.RegisterGeneratedTask(newTask)
+		if errRegisterGeneratedTask != nil {
+			ProcessError(errRegisterGeneratedTask)
 			return
 		}
 		_, _ = title.Printf(

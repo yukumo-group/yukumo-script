@@ -2,16 +2,12 @@ package api
 
 import (
 	"context"
-	"fmt"
-	"maps"
-	"slices"
 
 	"github.com/yukumo-group/yukumo-script/internal/characters"
 	"github.com/yukumo-group/yukumo-script/internal/example"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
 	"github.com/yukumo-group/yukumo-script/internal/phontsmanager"
 	"github.com/yukumo-group/yukumo-script/pkg/utils"
-	"github.com/yukumo-group/yukumo-script/pkg/utils/language"
 )
 
 // Init initializes runtime dirs, examples, phont map, characters, and tasks.
@@ -44,32 +40,6 @@ func Init() error {
 	return InitTaskManager()
 }
 
-// GenerateByPhont converts text, generates a wav via AquesTalk2, and registers the task.
-func GenerateByPhont(params *GenerateByPhontParams) (*GenerateByPhontResult, error) {
-	task, err := PrepareGenerateByPhont(params)
-	if err != nil {
-		return nil, err
-	}
-	phontPath, err := PhontPath(*task.PhontName)
-	if err != nil {
-		return nil, err
-	}
-	if err := task.Generate(phontPath, utils.ResultDir); err != nil {
-		return nil, err
-	}
-	if task.ResultFile == nil {
-		return nil, fmt.Errorf("result file path is nil after generation")
-	}
-	taskFile, err := RegisterGeneratedTask(task)
-	if err != nil {
-		return nil, err
-	}
-	return &GenerateByPhontResult{
-		ResultFile: *task.ResultFile,
-		TaskFile:   taskFile,
-	}, nil
-}
-
 // InitRuntimeDirs creates the runtime directories used by CLI and clib.
 func InitRuntimeDirs() {
 	utils.InitializeDirectory(utils.RuntimeDir)
@@ -95,57 +65,4 @@ func InitTaskManager() error {
 		utils.SingleSentenceTasksFile,
 	)
 	return singlesentence.Manager.ReadData()
-}
-
-// ListPhonts returns available phont names.
-func ListPhonts() []string {
-	return phontsmanager.PhontNameToFileName.GetAllKeys()
-}
-
-// ListTasks returns registered single-sentence task names.
-func ListTasks() []string {
-	return slices.Collect(maps.Keys(singlesentence.Manager.GetAllTasks()))
-}
-
-// PrepareGenerateByPhont validates inputs and creates a task without generating audio.
-func PrepareGenerateByPhont(params *GenerateByPhontParams) (*singlesentence.Task, error) {
-	if singlesentence.Manager.HasTask(params.TaskName) {
-		return nil, fmt.Errorf("task %s already exists", params.TaskName)
-	}
-	_, exists := phontsmanager.PhontNameToFileName.GetValue(params.PhontName)
-	if !exists {
-		return nil, fmt.Errorf("no such phont %s", params.PhontName)
-	}
-	processedText, err := language.ConvertText(
-		params.Text,
-		language.ToLanguage(params.Language),
-	)
-	if err != nil {
-		return nil, err
-	}
-	phontName := params.PhontName
-	return singlesentence.NewSingleSentenceTask(
-		processedText,
-		nil,
-		&phontName,
-		params.Speed,
-		params.TaskName,
-	)
-}
-
-// RegisterGeneratedTask saves task metadata and registers it in the manager.
-func RegisterGeneratedTask(task *singlesentence.Task) (string, error) {
-	taskFile, err := task.SaveFile(utils.SingleSentenceDir)
-	if err != nil {
-		return "", err
-	}
-	if err := singlesentence.Manager.NewTask(task.TaskName, taskFile); err != nil {
-		return "", err
-	}
-	return taskFile, nil
-}
-
-// PhontPath resolves a phont name to its file path under PhontsDir.
-func PhontPath(phontName string) (string, error) {
-	return phontsmanager.GetPhontFile(utils.PhontsDir, phontName)
 }
