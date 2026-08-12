@@ -4,10 +4,10 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
+	"github.com/yukumo-group/yukumo-script/internal/phontsmanager"
 	"github.com/yukumo-group/yukumo-script/pkg/api"
-	"github.com/yukumo-group/yukumo-script/pkg/generator/tasks/singlesentence"
-	"github.com/yukumo-group/yukumo-script/pkg/language"
-	"github.com/yukumo-group/yukumo-script/pkg/phontsmanager"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/language"
 )
 
 func TestPrepareGenerateByPhont(t *testing.T) {

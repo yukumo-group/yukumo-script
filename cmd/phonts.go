@@ -5,7 +5,7 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
-	"github.com/yukumo-group/yukumo-script/pkg/example"
+	"github.com/yukumo-group/yukumo-script/pkg/api"
 )
 
 // phontsCMD contains subcommands for managing phonts
@@ -31,7 +31,7 @@ ShowAvailablePhonts shows all the available phonts that can be used to generate 
 		title := color.New(color.FgGreen).Add(color.Bold)
 		_, _ = title.Println("Here are the available phonts:")
 		text := color.New(color.Italic)
-		for _, phontName := range example.GetAllExampleFont() {
+		for _, phontName := range api.GetAllExamplePhont() {
 			_, _ = text.Println(phontName)
 		}
 	},
@@ -49,7 +49,7 @@ var playExampleCMD = &cobra.Command{
 		text := color.New(color.Italic)
 		// Print info
 		_, _ = title.Println("Here are the available phonts:")
-		for _, phontName := range example.GetAllExampleFont() {
+		for _, phontName := range api.GetAllExamplePhont() {
 			_, _ = text.Println(phontName)
 		}
 		_, _ = title.Println("Input the name of the phont you want to play:")
@@ -57,12 +57,11 @@ var playExampleCMD = &cobra.Command{
 		var phontName string
 		_, errInput := fmt.Scan(&phontName)
 		if errInput != nil {
-			cmdLogger.Error(errInput.Error())
-			_, _ = errMessage.Println(errInput.Error())
+			ProcessError(errInput)
 			return
 		}
 		// Play
-		file, err := example.PlayExample(phontName)
+		file, err := api.PlayExample(phontName)
 		if err != nil {
 			cmdLogger.Error(err.Error())
 			if file != nil {

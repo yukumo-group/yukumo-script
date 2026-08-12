@@ -6,12 +6,12 @@ import (
 	"maps"
 	"slices"
 
-	"github.com/yukumo-group/yukumo-script/pkg/characters"
-	"github.com/yukumo-group/yukumo-script/pkg/example"
-	"github.com/yukumo-group/yukumo-script/pkg/generator/tasks/singlesentence"
-	"github.com/yukumo-group/yukumo-script/pkg/language"
-	"github.com/yukumo-group/yukumo-script/pkg/phontsmanager"
+	"github.com/yukumo-group/yukumo-script/internal/characters"
+	"github.com/yukumo-group/yukumo-script/internal/example"
+	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
+	"github.com/yukumo-group/yukumo-script/internal/phontsmanager"
 	"github.com/yukumo-group/yukumo-script/pkg/utils"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/language"
 )
 
 // Init initializes runtime dirs, examples, phont map, characters, and tasks.

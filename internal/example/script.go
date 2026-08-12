@@ -8,8 +8,8 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/yukumo-group/yukumo-script/pkg/generator/aquestalk2"
-	"github.com/yukumo-group/yukumo-script/pkg/language/all2jap"
+	"github.com/yukumo-group/yukumo-script/internal/generator/aquestalk2"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/language/all2jap"
 	"golang.org/x/sync/errgroup"
 )
 

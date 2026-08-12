@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/yukumo-group/yukumo-script/pkg/generator/aquestalk2"
+	"github.com/yukumo-group/yukumo-script/internal/generator/aquestalk2"
 )
 
 // Task defines the task of generating a single sentence

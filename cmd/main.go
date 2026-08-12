@@ -1,26 +1,22 @@
 package main
 
 import (
-	"github.com/spf13/cobra"
-	"github.com/yukumo-group/yukumo-script/pkg/utils"
+	"github.com/yukumo-group/yukumo-script/pkg/api"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/logger"
 )
 
-var cmdLogger = logger.NewLogger("CMD", nil)
+var cliLogger = logger.NewLogger(
+	"CLI",
+	nil,
+)
 
-// rootCMD defines the root command
-var rootCMD = &cobra.Command{
-	Use:   "yukumo",
-	Short: "yukumo is a program that can generate yukumo audio",
-	Long: `
-Yukumo is a simple and flexible program that can generate yukumo audio without the need for network connection. 
-	`,
-	Run: func(cmd *cobra.Command, args []string) {
-		utils.CLIWelcome()
-	},
-}
-
+// Initialize directories and shared runtime state
 func init() {
+	// Initialize
+	if err := api.Init(); err != nil {
+		cliLogger.Error(err.Error())
+		panic(err)
+	}
 	// Add flags for generateByFile
 	generateByFileCMD.Flags().StringVarP(
 		&SingleSentenceTaskNameByFile,
@@ -77,9 +73,7 @@ func init() {
 	)
 }
 
-// Execute executes the command
-func Execute() {
-	if err := rootCMD.Execute(); err != nil {
-		panic(err.Error())
-	}
+// Main process
+func main() {
+	Execute()
 }

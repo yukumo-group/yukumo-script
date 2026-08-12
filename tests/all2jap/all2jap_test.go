@@ -5,7 +5,7 @@ import (
 	"testing"
 	"unicode"
 
-	"github.com/yukumo-group/yukumo-script/pkg/language/all2jap"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/language/all2jap"
 )
 
 var nonKatakana = regexp.MustCompile(`[^\p{Katakana}]+`)

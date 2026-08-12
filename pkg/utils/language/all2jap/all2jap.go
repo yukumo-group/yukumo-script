@@ -3,8 +3,8 @@ package all2jap
 import (
 	"regexp"
 
-	"github.com/yukumo-group/yukumo-script/pkg/language/convertnums"
 	kanatrans "github.com/Luigi-Pizzolito/English2KanaTransliteration"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/language/convertnums"
 )
 
 // AllToKana converts English and Japanese characters to Kana

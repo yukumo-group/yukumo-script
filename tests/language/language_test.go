@@ -3,7 +3,7 @@ package language_test
 import (
 	"testing"
 
-	"github.com/yukumo-group/yukumo-script/pkg/language"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/language"
 )
 
 func TestToLanguage(t *testing.T) {

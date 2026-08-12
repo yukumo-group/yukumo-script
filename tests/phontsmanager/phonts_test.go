@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/yukumo-group/yukumo-script/pkg/phontsmanager"
+	"github.com/yukumo-group/yukumo-script/internal/phontsmanager"
 )
 
 func TestInitializeAndGetPhontFile(t *testing.T) {

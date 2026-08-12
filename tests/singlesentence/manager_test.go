@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/yukumo-group/yukumo-script/pkg/generator/tasks/singlesentence"
+	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
 )
 
 func TestTaskManagerJSON(t *testing.T) {

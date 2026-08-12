@@ -3,7 +3,7 @@ package convertnums_test
 import (
 	"testing"
 
-	"github.com/yukumo-group/yukumo-script/pkg/language/convertnums"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/language/convertnums"
 )
 
 func TestConvertNumToEnglish(t *testing.T) {

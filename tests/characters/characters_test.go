@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/yukumo-group/yukumo-script/pkg/characters"
+	"github.com/yukumo-group/yukumo-script/internal/characters"
 )
 
 func TestNewCharacter(t *testing.T) {

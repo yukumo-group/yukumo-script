@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
-	"github.com/yukumo-group/yukumo-script/pkg/generator/tasks/singlesentence"
+	"github.com/yukumo-group/yukumo-script/pkg/api"
 )
 
 // tasksCMD contains subcommands that manage the tasks
@@ -26,7 +26,7 @@ var showAllSingleSentenceTasksCMD = &cobra.Command{
 		title := color.New(color.FgGreen).Add(color.Bold)
 		text := color.New(color.Italic)
 		// Show all tasks
-		allTasks := singlesentence.Manager.GetAllTasks()
+		allTasks := api.GetAllTasks()
 		_, _ = title.Println("Here are all the created tasks")
 		for title := range allTasks {
 			_, _ = text.Println(title)
