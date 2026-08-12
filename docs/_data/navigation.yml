@@ -1,12 +1,17 @@
 docs:
-- title: Getting Started
+- title: "Getting Started"
   children:
     - title: "About This Project"
       url: /
-- title: Script
+- title: "Script"
   description: "The script that can generate audios or subtitle files"
   children:
     - title: "About"
       url: /script/
     - title: "Introduction"
       url: /script/introduction
+    - title: "Front Matter"
+      children:
+      - title: "Introduction"
+        url: /script/frontMatter/introduction
+    - title: "Body Matter"

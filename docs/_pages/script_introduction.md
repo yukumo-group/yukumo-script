@@ -5,11 +5,13 @@ permalink: /script/introduction
 
 Yukumo-Script is a scripting language for generating yukumo audios or subtitle files. It is intended to be designed like drama scripts to make it easier to use. 
 
-Each script file is devided into two different parts, the **front matter** and the **body matter**. Their syntax is not the same. 
+Each script file is devided into two different parts, the **front matter** and the **body matter**. Their syntax is not the same. Two parts are devided using `---`. 
 
 # Front Matter
 
 Front matter contains basic settings for the script, for instance the **default speed** for the generated audio and characters. The users are also allowed to define their own characters in the application and use them in the script.
+
+This part follows the YAML file style so you can just provide the script file with body matter and the front matter YAML file to the application. 
 
 # Body Matter
 
