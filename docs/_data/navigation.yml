@@ -8,3 +8,5 @@ docs:
   children:
     - title: "About"
       url: /script/
+    - title: "Introduction"
+      url: /script/introduction

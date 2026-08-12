@@ -1,5 +1,9 @@
 package characters
 
+import (
+	"github.com/fatih/color"
+)
+
 // Character defines the info of a character
 type Character struct {
 	Name             string  `json:"name"`
@@ -29,6 +33,14 @@ func (character *Character) HasProfileImage() bool {
 }
 
 // ShowInfo shows the info of the character
-func (character *Character) ShowInfo() {
-
+func (character *Character) ShowInfo(
+	title *color.Color,
+	text *color.Color,
+) {
+	title.Println(character.Name)
+	text.Printf(
+		"PhontName: %s\n",
+		character.PhontName,
+	)
+	text.Println(character.Description)
 }
