@@ -4,4 +4,7 @@ docs:
     - title: "About This Project"
       url: /
 - title: Script
-  url: /script/
+  description: "The script that can generate audios or subtitle files"
+  children:
+    - title: "About"
+      url: /script/
