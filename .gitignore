@@ -22,6 +22,7 @@ build/
 # Code coverage profiles and other test artifacts
 *.out
 coverage.*
+!/.github/workflows/coverage.yaml
 *.coverprofile
 profile.cov
 
@@ -43,3 +44,5 @@ third_party/*
 
 # Runtime I/O (phonts, wav, result, data, examples)
 runtime/
+
+coverage

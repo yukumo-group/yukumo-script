@@ -1,4 +1,4 @@
-name: Go Test Workflow
+name: Go Lint
 
 on: [push, pull_request]
 
