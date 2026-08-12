@@ -10,8 +10,6 @@ docs:
       url: /script/
     - title: "Introduction"
       url: /script/introduction
-    - title: "Front Matter"
-      children:
-      - title: "Introduction"
-        url: /script/frontMatter/introduction
+    - title: "Front Matter Introduction"
+      url: /script/frontMatter/introduction
     - title: "Body Matter"
