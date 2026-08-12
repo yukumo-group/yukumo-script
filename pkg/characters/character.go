@@ -37,10 +37,10 @@ func (character *Character) ShowInfo(
 	title *color.Color,
 	text *color.Color,
 ) {
-	title.Println(character.Name)
-	text.Printf(
+	_, _ = title.Println(character.Name)
+	_, _ = text.Printf(
 		"PhontName: %s\n",
 		character.PhontName,
 	)
-	text.Println(character.Description)
+	_, _ = text.Println(character.Description)
 }
