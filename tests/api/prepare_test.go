@@ -12,16 +12,21 @@ import (
 
 func TestPrepareGenerateByPhont(t *testing.T) {
 	phont := "prep_phont_" + filepath.Base(t.TempDir())
-	phontsmanager.PhontNameToFileName.SetKV(phont, phont+".phont")
+	phontsmanager.PhontNameToFileName.SetKV(
+		phont,
+		phont+".phont",
+	)
 
 	taskName := "prep_task_" + filepath.Base(t.TempDir())
-	task, err := api.PrepareGenerateByPhont(api.GenerateByPhontParams{
-		TaskName:  taskName,
-		Text:      "hello",
-		Language:  language.English.ToInt(),
-		Speed:     100,
-		PhontName: phont,
-	})
+	task, err := api.PrepareGenerateByPhont(
+		api.NewGenerateByPhontParams(
+			taskName,
+			"hello",
+			language.English.ToInt(),
+			100,
+			phont,
+		),
+	)
 	if err != nil {
 		t.Fatalf("PrepareGenerateByPhont: %v", err)
 	}
@@ -49,35 +54,40 @@ func TestPrepareGenerateByPhontErrors(t *testing.T) {
 		t.Fatalf("seed NewTask: %v", err)
 	}
 
-	_, err := api.PrepareGenerateByPhont(api.GenerateByPhontParams{
-		TaskName:  existing,
-		Text:      "hi",
-		Language:  language.English.ToInt(),
-		Speed:     100,
-		PhontName: phont,
-	})
+	_, err := api.PrepareGenerateByPhont(
+		api.NewGenerateByPhontParams(
+			existing,
+			"hi",
+			language.English.ToInt(),
+			100,
+			phont,
+		),
+	)
 	if err == nil {
 		t.Fatal("duplicate task: want error")
 	}
 
-	_, err = api.PrepareGenerateByPhont(api.GenerateByPhontParams{
-		TaskName:  "fresh_" + filepath.Base(dir),
-		Text:      "hi",
-		Language:  language.English.ToInt(),
-		Speed:     100,
-		PhontName: "no_such_phont_xyz",
-	})
+	_, err = api.PrepareGenerateByPhont(
+		api.NewGenerateByPhontParams(
+			"fresh_"+filepath.Base(dir),
+			"hi",
+			language.English.ToInt(),
+			100,
+			"no_such_phont_xyz",
+		),
+	)
 	if err == nil {
 		t.Fatal("missing phont: want error")
 	}
 
-	_, err = api.PrepareGenerateByPhont(api.GenerateByPhontParams{
-		TaskName:  "lang_" + filepath.Base(dir),
-		Text:      "hi",
-		Language:  language.Chinese.ToInt(),
-		Speed:     100,
-		PhontName: phont,
-	})
+	_, err = api.PrepareGenerateByPhont(api.NewGenerateByPhontParams(
+		"lang_"+filepath.Base(dir),
+		"hi",
+		language.Chinese.ToInt(),
+		100,
+		phont,
+	),
+	)
 	if err == nil {
 		t.Fatal("unsupported language: want error")
 	}
