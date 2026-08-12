@@ -81,7 +81,7 @@ generateByFile allows you to generate yukumo audio through phont file directly
 			ProcessError(errGenerate)
 			return
 		}
-		title.Printf(
+		_, _ = title.Printf(
 			"File saved at %s",
 			result.ResultFile,
 		)
