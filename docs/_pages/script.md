@@ -1,5 +1,4 @@
 ---
-title: "About the Script"
 permalink: /script/
 ---
 
