@@ -1,4 +1,7 @@
-- name: About This Project
-  link: /
-- name: About Script
-  link: /script/
+docs:
+- title: Getting Started
+  children:
+    - title: "About This Project"
+      url: /
+- title: Script
+  url: /script/
