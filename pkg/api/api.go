@@ -45,7 +45,7 @@ func Init() error {
 }
 
 // GenerateByPhont converts text, generates a wav via AquesTalk2, and registers the task.
-func GenerateByPhont(params GenerateByPhontParams) (*GenerateByPhontResult, error) {
+func GenerateByPhont(params *GenerateByPhontParams) (*GenerateByPhontResult, error) {
 	task, err := PrepareGenerateByPhont(params)
 	if err != nil {
 		return nil, err
@@ -72,6 +72,7 @@ func GenerateByPhont(params GenerateByPhontParams) (*GenerateByPhontResult, erro
 
 // InitRuntimeDirs creates the runtime directories used by CLI and clib.
 func InitRuntimeDirs() {
+	utils.InitializeDirectory(utils.RuntimeDir)
 	utils.InitializeDirectory(utils.PhontsDir)
 	utils.InitializeDirectory(utils.ResultDir)
 	utils.InitializeDirectory(utils.WavsDir)
@@ -106,23 +107,8 @@ func ListTasks() []string {
 	return slices.Collect(maps.Keys(singlesentence.Manager.GetAllTasks()))
 }
 
-// GenerateByPhontParams holds inputs for GenerateByPhont.
-type GenerateByPhontParams struct {
-	TaskName  string
-	Text      string
-	Language  int
-	Speed     int
-	PhontName string
-}
-
-// GenerateByPhontResult holds outputs from a successful generation.
-type GenerateByPhontResult struct {
-	ResultFile string
-	TaskFile   string
-}
-
 // PrepareGenerateByPhont validates inputs and creates a task without generating audio.
-func PrepareGenerateByPhont(params GenerateByPhontParams) (*singlesentence.Task, error) {
+func PrepareGenerateByPhont(params *GenerateByPhontParams) (*singlesentence.Task, error) {
 	if singlesentence.Manager.HasTask(params.TaskName) {
 		return nil, fmt.Errorf("task %s already exists", params.TaskName)
 	}

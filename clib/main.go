@@ -93,13 +93,15 @@ func YukumoGenerateByPhont(
 	if outResultFile != nil {
 		*outResultFile = nil
 	}
-	result, err := api.GenerateByPhont(api.GenerateByPhontParams{
-		TaskName:  C.GoString(taskName),
-		Text:      C.GoString(text),
-		Language:  int(language),
-		Speed:     int(speed),
-		PhontName: C.GoString(phontName),
-	})
+	result, err := api.GenerateByPhont(
+		api.NewGenerateByPhontParams(
+			C.GoString(taskName),
+			C.GoString(text),
+			int(language),
+			int(speed),
+			C.GoString(phontName),
+		),
+	)
 	if err != nil {
 		return errMessage(1, err)
 	}

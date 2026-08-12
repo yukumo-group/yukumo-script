@@ -1,6 +1,8 @@
 package utils
 
 const (
+	// RuntimeDir defines the directory to store the file generated when running
+	RuntimeDir string = "runtime"
 	// ExampleDir defines the directory to store the example audios
 	ExampleDir string = "runtime/examples"
 	// PhontsDir defines the directory to store the phont files
