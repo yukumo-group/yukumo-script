@@ -28,7 +28,13 @@ jobs:
         run: go mod download
 
       - name: Run tests
-        run: go test -coverprofile=coverage.txt ./...
+        # tests/ are external packages (*_test); -coverpkg is required to attribute
+        # coverage to the production packages they exercise (see just coverage).
+        run: >
+          go test -tags "test noaudio"
+          -coverpkg=./pkg/language/...,./pkg/utils/...,./pkg/characters,./pkg/phontsmanager,./pkg/api,./pkg/generator/tasks/singlesentence,./pkg/example
+          -coverprofile=coverage.txt
+          ./tests/...
         env:
           CGO_ENABLED: "1"
 
