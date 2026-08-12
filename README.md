@@ -39,8 +39,8 @@ Cross linux/macOS builds use [Zig](https://ziglang.org/) (`ZIG=zig`). Windows 32
 Or with plain Go (host only):
 
 ```bash
-go build -o dist/cli/win64/yukumo.exe ./cmd/yukumo
-go build -tags clib -buildmode=c-shared -o dist/clib/win64/yukumo.dll ./clib
+go build -trimpath -o dist/cli/win64/yukumo.exe ./cmd/yukumo
+go build -trimpath -tags clib -buildmode=c-shared -o dist/clib/win64/yukumo.dll ./clib
 ```
 
 ### Prerequisites (AquesTalk2)
