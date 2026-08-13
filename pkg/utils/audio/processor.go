@@ -1,6 +1,11 @@
 package audio
 
 import (
+	"bytes"
+	"os"
+
+	"github.com/go-audio/wav"
+	"github.com/jonchammer/audio-io/wave"
 	"github.com/zeozeozeo/gomplerate"
 )
 
@@ -21,6 +26,61 @@ func ResampleWAV(
 	}
 	resampledData := resampler.ResampleInt16(data)
 	return resampledData, nil
+}
+
+// UpdateResampledFile updates a file
+func UpdateResampledFile(
+	wavFileName string,
+	targetSampleRate int,
+) error {
+	// Read wav data
+	wavBytes, errReadWavFile := os.ReadFile(wavFileName)
+	if errReadWavFile != nil {
+		return errReadWavFile
+	}
+	wavReader := bytes.NewReader(wavBytes)
+	wavDecoder := wav.NewDecoder(wavReader)
+	wavBuffer, errDecode := wavDecoder.FullPCMBuffer()
+	if errDecode != nil {
+		return errDecode
+	}
+	// Convert audio data to int16
+	decodedData := make([]int16, len(wavBuffer.Data))
+	for i, data := range wavBuffer.Data {
+		decodedData[i] = int16(data)
+	}
+	resampledDecodedData, errResample := ResampleWAV(
+		decodedData,
+		wavBuffer.Format.NumChannels,
+		wavBuffer.Format.SampleRate,
+		targetSampleRate,
+	)
+	if errResample != nil {
+		return errResample
+	}
+	// Open file
+	file, errOpenFile := os.Open(wavFileName)
+	if errOpenFile != nil {
+		return errOpenFile
+	}
+	// Write
+	writer, errCreateWriter := wave.NewWriter(
+		file,
+		wave.SampleTypeInt16,
+		uint32(wavBuffer.Format.SampleRate),
+		wave.WithChannelCount(
+			uint16(wavBuffer.Format.NumChannels),
+		),
+	)
+	if errCreateWriter != nil {
+		return errCreateWriter
+	}
+	flushWriter := func() {
+		writer.Flush()
+	}
+	defer flushWriter()
+	errWrite := writer.WriteInt16(resampledDecodedData)
+	return errWrite
 }
 
 // UpdateChannelNumberTo2 updates the data to two channels.
