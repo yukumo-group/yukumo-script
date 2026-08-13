@@ -31,7 +31,7 @@ func AddCharacter(
 	)
 	if phontExists {
 		return fmt.Errorf(
-			"Phont %s does not exists",
+			"phont %s does not exists",
 			phontName,
 		)
 	}
@@ -56,14 +56,14 @@ func GetPhontNameByCharacterName(
 	thisCharacter, exists := allCharacters[characterName]
 	if !exists {
 		return "", fmt.Errorf(
-			"Character with name %s does not exists",
+			"character with name %s does not exists",
 			characterName,
 		)
 	}
 	phontName := thisCharacter.PhontName
 	if !IsPhontExists(phontName) {
 		return "", fmt.Errorf(
-			"Phont with name %s does not exists",
+			"phont with name %s does not exists",
 			phontName,
 		)
 	}
