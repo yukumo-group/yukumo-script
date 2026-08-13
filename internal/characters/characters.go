@@ -80,6 +80,23 @@ func (characters *Characters) ChangeCharacter(
 	)
 }
 
+// DeleteCharacter deletes a character
+func (characters *Characters) DeleteCharacter(
+	characterName string,
+) error {
+	characters.Lock()
+	defer characters.Unlock()
+	_, exists := characters.Data[characterName]
+	if !exists {
+		return fmt.Errorf(
+			"%s character does not exists",
+			characterName,
+		)
+	}
+	delete(characters.Data, characterName)
+	return nil
+}
+
 // saveTo saves to the target file
 func (characters *Characters) saveTo(target string) error {
 	characters.RLock()

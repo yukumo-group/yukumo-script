@@ -107,3 +107,12 @@ func GetPhontNameByCharacterName(
 	}
 	return phontName, nil
 }
+
+// DeleteCharacter deletes certain character
+func DeleteCharacter(
+	characterName string,
+) error {
+	return characters.CharacterList.DeleteCharacter(
+		characterName,
+	)
+}
