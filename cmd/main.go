@@ -56,6 +56,9 @@ func init() {
 		panic(err)
 	}
 	// Add subcommands
+	charactersCMD.AddCommand(
+		addCharacterCMD,
+	)
 	phontsCMD.AddCommand(
 		showAvailablePhontsCMD,
 		playExampleCMD,
@@ -70,6 +73,7 @@ func init() {
 		phontsCMD,
 		generationCMD,
 		tasksCMD,
+		charactersCMD,
 	)
 }
 

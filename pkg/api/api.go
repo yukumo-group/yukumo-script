@@ -9,9 +9,12 @@ import (
 	"github.com/yukumo-group/yukumo-script/pkg/utils"
 )
 
+func init() {
+	InitializePathesByConst()
+}
+
 // Init initializes runtime dirs, examples, phont map, characters, and tasks.
 func Init() error {
-	InitializePathesByConst()
 	InitRuntimeDirs()
 
 	dir, err := phontsmanager.GetAllPhonts(filePathForProg.PhontsDir)
