@@ -5,7 +5,6 @@ import (
 	"slices"
 
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
-	"github.com/yukumo-group/yukumo-script/pkg/utils"
 )
 
 // GetAllTasks gets all the tasks
@@ -20,7 +19,7 @@ func ListTasks() []string {
 
 // RegisterGeneratedTask saves task metadata and registers it in the manager.
 func RegisterGeneratedTask(task *singlesentence.Task) (string, error) {
-	taskFile, err := task.SaveFile(utils.SingleSentenceDir)
+	taskFile, err := task.SaveFile(filePathForProg.SingleSentenceDir)
 	if err != nil {
 		return "", err
 	}
@@ -28,4 +27,13 @@ func RegisterGeneratedTask(task *singlesentence.Task) (string, error) {
 		return "", err
 	}
 	return taskFile, nil
+}
+
+// InitTaskManager configures and loads the single-sentence task manager.
+func InitTaskManager() error {
+	singlesentence.Manager.SetTargetFile(
+		filePathForProg.TaskDir,
+		filePathForProg.SingleSentenceTasksFile,
+	)
+	return singlesentence.Manager.ReadData()
 }

@@ -1,5 +1,8 @@
 package api
 
+// filePathForProg stores the file path needed
+var filePathForProg = FilePathes{}
+
 // GenerateByPhontParams holds inputs for GenerateByPhont.
 type GenerateByPhontParams struct {
 	TaskName  string
@@ -30,4 +33,21 @@ func NewGenerateByPhontParams(
 		Speed:     speed,
 		PhontName: phontName,
 	}
+}
+
+// FilePathes stores the pathes needed by the program
+type FilePathes struct {
+	RuntimeDir              string
+	ExampleDir              string
+	PhontsDir               string
+	ResultDir               string
+	WavsDir                 string
+	DataDir                 string
+	ImagesDir               string
+	TaskDir                 string
+	SingleSentenceDir       string
+	SingleSentenceTasksFile string
+	ConfDir                 string
+	CharactersFile          string
+	EnglishTexts            string
 }

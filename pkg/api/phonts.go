@@ -2,8 +2,12 @@ package api
 
 import (
 	"github.com/yukumo-group/yukumo-script/internal/phontsmanager"
-	"github.com/yukumo-group/yukumo-script/pkg/utils"
 )
+
+// InitPhontMap loads phont name → file mappings from PhontsDir.
+func InitPhontMap() error {
+	return phontsmanager.InitializePhontNameToFileName(filePathForProg.PhontsDir)
+}
 
 // ListPhonts returns available phont names.
 func ListPhonts() []string {
@@ -12,5 +16,5 @@ func ListPhonts() []string {
 
 // PhontPath resolves a phont name to its file path under PhontsDir.
 func PhontPath(phontName string) (string, error) {
-	return phontsmanager.GetPhontFile(utils.PhontsDir, phontName)
+	return phontsmanager.GetPhontFile(filePathForProg.PhontsDir, phontName)
 }

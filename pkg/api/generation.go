@@ -5,7 +5,6 @@ import (
 
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
 	"github.com/yukumo-group/yukumo-script/internal/phontsmanager"
-	"github.com/yukumo-group/yukumo-script/pkg/utils"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/language"
 )
 
@@ -19,7 +18,7 @@ func GenerateByPhont(params *GenerateByPhontParams) (*GenerateByPhontResult, err
 	if err != nil {
 		return nil, err
 	}
-	if err := task.Generate(phontPath, utils.ResultDir); err != nil {
+	if err := task.Generate(phontPath, filePathForProg.ResultDir); err != nil {
 		return nil, err
 	}
 	if task.ResultFile == nil {
