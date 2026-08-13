@@ -68,3 +68,32 @@ func InitializePathesByConst() {
 	filePathForProg.CharactersFile = utils.CharactersFile
 	filePathForProg.ConfDir = utils.ConfDir
 }
+
+// InitializePathesByCostum allows the user to use their own file structure
+func InitializePathesByCostum(
+	runtimeDir string,
+	phontsDir string,
+	resultDir string,
+	wavsDir string,
+	dataDir string,
+	exampleDir string,
+	imagesDir string,
+	taskDir string,
+	singleSentenceDir string,
+	singleSentenceTasksFile string,
+	charactersFile string,
+	confDir string,
+) {
+	filePathForProg.RuntimeDir = runtimeDir
+	filePathForProg.PhontsDir = phontsDir
+	filePathForProg.ResultDir = resultDir
+	filePathForProg.WavsDir = wavsDir
+	filePathForProg.DataDir = dataDir
+	filePathForProg.ExampleDir = exampleDir
+	filePathForProg.ImagesDir = imagesDir
+	filePathForProg.TaskDir = taskDir
+	filePathForProg.SingleSentenceDir = singleSentenceDir
+	filePathForProg.SingleSentenceTasksFile = singleSentenceTasksFile
+	filePathForProg.CharactersFile = charactersFile
+	filePathForProg.ConfDir = confDir
+}

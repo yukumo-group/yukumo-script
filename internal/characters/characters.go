@@ -54,7 +54,29 @@ func (characters *Characters) AddCharacter(
 		return nil
 	}
 	return errors.New(
-		"this characterID already exists",
+		"character cannot be nil",
+	)
+}
+
+// UpdateCharacter change the info inside a character
+func (characters *Characters) ChangeCharacter(
+	newCharacter *Character,
+) error {
+	if newCharacter != nil {
+		characters.Lock()
+		defer characters.Unlock()
+		_, exists := characters.Data[newCharacter.Name]
+		if !exists {
+			return fmt.Errorf(
+				"character with character ID %s already exists",
+				newCharacter.Name,
+			)
+		}
+		characters.Data[newCharacter.Name] = newCharacter
+		return nil
+	}
+	return errors.New(
+		"character cannot be nil",
 	)
 }
 
