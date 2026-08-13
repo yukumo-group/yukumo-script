@@ -76,7 +76,7 @@ func UpdateResampledFile(
 		return errCreateWriter
 	}
 	flushWriter := func() {
-		writer.Flush()
+		_ = writer.Flush()
 	}
 	defer flushWriter()
 	errWrite := writer.WriteInt16(resampledDecodedData)
