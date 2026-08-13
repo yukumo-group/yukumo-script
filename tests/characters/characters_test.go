@@ -58,7 +58,7 @@ func TestCharactersCRUDAndJSON(t *testing.T) {
 		t.Fatalf("ReadData load: %v", err)
 	}
 	data := loaded.GetData()
-	got, ok := data["id1"]
+	got, ok := data["Yukumo"]
 	if !ok || got.Name != "Yukumo" || got.PhontName != "phont1" {
 		t.Fatalf("loaded id1 = %+v, ok=%v", got, ok)
 	}
