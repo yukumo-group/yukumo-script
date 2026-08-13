@@ -26,7 +26,10 @@ func GetAudioInfo(
 	if errDecode != nil {
 		return nil, errDecode
 	}
-	defer streamer.Close()
+	closeStreamer := func() {
+		_ = streamer.Close()
+	}
+	defer closeStreamer()
 	totalSamples := streamer.Len()
 	sampleRate := format.SampleRate
 	length := float64(totalSamples) / float64(sampleRate)
