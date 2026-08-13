@@ -60,6 +60,6 @@ func TestCharactersCRUDAndJSON(t *testing.T) {
 	data := loaded.GetData()
 	got, ok := data["Yukumo"]
 	if !ok || got.Name != "Yukumo" || got.PhontName != "phont1" {
-		t.Fatalf("loaded id1 = %+v, ok=%v", got, ok)
+		t.Fatalf("loaded Yukumo = %+v, ok=%v", got, ok)
 	}
 }
