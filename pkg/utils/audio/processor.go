@@ -67,7 +67,7 @@ func UpdateResampledFile(
 	writer, errCreateWriter := wave.NewWriter(
 		file,
 		wave.SampleTypeInt16,
-		uint32(wavBuffer.Format.SampleRate),
+		uint32(targetSampleRate),
 		wave.WithChannelCount(
 			uint16(wavBuffer.Format.NumChannels),
 		),
