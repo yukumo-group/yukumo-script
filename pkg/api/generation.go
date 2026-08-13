@@ -44,7 +44,7 @@ func GenerateByPhont(
 	}
 	if task.PhontName == nil {
 		return nil, errors.New(
-			"Phont name cannot be nil when generating",
+			"phont name cannot be nil when generating",
 		)
 	}
 	phontPath, err := PhontPath(*task.PhontName)
@@ -105,7 +105,7 @@ func GenerateByCharacter(
 	}
 	if task.CharacterID == nil {
 		return nil, errors.New(
-			"The character ID (character name) cannot be nil",
+			"the character ID (character name) cannot be nil",
 		)
 	}
 	phontName, errGetPhontName := GetPhontNameByCharacterName(
