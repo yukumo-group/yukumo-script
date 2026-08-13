@@ -45,7 +45,11 @@ func AddCharacter(
 	errAddCharacter := characters.CharacterList.AddCharacter(
 		newCharacter,
 	)
-	return errAddCharacter
+	if errAddCharacter != nil {
+		return errAddCharacter
+	}
+	errSaveData := characters.CharacterList.SaveData()
+	return errSaveData
 }
 
 // ChangeCharacter changes certain character
@@ -72,10 +76,14 @@ func ChangeCharacter(
 		description,
 		profileImagePath,
 	)
-	errAddCharacter := characters.CharacterList.ChangeCharacter(
+	errChangeCharacter := characters.CharacterList.ChangeCharacter(
 		newCharacter,
 	)
-	return errAddCharacter
+	if errChangeCharacter != nil {
+		return errChangeCharacter
+	}
+	errSaveData := characters.CharacterList.SaveData()
+	return errSaveData
 }
 
 // GetPhontNameByCharacterName gets phont name by character name

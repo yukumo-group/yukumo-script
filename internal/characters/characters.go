@@ -68,7 +68,7 @@ func (characters *Characters) ChangeCharacter(
 		_, exists := characters.Data[newCharacter.Name]
 		if !exists {
 			return fmt.Errorf(
-				"character with character ID %s already exists",
+				"character with character ID %s does not exists",
 				newCharacter.Name,
 			)
 		}
