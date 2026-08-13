@@ -18,3 +18,9 @@ func ListPhonts() []string {
 func PhontPath(phontName string) (string, error) {
 	return phontsmanager.GetPhontFile(filePathForProg.PhontsDir, phontName)
 }
+
+// IsPhontExists checks if phont exists
+func IsPhontExists(phontName string) bool {
+	_, exists := phontsmanager.PhontNameToFileName.GetValue(phontName)
+	return exists
+}

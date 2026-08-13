@@ -38,13 +38,13 @@ func TestCharactersCRUDAndJSON(t *testing.T) {
 	}
 
 	ch := characters.NewCharacter("Yukumo", "phont1", "hello", nil)
-	if err := store.AddCharacter("id1", ch); err != nil {
+	if err := store.AddCharacter(ch); err != nil {
 		t.Fatalf("AddCharacter: %v", err)
 	}
-	if err := store.AddCharacter("id1", ch); err == nil {
+	if err := store.AddCharacter(ch); err == nil {
 		t.Fatal("AddCharacter duplicate: want error")
 	}
-	if err := store.AddCharacter("id2", nil); err == nil {
+	if err := store.AddCharacter(nil); err == nil {
 		t.Fatal("AddCharacter nil: want error")
 	}
 

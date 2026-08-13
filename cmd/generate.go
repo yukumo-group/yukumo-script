@@ -63,21 +63,9 @@ generateByFile allows you to generate yukumo audio through phont file directly
 			SingleSentenceTaskSpeedByFile,
 			phontName,
 		)
-		newTask, errPrepareGeneration := api.PrepareGenerateByPhont(
-			newGenerationParam,
-		)
-		if errPrepareGeneration != nil {
-			ProcessError(errPrepareGeneration)
-			return
-		}
 		result, errGenerate := api.GenerateByPhont(newGenerationParam)
 		if errGenerate != nil {
 			ProcessError(errGenerate)
-			return
-		}
-		_, errRegisterGeneratedTask := api.RegisterGeneratedTask(newTask)
-		if errRegisterGeneratedTask != nil {
-			ProcessError(errRegisterGeneratedTask)
 			return
 		}
 		_, _ = title.Printf(

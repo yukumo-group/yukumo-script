@@ -12,8 +12,17 @@ type GenerateByPhontParams struct {
 	PhontName string
 }
 
-// GenerateByPhontResult holds outputs from a successful generation.
-type GenerateByPhontResult struct {
+// GenerateByCharacterParams holds inputs for GenerateByPhont.
+type GenerateByCharacterParams struct {
+	TaskName      string
+	Text          string
+	Language      int
+	Speed         int
+	CharacterName string
+}
+
+// GenerateResult holds outputs from a successful generation.
+type GenerateResult struct {
 	ResultFile string
 	TaskFile   string
 }
@@ -32,6 +41,23 @@ func NewGenerateByPhontParams(
 		Language:  language,
 		Speed:     speed,
 		PhontName: phontName,
+	}
+}
+
+// NewGenerateByCharacterParams creates new GenerateByPhontParams
+func NewGenerateByCharacterParams(
+	taskName string,
+	text string,
+	language int,
+	speed int,
+	characterName string,
+) *GenerateByCharacterParams {
+	return &GenerateByCharacterParams{
+		TaskName:      taskName,
+		Text:          text,
+		Language:      language,
+		Speed:         speed,
+		CharacterName: characterName,
 	}
 }
 
