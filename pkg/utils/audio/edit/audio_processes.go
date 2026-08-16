@@ -1,4 +1,4 @@
-package audio
+package edit
 
 // Processes stores the processes that can be done on audio files
 type Process string

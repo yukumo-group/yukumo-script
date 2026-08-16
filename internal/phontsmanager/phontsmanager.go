@@ -25,11 +25,11 @@ func InitializePhontNameToFileName(phontsDir string) error {
 	}
 	for _, phont := range phonts {
 		name := phont.Name()
-		extension := filepath.Ext(name)
-		if extension == ".phont" {
+		suffix := filepath.Ext(name)
+		if suffix == ".phont" {
 			phontName := strings.TrimSuffix(
 				name,
-				extension,
+				suffix,
 			)
 			PhontNameToFileName.SetKV(phontName, name)
 		}

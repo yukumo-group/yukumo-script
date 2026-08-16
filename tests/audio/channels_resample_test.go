@@ -6,12 +6,13 @@ import (
 	"testing"
 
 	"github.com/yukumo-group/yukumo-script/pkg/utils/audio"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/audio/edit"
 )
 
 func TestUpdateChannelNumberTo2(t *testing.T) {
 	t.Parallel()
 	in := []int16{1, 2, 3}
-	got := audio.UpdateChannelNumberTo2(in)
+	got := edit.UpdateChannelNumberTo2(in)
 	want := []int16{1, 1, 2, 2, 3, 3}
 	if len(got) != len(want) {
 		t.Fatalf("len = %d, want %d", len(got), len(want))
@@ -30,7 +31,7 @@ func TestResampleWAV(t *testing.T) {
 	for i := range in {
 		in[i] = int16(i)
 	}
-	out, err := audio.ResampleWAV(in, 1, 8000, 16000)
+	out, err := edit.ResampleWAV(in, 1, 8000, 16000)
 	if err != nil {
 		t.Fatalf("ResampleWAV: %v", err)
 	}

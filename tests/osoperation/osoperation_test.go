@@ -85,3 +85,59 @@ func TestCopyFile(t *testing.T) {
 		t.Fatal("CopyFile missing: want error")
 	}
 }
+
+func TestImageSupported(
+	t *testing.T,
+) {
+	suffix1, supported1 := osoperation.IsSuffixSupported(
+		"abcdefg",
+		osoperation.SupportedImageSuffix,
+	)
+	if supported1 {
+		t.Errorf(
+			"%s should not be supported. ",
+			"abcdefg",
+		)
+	}
+	if suffix1 != "" {
+		t.Errorf(
+			"expected %s, got %s",
+			"",
+			suffix1,
+		)
+	}
+	suffix2, supported2 := osoperation.IsSuffixSupported(
+		"abc.png",
+		osoperation.SupportedImageSuffix,
+	)
+	if !supported2 {
+		t.Errorf(
+			"%s should be supported. ",
+			"abc.png",
+		)
+	}
+	if suffix2 != ".png" {
+		t.Errorf(
+			"expected %s, got %s",
+			"png",
+			suffix2,
+		)
+	}
+	suffix3, supported3 := osoperation.IsSuffixSupported(
+		"abc.go",
+		osoperation.SupportedImageSuffix,
+	)
+	if supported3 {
+		t.Errorf(
+			"%s should not be supported. ",
+			"abc.go",
+		)
+	}
+	if suffix3 != ".go" {
+		t.Errorf(
+			"expected %s, got %s",
+			".go",
+			suffix3,
+		)
+	}
+}

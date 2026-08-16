@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/yukumo-group/yukumo-script/pkg/utils/osoperation"
 	"github.com/braheezy/shine-mp3/pkg/mp3"
 	"github.com/go-audio/wav"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/audio/edit"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/osoperation"
 )
 
 // wavToMp3TargetSampleRate is the sample rate (Hz) that WAV data is resampled
@@ -40,8 +41,8 @@ func WAV2MP3(
 	for i, data := range wavBuffer.Data {
 		decodedData[i] = int16(data)
 	}
-	decodedData = UpdateChannelNumberTo2(decodedData)
-	resampledDecodedData, errResample := ResampleWAV(
+	decodedData = edit.UpdateChannelNumberTo2(decodedData)
+	resampledDecodedData, errResample := edit.ResampleWAV(
 		decodedData,
 		2,
 		wavBuffer.Format.SampleRate,
