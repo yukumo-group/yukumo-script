@@ -25,13 +25,12 @@ type Task struct {
 // NewEmptyTask creates new empty task.
 // Length is in seconds.
 func NewEmptyTask(
-	length float64,
 	data *audio.Info,
 ) *Task {
 	id := uuid.NewString()
 	return &Task{
 		ID:          id,
-		Length:      length,
+		Length:      data.Length,
 		SampleRate:  data.SampleRate,
 		CreatedTime: time.Now(),
 		NumChannels: data.ChannelNumbers,

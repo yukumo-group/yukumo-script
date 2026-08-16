@@ -1,5 +1,9 @@
 package api
 
+import (
+	"github.com/yukumo-group/yukumo-script/pkg/utils/audio"
+)
+
 // filePathForProg stores the file path needed
 var filePathForProg = FilePathes{}
 
@@ -59,6 +63,11 @@ func NewGenerateByCharacterParams(
 		Speed:         speed,
 		CharacterName: characterName,
 	}
+}
+
+// GenerateEmptyParams defines the parameters for generating empty audio
+type GenerateEmptyParams struct {
+	AudioInfo *audio.Info
 }
 
 // FilePathes stores the pathes needed by the program
