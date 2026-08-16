@@ -24,7 +24,7 @@ func SaveFileAsImages(
 	)
 	if !supported {
 		return fmt.Errorf(
-			"The file %s's suffix does not supported",
+			"the file %s's suffix does not supported",
 			originalFilePath,
 		)
 	}

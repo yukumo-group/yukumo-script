@@ -62,9 +62,12 @@ func TestCharactersCRUDAndJSON(t *testing.T) {
 	if !ok || got.Name != "Yukumo" || got.PhontName != "phont1" {
 		t.Fatalf("loaded Yukumo = %+v, ok=%v", got, ok)
 	}
-	loaded.DeleteCharacter("Yukumo")
+	errDelete := loaded.DeleteCharacter("Yukumo")
+	if errDelete != nil {
+		t.Error(errDelete)
+	}
 	data = loaded.GetData()
-	got, ok = data["Yukumo"]
+	_, ok = data["Yukumo"]
 	if ok {
 		t.Errorf(
 			"%s expected to get deleted",
