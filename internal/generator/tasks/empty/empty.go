@@ -33,7 +33,7 @@ func NewEmptyTask(
 		Length:      data.Length,
 		SampleRate:  data.SampleRate,
 		CreatedTime: time.Now(),
-		NumChannels: data.ChannelNumbers,
+		NumChannels: data.ChannelNumber,
 		Precision:   data.Precision,
 	}
 }

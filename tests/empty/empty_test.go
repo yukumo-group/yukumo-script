@@ -11,10 +11,10 @@ import (
 func TestCreateEmptyTask(t *testing.T) {
 	t.Parallel()
 	testAudioInfo := &audio.Info{
-		ChannelNumbers: 1,
-		SampleRate:     8000,
-		Length:         1.5,
-		Precision:      2,
+		ChannelNumber: 1,
+		SampleRate:    8000,
+		Length:        1.5,
+		Precision:     2,
 	}
 	newTask := empty.NewEmptyTask(
 		testAudioInfo,

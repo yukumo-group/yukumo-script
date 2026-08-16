@@ -8,10 +8,10 @@ import (
 
 // Info reveals the information about the audio
 type Info struct {
-	ChannelNumbers int
-	SampleRate     int
-	Length         float64 // length in seconds
-	Precision      int
+	ChannelNumber int
+	SampleRate    int
+	Length        float64 // length in seconds
+	Precision     int
 }
 
 // GetAudioInfo gets the information of an audio
@@ -34,9 +34,9 @@ func GetAudioInfo(
 	sampleRate := format.SampleRate
 	length := float64(totalSamples) / float64(sampleRate)
 	return &Info{
-		ChannelNumbers: format.NumChannels,
-		SampleRate:     int(sampleRate),
-		Length:         length,
-		Precision:      format.Precision,
+		ChannelNumber: format.NumChannels,
+		SampleRate:    int(sampleRate),
+		Length:        length,
+		Precision:     format.Precision,
 	}, nil
 }
