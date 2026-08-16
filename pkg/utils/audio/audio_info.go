@@ -3,7 +3,7 @@ package audio
 import (
 	"os"
 
-	"github.com/faiface/beep/wav"
+	"github.com/unitoftime/beep/wav"
 )
 
 // Info reveals the information about the audio
@@ -11,7 +11,7 @@ type Info struct {
 	ChannelNumbers int
 	SampleRate     int
 	Length         float64 // length in seconds
-	BitDepth       int
+	Precision      int
 }
 
 // GetAudioInfo gets the information of an audio
@@ -37,6 +37,6 @@ func GetAudioInfo(
 		ChannelNumbers: format.NumChannels,
 		SampleRate:     int(sampleRate),
 		Length:         length,
-		BitDepth:       format.Precision,
+		Precision:      format.Precision,
 	}, nil
 }

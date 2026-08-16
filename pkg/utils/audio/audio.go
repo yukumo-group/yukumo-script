@@ -6,9 +6,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/faiface/beep"
-	"github.com/faiface/beep/speaker"
-	"github.com/faiface/beep/wav"
+	"github.com/unitoftime/beep"
+	"github.com/unitoftime/beep/speaker"
+	"github.com/unitoftime/beep/wav"
 )
 
 // PlayWAV plays the wav file

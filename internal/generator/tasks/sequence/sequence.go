@@ -15,7 +15,7 @@ type Task struct {
 	ID          string                          `json:"id"`
 	CreatedTime time.Time                       `json:"createdTime"`
 	EditTime    time.Time                       `json:"editTime"`
-	AllTasks    []tasks.Task                    `json:"allTasks"`
+	AllTasks    map[int]tasks.Task              `json:"allTasks"`
 	Characters  map[string]characters.Character `json:"characters"`
 }
 
