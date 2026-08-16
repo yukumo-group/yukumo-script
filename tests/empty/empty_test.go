@@ -16,10 +16,13 @@ func TestCreateEmptyTask(t *testing.T) {
 		Length:        1.5,
 		Precision:     2,
 	}
-	newTask := empty.NewEmptyTask(
+	newTask, errNewEmptyTask := empty.NewEmptyTask(
 		1.5,
 		testAudioInfo,
 	)
+	if errNewEmptyTask != nil {
+		t.Error(errNewEmptyTask)
+	}
 	tmpDir := os.TempDir()
 	errGenerate := newTask.Generate(
 		"",

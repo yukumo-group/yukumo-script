@@ -4,7 +4,9 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/empty"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/audio"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/language"
 )
 
@@ -132,4 +134,38 @@ func GenerateByCharacter(
 		ResultFile: *task.ResultFile,
 		TaskFile:   taskFile,
 	}, nil
+}
+
+// GenerateEmpty generates empty wav file.
+// The generated audio will have the same format with the original audio.
+func GenerateEmpty(
+	length float64,
+	originalAudioPath string,
+) (*string, error) {
+	format, errGetAudioInfo := audio.GetAudioInfo(
+		originalAudioPath,
+	)
+	if errGetAudioInfo != nil {
+		return nil, errGetAudioInfo
+	}
+	newEmptyTask, errNewEmptyTask := empty.NewEmptyTask(
+		length,
+		format,
+	)
+	if errNewEmptyTask != nil {
+		return nil, errNewEmptyTask
+	}
+	errGenerate := newEmptyTask.Generate(
+		"",
+		filePathForProg.WavsDir,
+	)
+	if errGenerate != nil {
+		return nil, errGenerate
+	}
+	if newEmptyTask.ResultFile == nil {
+		return nil, errors.New(
+			"The result file is possibly not generated",
+		)
+	}
+	return newEmptyTask.ResultFile, nil
 }

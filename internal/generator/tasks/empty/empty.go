@@ -1,6 +1,7 @@
 package empty
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"time"
@@ -27,7 +28,12 @@ type Task struct {
 func NewEmptyTask(
 	length float64,
 	data *audio.Info,
-) *Task {
+) (*Task, error) {
+	if data == nil {
+		return nil, errors.New(
+			"The input data cannot be nil",
+		)
+	}
 	id := uuid.NewString()
 	return &Task{
 		ID:          id,
@@ -36,7 +42,7 @@ func NewEmptyTask(
 		CreatedTime: time.Now(),
 		NumChannels: data.ChannelNumber,
 		Precision:   data.Precision,
-	}
+	}, nil
 }
 
 // Generate generates empty audio.
