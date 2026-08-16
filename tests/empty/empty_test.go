@@ -17,6 +17,7 @@ func TestCreateEmptyTask(t *testing.T) {
 		Precision:     2,
 	}
 	newTask := empty.NewEmptyTask(
+		1.5,
 		testAudioInfo,
 	)
 	tmpDir := os.TempDir()
