@@ -12,4 +12,6 @@ docs:
       url: /script/introduction
     - title: "Front Matter Introduction"
       url: /script/frontMatter/introduction
+    - title: "Characters"
+      url: /script/characters
     - title: "Body Matter"

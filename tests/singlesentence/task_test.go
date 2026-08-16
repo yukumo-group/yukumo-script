@@ -3,6 +3,7 @@ package singlesentence_test
 import (
 	"testing"
 
+	"github.com/yukumo-group/yukumo-script/internal/generator/tasks"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
 )
 
@@ -43,5 +44,13 @@ func TestTaskSaveFileRoundTrip(t *testing.T) {
 	}
 	if loaded.PhontName == nil || *loaded.PhontName != phont {
 		t.Fatalf("loaded PhontName = %v, want %s", loaded.PhontName, phont)
+	}
+}
+
+func TestInterface(t *testing.T) {
+	var testTask interface{} = &singlesentence.Task{}
+	_, ok := testTask.(tasks.Task)
+	if !ok {
+		t.Error("singlesentence.Task does not support task interface")
 	}
 }
