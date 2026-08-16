@@ -164,7 +164,7 @@ func GenerateEmpty(
 	}
 	if newEmptyTask.ResultFile == nil {
 		return nil, errors.New(
-			"The result file is possibly not generated",
+			"the result file is possibly not generated",
 		)
 	}
 	return newEmptyTask.ResultFile, nil

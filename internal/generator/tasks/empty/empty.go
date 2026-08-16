@@ -31,7 +31,7 @@ func NewEmptyTask(
 ) (*Task, error) {
 	if data == nil {
 		return nil, errors.New(
-			"The input data cannot be nil",
+			"the input data cannot be nil",
 		)
 	}
 	id := uuid.NewString()
