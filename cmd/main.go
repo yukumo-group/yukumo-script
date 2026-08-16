@@ -46,9 +46,6 @@ func init() {
 		100,
 		"Speed of the audio(default: 100)",
 	)
-	if err := generateByFileCMD.MarkFlagRequired("name"); err != nil {
-		panic(err)
-	}
 	if err := generateByFileCMD.MarkFlagRequired("text"); err != nil {
 		panic(err)
 	}

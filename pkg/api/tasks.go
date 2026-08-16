@@ -1,8 +1,10 @@
 package api
 
 import (
+	"fmt"
 	"maps"
 	"slices"
+	"time"
 
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
 )
@@ -36,4 +38,15 @@ func InitTaskManager() error {
 		filePathForProg.SingleSentenceTasksFile,
 	)
 	return singlesentence.Manager.ReadData()
+}
+
+// RandomTaskName creates a random task name for the task name
+func RandomTaskName(
+	taskType string,
+) string {
+	return fmt.Sprintf(
+		"New_%s_Task_%d",
+		taskType,
+		time.Now().Unix(),
+	)
 }

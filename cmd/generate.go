@@ -56,8 +56,14 @@ generateByFile allows you to generate yukumo audio through phont file directly
 			ProcessError(errInput)
 			return
 		}
+		var taskName string
+		if SingleSentenceTaskNameByFile != "" {
+			taskName = api.RandomTaskName("SingleSentence")
+		} else {
+			taskName = SingleSentenceTaskNameByFile
+		}
 		newGenerationParam := api.NewGenerateByPhontParams(
-			SingleSentenceTaskNameByFile,
+			taskName,
 			SingleSentenceTaskTextByFile,
 			SingleSentenceTaskLanguageByFile,
 			SingleSentenceTaskSpeedByFile,

@@ -122,6 +122,7 @@ func (task *Task) Generate(
 		task.Text,
 	)
 	err := generator.GenerateWav()
+	task.EditTime = time.Now()
 	task.ResultFile = &fileName
 	return err
 }
