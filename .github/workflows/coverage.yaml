@@ -32,7 +32,7 @@ jobs:
         # coverage to the production packages they exercise (see just coverage).
         run: >
           go test -tags "test noaudio"
-          -coverpkg=./pkg/utils/language/...,./pkg/utils/...,./internal/characters,./internal/phontsmanager,./pkg/api,./internal/generator/tasks/singlesentence,./internal/generator/tasks/empty,./internal/example
+          -coverpkg=./pkg/...,./internal/...
           -coverprofile=coverage.txt
           ./tests/...
         env:
