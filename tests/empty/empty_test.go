@@ -4,6 +4,7 @@ import (
 	"os"
 	"testing"
 
+	"github.com/yukumo-group/yukumo-script/internal/generator/tasks"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/empty"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/audio"
 )
@@ -33,5 +34,14 @@ func TestCreateEmptyTask(t *testing.T) {
 	}
 	if newTask.ResultFile == nil {
 		t.Error("Result file should not be nil after generation")
+	}
+}
+
+func TestInterface(t *testing.T) {
+	t.Parallel()
+	var testTask interface{} = &empty.Task{}
+	_, ok := testTask.(tasks.Task)
+	if !ok {
+		t.Error("Empty task cannot suit to the task interface")
 	}
 }

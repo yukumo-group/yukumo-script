@@ -18,6 +18,7 @@ type Task struct {
 	SampleRate  int
 	Length      float64
 	CreatedTime time.Time
+	EditTime    time.Time
 	ResultFile  *string
 	NumChannels int
 	Precision   int
@@ -40,6 +41,7 @@ func NewEmptyTask(
 		Length:      length,
 		SampleRate:  data.SampleRate,
 		CreatedTime: time.Now(),
+		EditTime:    time.Now(),
 		NumChannels: data.ChannelNumber,
 		Precision:   data.Precision,
 	}, nil
@@ -52,12 +54,13 @@ func (task *Task) Generate(
 	phontPath string,
 	targetDir string,
 ) error {
+	task.EditTime = time.Now()
 	// Create file
 	targetFileDir := fmt.Sprintf(
 		"%s/empty_%s_%d.wav",
 		targetDir,
 		task.ID,
-		task.CreatedTime.Unix(),
+		task.EditTime.Unix(),
 	)
 	file, errCreateFile := os.Create(targetFileDir)
 	if errCreateFile != nil {

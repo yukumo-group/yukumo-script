@@ -13,15 +13,16 @@ import (
 
 // Task defines the task of generating a single sentence
 type Task struct {
-	ID          string    `json:"id"`
-	TaskName    string    `json:"taskName"`
-	Text        string    `json:"text"`
-	Speed       int       `json:"speed"`
-	CreateTime  time.Time `json:"createTime"`
-	EditTime    time.Time `json:"editTime"`
-	CharacterID *string   `json:"characterID"`
-	PhontName   *string   `json:"phontName"`
-	ResultFile  *string   `json:"resultFile"`
+	ID           string    `json:"id"`
+	TaskName     string    `json:"taskName"`
+	Text         string    `json:"text"`
+	OriginalText string    `json:"originalText"`
+	Speed        int       `json:"speed"`
+	CreateTime   time.Time `json:"createTime"`
+	EditTime     time.Time `json:"editTime"`
+	CharacterID  *string   `json:"characterID"`
+	PhontName    *string   `json:"phontName"`
+	ResultFile   *string   `json:"resultFile"`
 }
 
 // NewSingleSentenceTask creates new single sentence task
@@ -31,6 +32,7 @@ func NewSingleSentenceTask(
 	phontName *string,
 	speed int,
 	taskName string,
+	originalText string,
 ) (*Task, error) {
 	if phontName == nil && characterID == nil {
 		return nil, errors.New(
@@ -39,15 +41,16 @@ func NewSingleSentenceTask(
 	}
 	id := uuid.NewString()
 	return &Task{
-		ID:          id,
-		Text:        text,
-		CreateTime:  time.Now(),
-		EditTime:    time.Now(),
-		CharacterID: characterID,
-		PhontName:   phontName,
-		Speed:       speed,
-		ResultFile:  nil,
-		TaskName:    taskName,
+		ID:           id,
+		Text:         text,
+		CreateTime:   time.Now(),
+		EditTime:     time.Now(),
+		CharacterID:  characterID,
+		PhontName:    phontName,
+		Speed:        speed,
+		ResultFile:   nil,
+		TaskName:     taskName,
+		OriginalText: originalText,
 	}, nil
 }
 
@@ -108,12 +111,13 @@ func (task *Task) Generate(
 	phontPath string,
 	targetDir string,
 ) error {
+	task.EditTime = time.Now()
 	fileName := fmt.Sprintf(
 		"%s/%s_%s_%d.wav",
 		targetDir,
 		task.TaskName,
 		task.ID,
-		task.CreateTime.Unix(),
+		task.EditTime.Unix(),
 	)
 	generator := aquestalk2.NewGenerator(
 		task.Speed,
@@ -122,7 +126,9 @@ func (task *Task) Generate(
 		task.Text,
 	)
 	err := generator.GenerateWav()
-	task.EditTime = time.Now()
+	if err != nil {
+		return err
+	}
 	task.ResultFile = &fileName
-	return err
+	return nil
 }

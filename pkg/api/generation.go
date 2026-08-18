@@ -33,6 +33,7 @@ func PrepareGenerateByPhont(params *GenerateByPhontParams) (*singlesentence.Task
 		&phontName,
 		params.Speed,
 		params.TaskName,
+		params.Text,
 	)
 }
 
@@ -94,6 +95,7 @@ func PrepareGenerateByCharacter(
 		nil,
 		params.Speed,
 		params.TaskName,
+		params.Text,
 	)
 }
 

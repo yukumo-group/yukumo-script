@@ -9,7 +9,7 @@ import (
 
 func TestNewSingleSentenceTaskRequiresVoice(t *testing.T) {
 	t.Parallel()
-	_, err := singlesentence.NewSingleSentenceTask("text", nil, nil, 100, "t")
+	_, err := singlesentence.NewSingleSentenceTask("text", nil, nil, 100, "t", "text")
 	if err == nil {
 		t.Fatal("want error when both characterID and phontName are nil")
 	}
@@ -19,7 +19,7 @@ func TestTaskSaveFileRoundTrip(t *testing.T) {
 	t.Parallel()
 	dir := t.TempDir()
 	phont := "f1"
-	task, err := singlesentence.NewSingleSentenceTask("カナ", nil, &phont, 100, "hello")
+	task, err := singlesentence.NewSingleSentenceTask("カナ", nil, &phont, 100, "hello", "カナ")
 	if err != nil {
 		t.Fatalf("NewSingleSentenceTask: %v", err)
 	}
