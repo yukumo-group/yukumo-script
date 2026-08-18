@@ -12,6 +12,7 @@ import (
 func TestAudioSlicing(
 	t *testing.T,
 ) {
+	t.Parallel()
 	testAudioInfo1 := &audio.Info{
 		ChannelNumber: 1,
 		SampleRate:    8000,
@@ -40,7 +41,13 @@ func TestAudioSlicing(
 	}
 	tmpDir := t.TempDir()
 	err = task1.Generate("", tmpDir)
+	if err != nil {
+		t.Error(err)
+	}
 	err = task2.Generate("", tmpDir)
+	if err != nil {
+		t.Error(err)
+	}
 	if task1.ResultFile == nil || task2.ResultFile == nil {
 		t.Error("the audio failed to generate")
 	}

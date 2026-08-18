@@ -67,7 +67,7 @@ func SpliceAudios(
 			return errReadFile
 		}
 		closeFile := func() {
-			file.Close()
+			_ = file.Close()
 		}
 		defer closeFile()
 		streamer, format, errDecode := wav.Decode(
