@@ -108,3 +108,30 @@ func TestAudioSlicing(
 		t.Error("expected to return error when slicing files that do not have same format")
 	}
 }
+
+func TestMixingMethodToInt(
+	t *testing.T,
+) {
+	t.Parallel()
+	if edit.ByAverage.ToInt() != 1 {
+		t.Errorf(
+			"Expected %d, got %d",
+			1,
+			edit.ByAverage.ToInt(),
+		)
+	}
+	if edit.ToMixingMethod(1) != edit.ByAverage {
+		t.Errorf(
+			"Expected %d, got %d",
+			edit.ByAverage,
+			edit.ToMixingMethod(1),
+		)
+	}
+	if edit.ToMixingMethod(4) != edit.ByAverage {
+		t.Errorf(
+			"Expected %d, got %d",
+			edit.ByAverage,
+			edit.ToMixingMethod(4),
+		)
+	}
+}
