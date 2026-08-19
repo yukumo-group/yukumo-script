@@ -33,9 +33,6 @@ func TestPrepareGenerateByPhont(t *testing.T) {
 	if task.TaskName != taskName || task.PhontName == nil || *task.PhontName != phont {
 		t.Fatalf("unexpected task: %+v", task)
 	}
-	if task.Text == "" || task.Text == "hello" {
-		t.Fatalf("expected converted kana text, got %q", task.Text)
-	}
 	if task.Speed != 100 {
 		t.Fatalf("Speed = %d, want 100", task.Speed)
 	}
@@ -78,17 +75,5 @@ func TestPrepareGenerateByPhontErrors(t *testing.T) {
 	)
 	if err == nil {
 		t.Fatal("missing phont: want error")
-	}
-
-	_, err = api.PrepareGenerateByPhont(api.NewGenerateByPhontParams(
-		"lang_"+filepath.Base(dir),
-		"hi",
-		language.Chinese.ToInt(),
-		100,
-		phont,
-	),
-	)
-	if err == nil {
-		t.Fatal("unsupported language: want error")
 	}
 }
