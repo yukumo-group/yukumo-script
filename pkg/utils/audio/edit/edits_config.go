@@ -42,3 +42,9 @@ func ToMixingMethod(
 		return ByAverage
 	}
 }
+
+// MixingConfig defines the config of mixing
+type MixingConfig struct {
+	Method     MixingMethod
+	AudioGains *[]float64
+}

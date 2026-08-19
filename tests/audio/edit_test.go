@@ -135,3 +135,34 @@ func TestMixingMethodToInt(
 		)
 	}
 }
+
+func TestGetBaseVolume(
+	t *testing.T,
+) {
+	base, volume := edit.GetBaseVolume(
+		0.5,
+	)
+	if base != 2.0 {
+		t.Errorf(
+			"Expected %f, got %f",
+			2.0,
+			base,
+		)
+	}
+	if volume != -1.0 {
+		t.Errorf(
+			"Expected %f, got %f",
+			-1.0,
+			volume,
+		)
+	}
+	_, volume = edit.GetBaseVolume(
+		-0.5,
+	)
+	t.Log(volume)
+	if volume >= 0.0 {
+		t.Error(
+			"Expected volum to be negative",
+		)
+	}
+}
