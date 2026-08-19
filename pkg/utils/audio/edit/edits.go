@@ -31,7 +31,7 @@ func MixAudios(
 ) error {
 	if mixingConfig == nil {
 		return errors.New(
-			"You cannot give a nil mixing config",
+			"you cannot give a nil mixing config",
 		)
 	}
 	return nil
