@@ -13,8 +13,9 @@ internal/cmdinterface/   CLI-only helpers
 third_party/aquestalk2/  Native AquesTalk2 libraries (local)
 runtime/                 Runtime I/O (phonts, wav, result, data, examples)
 dist/                    Build outputs (gitignored)
-yukumo-gui/              Wails v3 GUI submodule
 ```
+
+The Wails GUI lives in [yukumo-gui](https://github.com/yukumo-group/yukumo-gui), which vendors this repository as a git submodule.
 
 ## Build targets
 
