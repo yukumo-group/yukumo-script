@@ -48,3 +48,18 @@ type MixingConfig struct {
 	Method     MixingMethod
 	AudioGains *[]float64
 }
+
+// NewMixingMethod creates new mixing method
+func NewMixingMethod(
+	Method MixingMethod,
+	gains *[]float64,
+) *MixingConfig {
+	method := Method
+	if gains == nil && method == ByCustom {
+		method = ByAverage
+	}
+	return &MixingConfig{
+		Method:     method,
+		AudioGains: gains,
+	}
+}

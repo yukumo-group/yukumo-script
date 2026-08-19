@@ -15,3 +15,10 @@ func GetBaseVolume(
 	volume := math.Log2(gain)
 	return 2.0, volume
 }
+
+// GetAveragedVolumeGains gets the averaged base of the volume
+func GetAveragedVolumeGains(
+	numberOfAudios int,
+) float64 {
+	return 1.0 / float64(numberOfAudios)
+}

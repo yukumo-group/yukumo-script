@@ -6,8 +6,36 @@ import (
 	"os"
 
 	"github.com/unitoftime/beep"
+	"github.com/unitoftime/beep/effects"
 	"github.com/unitoftime/beep/wav"
 )
+
+// AlterAudioVolume alters the volume of a single audio
+func AlterAudioVolume(
+	originalStream beep.Streamer,
+	gain float64,
+) beep.Streamer {
+	base, volume := GetBaseVolume(gain)
+	volumeStreamer := &effects.Volume{
+		Streamer: originalStream,
+		Base:     base,
+		Volume:   volume,
+		Silent:   false,
+	}
+	return volumeStreamer
+}
+
+// MixAudios mixes audios
+func MixAudios(
+	mixingConfig *MixingConfig,
+) error {
+	if mixingConfig == nil {
+		return errors.New(
+			"You cannot give a nil mixing config",
+		)
+	}
+	return nil
+}
 
 // CheckCanCombine checks if two audios have same precision and other data
 func CheckCanCombine(

@@ -19,21 +19,14 @@ func PrepareGenerateByPhont(params *GenerateByPhontParams) (*singlesentence.Task
 	if !exists {
 		return nil, fmt.Errorf("no such phont %s", params.PhontName)
 	}
-	processedText, err := language.ConvertText(
-		params.Text,
-		language.ToLanguage(params.Language),
-	)
-	if err != nil {
-		return nil, err
-	}
 	phontName := params.PhontName
 	return singlesentence.NewSingleSentenceTask(
-		processedText,
+		params.Text,
 		nil,
 		&phontName,
 		params.Speed,
 		params.TaskName,
-		params.Text,
+		language.ToLanguage(params.Language),
 	)
 }
 
@@ -81,21 +74,14 @@ func PrepareGenerateByCharacter(
 	if !exists {
 		return nil, fmt.Errorf("no such character %s", params.CharacterName)
 	}
-	processedText, err := language.ConvertText(
-		params.Text,
-		language.ToLanguage(params.Language),
-	)
-	if err != nil {
-		return nil, err
-	}
 	characterName := params.CharacterName
 	return singlesentence.NewSingleSentenceTask(
-		processedText,
+		params.Text,
 		&characterName,
 		nil,
 		params.Speed,
 		params.TaskName,
-		params.Text,
+		language.ToLanguage(params.Language),
 	)
 }
 

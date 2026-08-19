@@ -5,11 +5,12 @@ import (
 
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/language"
 )
 
 func TestNewSingleSentenceTaskRequiresVoice(t *testing.T) {
 	t.Parallel()
-	_, err := singlesentence.NewSingleSentenceTask("text", nil, nil, 100, "t", "text")
+	_, err := singlesentence.NewSingleSentenceTask("text", nil, nil, 100, "t", language.Japanese)
 	if err == nil {
 		t.Fatal("want error when both characterID and phontName are nil")
 	}
@@ -19,7 +20,7 @@ func TestTaskSaveFileRoundTrip(t *testing.T) {
 	t.Parallel()
 	dir := t.TempDir()
 	phont := "f1"
-	task, err := singlesentence.NewSingleSentenceTask("カナ", nil, &phont, 100, "hello", "カナ")
+	task, err := singlesentence.NewSingleSentenceTask("カナ", nil, &phont, 100, "hello", language.Japanese)
 	if err != nil {
 		t.Fatalf("NewSingleSentenceTask: %v", err)
 	}

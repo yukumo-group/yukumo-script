@@ -9,20 +9,21 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/yukumo-group/yukumo-script/internal/generator/aquestalk2"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/language"
 )
 
 // Task defines the task of generating a single sentence
 type Task struct {
-	ID           string    `json:"id"`
-	TaskName     string    `json:"taskName"`
-	Text         string    `json:"text"`
-	OriginalText string    `json:"originalText"`
-	Speed        int       `json:"speed"`
-	CreateTime   time.Time `json:"createTime"`
-	EditTime     time.Time `json:"editTime"`
-	CharacterID  *string   `json:"characterID"`
-	PhontName    *string   `json:"phontName"`
-	ResultFile   *string   `json:"resultFile"`
+	ID           string            `json:"id"`
+	TaskName     string            `json:"taskName"`
+	Text         string            `json:"text"`
+	TaskLanguage language.Language `json:"taskLanguage"`
+	Speed        int               `json:"speed"`
+	CreateTime   time.Time         `json:"createTime"`
+	EditTime     time.Time         `json:"editTime"`
+	CharacterID  *string           `json:"characterID"`
+	PhontName    *string           `json:"phontName"`
+	ResultFile   *string           `json:"resultFile"`
 }
 
 // NewSingleSentenceTask creates new single sentence task
@@ -32,7 +33,7 @@ func NewSingleSentenceTask(
 	phontName *string,
 	speed int,
 	taskName string,
-	originalText string,
+	taskLanguage language.Language,
 ) (*Task, error) {
 	if phontName == nil && characterID == nil {
 		return nil, errors.New(
@@ -50,7 +51,7 @@ func NewSingleSentenceTask(
 		Speed:        speed,
 		ResultFile:   nil,
 		TaskName:     taskName,
-		OriginalText: originalText,
+		TaskLanguage: taskLanguage,
 	}, nil
 }
 
@@ -119,13 +120,20 @@ func (task *Task) Generate(
 		task.ID,
 		task.EditTime.Unix(),
 	)
+	processedText, err := language.ConvertText(
+		task.Text,
+		task.TaskLanguage,
+	)
+	if err != nil {
+		return err
+	}
 	generator := aquestalk2.NewGenerator(
 		task.Speed,
 		phontPath,
 		fileName,
-		task.Text,
+		processedText,
 	)
-	err := generator.GenerateWav()
+	err = generator.GenerateWav()
 	if err != nil {
 		return err
 	}
