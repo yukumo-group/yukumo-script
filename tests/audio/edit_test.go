@@ -139,6 +139,7 @@ func TestMixingMethodToInt(
 func TestGetBaseVolume(
 	t *testing.T,
 ) {
+	t.Parallel()
 	base, volume := edit.GetBaseVolume(
 		0.5,
 	)
@@ -164,5 +165,114 @@ func TestGetBaseVolume(
 		t.Error(
 			"Expected volum to be negative",
 		)
+	}
+}
+
+func TestMixAudio(
+	t *testing.T,
+) {
+	t.Parallel()
+	testAudioInfo1 := &audio.Info{
+		ChannelNumber: 1,
+		SampleRate:    8000,
+		Length:        1.5,
+		Precision:     2,
+	}
+	testAudioInfo2 := &audio.Info{
+		ChannelNumber: 1,
+		SampleRate:    8000,
+		Length:        1.5,
+		Precision:     2,
+	}
+	task1, err := empty.NewEmptyTask(
+		1.5,
+		testAudioInfo1,
+	)
+	if err != nil {
+		t.Error(err)
+	}
+	task2, err := empty.NewEmptyTask(
+		1.5,
+		testAudioInfo2,
+	)
+	if err != nil {
+		t.Error(err)
+	}
+	tmpDir := t.TempDir()
+	err = task1.Generate("", tmpDir)
+	if err != nil {
+		t.Error(err)
+	}
+	err = task2.Generate("", tmpDir)
+	if err != nil {
+		t.Error(err)
+	}
+	if task1.ResultFile == nil || task2.ResultFile == nil {
+		t.Error("the audio failed to generate")
+	}
+	newWAVDir := fmt.Sprintf(
+		"%s/%s",
+		tmpDir,
+		"test.wav",
+	)
+	testMixingConfig := edit.NewMixingMethod(
+		edit.ByDefault,
+		nil,
+	)
+	err = edit.MixAudios(
+		[]string{
+			*task1.ResultFile,
+			*task2.ResultFile,
+		},
+		testMixingConfig,
+		newWAVDir,
+	)
+	if err != nil {
+		t.Error(err)
+	}
+	testMixingConfig = edit.NewMixingMethod(
+		edit.ByAverage,
+		nil,
+	)
+	err = edit.MixAudios(
+		[]string{
+			*task1.ResultFile,
+			*task2.ResultFile,
+		},
+		testMixingConfig,
+		newWAVDir,
+	)
+	if err != nil {
+		t.Error(err)
+	}
+	testMixingConfig = edit.NewMixingMethod(
+		edit.ByCustom,
+		nil,
+	)
+	err = edit.MixAudios(
+		[]string{
+			*task1.ResultFile,
+			*task2.ResultFile,
+		},
+		testMixingConfig,
+		newWAVDir,
+	)
+	if err != nil {
+		t.Error(err)
+	}
+	testMixingConfig = edit.NewMixingMethod(
+		edit.ByCustom,
+		&[]float64{0.5, 0.5},
+	)
+	err = edit.MixAudios(
+		[]string{
+			*task1.ResultFile,
+			*task2.ResultFile,
+		},
+		testMixingConfig,
+		newWAVDir,
+	)
+	if err != nil {
+		t.Error(err)
 	}
 }
