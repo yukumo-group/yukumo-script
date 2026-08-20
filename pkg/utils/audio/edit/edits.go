@@ -42,13 +42,31 @@ func MixAudios(
 		mixingMode = ByAverage
 	}
 	// Read streams
-	streamers, formats, err := ReadMultipleWavFiles(
-		audioPathes,
-	)
-	if err != nil {
-		return err
+	streamers := []beep.Streamer{}
+	formats := []beep.Format{}
+	for _, audioPath := range audioPathes {
+		file, err := os.Open(audioPath)
+		if err != nil {
+			return err
+		}
+		closeFile := func() {
+			_ = file.Close()
+		}
+		defer closeFile()
+		streamer, format, err := wav.Decode(
+			file,
+		)
+		if err != nil {
+			return err
+		}
+		closeStream := func() {
+			_ = streamer.Close()
+		}
+		defer closeStream()
+		streamers = append(streamers, streamer)
+		formats = append(formats, format)
 	}
-	err = CheckCanCombine(formats)
+	err := CheckCanCombine(formats)
 	if err != nil {
 		return err
 	}
@@ -156,16 +174,17 @@ func CheckCanCombine(
 	return nil
 }
 
-// ReadMultipleFiles reads multiple streams and convert it to streamer and formats
-func ReadMultipleWavFiles(
+// SpliceAudios splices the audio.
+func SpliceAudios(
+	targetFileName string,
 	audioPathes []string,
-) ([]beep.Streamer, []beep.Format, error) {
+) error {
 	streamers := []beep.Streamer{}
 	formats := []beep.Format{}
 	for _, audioPath := range audioPathes {
 		file, err := os.Open(audioPath)
 		if err != nil {
-			return nil, nil, err
+			return err
 		}
 		closeFile := func() {
 			_ = file.Close()
@@ -175,7 +194,7 @@ func ReadMultipleWavFiles(
 			file,
 		)
 		if err != nil {
-			return nil, nil, err
+			return err
 		}
 		closeStream := func() {
 			_ = streamer.Close()
@@ -183,20 +202,6 @@ func ReadMultipleWavFiles(
 		defer closeStream()
 		streamers = append(streamers, streamer)
 		formats = append(formats, format)
-	}
-	return streamers, formats, nil
-}
-
-// SpliceAudios splices the audio.
-func SpliceAudios(
-	targetFileName string,
-	audioPathes []string,
-) error {
-	streamers, formats, err := ReadMultipleWavFiles(
-		audioPathes,
-	)
-	if err != nil {
-		return err
 	}
 	errCanCombine := CheckCanCombine(formats)
 	if errCanCombine != nil {
