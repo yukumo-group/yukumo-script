@@ -8,13 +8,14 @@ A Go application that generates Yukumo audio from script using AquesTalk2.
 cmd/yukumo/              CLI entrypoint (standalone)
 clib/                    C shared library exports (-buildmode=c-shared)
 pkg/api/                 Shared helpers used by CLI and clib
-pkg/                     Shared libraries (also used by yukumo-script-gui)
+pkg/                     Shared libraries (also used by yukumo-gui)
 internal/cmdinterface/   CLI-only helpers
 third_party/aquestalk2/  Native AquesTalk2 libraries (local)
 runtime/                 Runtime I/O (phonts, wav, result, data, examples)
 dist/                    Build outputs (gitignored)
-yukumo-script-gui/       Wails GUI submodule
 ```
+
+The Wails GUI lives in [yukumo-gui](https://github.com/yukumo-group/yukumo-gui), which vendors this repository as a git submodule.
 
 ## Build targets
 
