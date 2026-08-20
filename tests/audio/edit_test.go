@@ -213,7 +213,7 @@ func TestMixAudio(
 	newWAVDir := fmt.Sprintf(
 		"%s/%s",
 		tmpDir,
-		"test.wav",
+		"testMixAudio.wav",
 	)
 	testMixingConfig := edit.NewMixingMethod(
 		edit.ByDefault,
