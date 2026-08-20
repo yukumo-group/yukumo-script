@@ -57,7 +57,7 @@ func MixAudios(
 	ProcessByCustom := func() error {
 		if len(*mixingConfig.AudioGains) != len(audioPathes) {
 			return errors.New(
-				"Length of audio path slice is inconsistent with the audio gains list",
+				"length of audio path slice is inconsistent with the audio gains list",
 			)
 		}
 		for i, stream := range streamers {
@@ -108,7 +108,7 @@ func MixAudios(
 		mixer,
 		formats[0],
 	)
-	return nil
+	return err
 }
 
 // CheckCanCombine checks if two audios have same precision and other data
