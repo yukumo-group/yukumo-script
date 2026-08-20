@@ -45,6 +45,8 @@ github.com/unitoftime/beep v0.0.0-20260407205258-62236bbd2ba3 h1:PFyLVAHVveVQ3bR
 github.com/unitoftime/beep v0.0.0-20260407205258-62236bbd2ba3/go.mod h1:P1j3xRgms7eb4x95IaPENFqQ/7GCNx/KAgEfTPhPaq8=
 github.com/yukumo-group/yukumo-script v0.0.0-20260819085836-466b1fb01a3c h1:YbZm4zM3aloXDuIrDVpCqz/cwREz/AEGTIr6GJRoyhc=
 github.com/yukumo-group/yukumo-script v0.0.0-20260819085836-466b1fb01a3c/go.mod h1:DTJPHvHdI/ZUBmB3hsK2TMYx5NGYo0NGXQybS1TO5sU=
+github.com/yukumo-group/yukumo-script v0.0.0-20260819093836-5eebb2c62fea h1:/dUc1lVDatQJF0nhNG1vd+KGtryE+cpoG3KiDIf2/0o=
+github.com/yukumo-group/yukumo-script v0.0.0-20260819093836-5eebb2c62fea/go.mod h1:DTJPHvHdI/ZUBmB3hsK2TMYx5NGYo0NGXQybS1TO5sU=
 github.com/zeozeozeo/gomplerate v0.0.0-20250404113140-0fbb236df825 h1:rViu1xhQRtdJogc39jF46PS01xHVD736JowXl2qOcPM=
 github.com/zeozeozeo/gomplerate v0.0.0-20250404113140-0fbb236df825/go.mod h1:ASuMFHITnaVdPvMkoDGI4tTwYG9fW7Mxv2j5AuvTo8Q=
 go.yaml.in/yaml/v3 v3.0.4/go.mod h1:DhzuOOF2ATzADvBadXxruRBLzYTpT36CKvDb3+aBEFg=
