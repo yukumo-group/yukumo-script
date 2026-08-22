@@ -1,4 +1,4 @@
-package singlesentence
+package tasks
 
 import (
 	"github.com/yukumo-group/yukumo-script/internal/phontsmanager"

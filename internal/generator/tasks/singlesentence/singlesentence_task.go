@@ -11,6 +11,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/yukumo-group/yukumo-script/internal/characters"
 	"github.com/yukumo-group/yukumo-script/internal/generator/aquestalk2"
+	"github.com/yukumo-group/yukumo-script/internal/generator/tasks"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/language"
 )
 
@@ -140,7 +141,7 @@ func (task *Task) Generate(
 				*task.CharacterID,
 			)
 		}
-		phontPath, err = PhontFile(
+		phontPath, err = tasks.PhontFile(
 			phontsDir,
 			character.PhontName,
 		)
@@ -148,7 +149,7 @@ func (task *Task) Generate(
 			return err
 		}
 	} else if task.PhontName != nil {
-		phontPath, err = PhontFile(
+		phontPath, err = tasks.PhontFile(
 			phontsDir,
 			*task.PhontName,
 		)
