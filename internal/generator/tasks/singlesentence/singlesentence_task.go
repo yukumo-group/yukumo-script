@@ -1,6 +1,7 @@
 package singlesentence
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -109,6 +110,7 @@ func (task *Task) SaveFile(
 
 // Generate synthesizes the wav file via AquesTalk2.
 func (task *Task) Generate(
+	ctx context.Context,
 	phontPath string,
 	targetDir string,
 ) error {

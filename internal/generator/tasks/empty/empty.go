@@ -1,6 +1,7 @@
 package empty
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os"
@@ -51,6 +52,7 @@ func NewEmptyTask(
 // phont path should let empty "".
 // As a file for combining with other files, it is recommended to save it at wav directory
 func (task *Task) Generate(
+	ctx context.Context,
 	phontPath string,
 	targetDir string,
 ) error {

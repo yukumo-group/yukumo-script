@@ -26,6 +26,7 @@ func TestCreateEmptyTask(t *testing.T) {
 	}
 	tmpDir := os.TempDir()
 	errGenerate := newTask.Generate(
+		t.Context(),
 		"",
 		tmpDir,
 	)

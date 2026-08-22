@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"errors"
 	"fmt"
 
@@ -32,6 +33,7 @@ func PrepareGenerateByPhont(params *GenerateByPhontParams) (*singlesentence.Task
 
 // GenerateByPhont converts text, generates a wav via AquesTalk2, and registers the task.
 func GenerateByPhont(
+	ctx context.Context,
 	params *GenerateByPhontParams,
 ) (*GenerateResult, error) {
 	task, err := PrepareGenerateByPhont(params)
@@ -47,7 +49,12 @@ func GenerateByPhont(
 	if err != nil {
 		return nil, err
 	}
-	if err := task.Generate(phontPath, filePathForProg.ResultDir); err != nil {
+	err = task.Generate(
+		ctx,
+		phontPath,
+		filePathForProg.ResultDir,
+	)
+	if err != nil {
 		return nil, err
 	}
 	if task.ResultFile == nil {
@@ -87,6 +94,7 @@ func PrepareGenerateByCharacter(
 
 // GenerateByCharacter converts text, generates a wav via AquesTalk2, and registers the task.
 func GenerateByCharacter(
+	ctx context.Context,
 	params *GenerateByCharacterParams,
 ) (*GenerateResult, error) {
 	task, err := PrepareGenerateByCharacter(params)
@@ -108,7 +116,12 @@ func GenerateByCharacter(
 	if errGetPhontPath != nil {
 		return nil, errGetPhontPath
 	}
-	if err := task.Generate(phontPath, filePathForProg.ResultDir); err != nil {
+	err = task.Generate(
+		ctx,
+		phontPath,
+		filePathForProg.ResultDir,
+	)
+	if err != nil {
 		return nil, err
 	}
 	if task.ResultFile == nil {
@@ -127,6 +140,7 @@ func GenerateByCharacter(
 // GenerateEmpty generates empty wav file.
 // The generated audio will have the same format with the original audio.
 func GenerateEmpty(
+	ctx context.Context,
 	length float64,
 	originalAudioPath string,
 ) (*string, error) {
@@ -144,6 +158,7 @@ func GenerateEmpty(
 		return nil, errNewEmptyTask
 	}
 	errGenerate := newEmptyTask.Generate(
+		ctx,
 		"",
 		filePathForProg.WavsDir,
 	)

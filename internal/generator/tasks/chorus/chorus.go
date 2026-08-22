@@ -13,6 +13,7 @@ type Task struct {
 	PhontList    *[]string         `json:"phontList"`
 	ResultFile   *string           `json:"resultFile"`
 	CreatedTime  time.Time         `json:"createdTime"`
+	EditTime     time.Time         `json:"editTime"`
 	Text         string            `json:"text"`
 	TaskLanguage language.Language `json:"taskLanguage"`
 }

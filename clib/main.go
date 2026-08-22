@@ -25,6 +25,7 @@ typedef struct StringList {
 */
 import "C"
 import (
+	"context"
 	"unsafe"
 
 	"github.com/yukumo-group/yukumo-script/pkg/api"
@@ -90,10 +91,12 @@ func YukumoGenerateByPhont(
 	phontName *C.char,
 	outResultFile **C.char,
 ) C.ErrorMessage {
+	ctx := context.Background()
 	if outResultFile != nil {
 		*outResultFile = nil
 	}
 	result, err := api.GenerateByPhont(
+		ctx,
 		api.NewGenerateByPhontParams(
 			C.GoString(taskName),
 			C.GoString(text),

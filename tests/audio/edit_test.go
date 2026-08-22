@@ -40,11 +40,11 @@ func TestAudioSlicing(
 		t.Error(err)
 	}
 	tmpDir := t.TempDir()
-	err = task1.Generate("", tmpDir)
+	err = task1.Generate(t.Context(), "", tmpDir)
 	if err != nil {
 		t.Error(err)
 	}
-	err = task2.Generate("", tmpDir)
+	err = task2.Generate(t.Context(), "", tmpDir)
 	if err != nil {
 		t.Error(err)
 	}
@@ -199,11 +199,11 @@ func TestMixAudio(
 		t.Error(err)
 	}
 	tmpDir := t.TempDir()
-	err = task1.Generate("", tmpDir)
+	err = task1.Generate(t.Context(), "", tmpDir)
 	if err != nil {
 		t.Error(err)
 	}
-	err = task2.Generate("", tmpDir)
+	err = task2.Generate(t.Context(), "", tmpDir)
 	if err != nil {
 		t.Error(err)
 	}
