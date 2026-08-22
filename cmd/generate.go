@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/fatih/color"
@@ -40,6 +41,7 @@ var generateByFileCMD = &cobra.Command{
 generateByFile allows you to generate yukumo audio through phont file directly
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
+		ctx := context.Background()
 		// Define the format of the texts
 		title := color.New(color.FgGreen).Add(color.Bold)
 		text := color.New(color.Italic)
@@ -69,7 +71,10 @@ generateByFile allows you to generate yukumo audio through phont file directly
 			SingleSentenceTaskSpeedByFile,
 			phontName,
 		)
-		result, errGenerate := api.GenerateByPhont(newGenerationParam)
+		result, errGenerate := api.GenerateByPhont(
+			ctx,
+			newGenerationParam,
+		)
 		if errGenerate != nil {
 			ProcessError(errGenerate)
 			return
