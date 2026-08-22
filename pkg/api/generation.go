@@ -40,18 +40,9 @@ func GenerateByPhont(
 	if err != nil {
 		return nil, err
 	}
-	if task.PhontName == nil {
-		return nil, errors.New(
-			"phont name cannot be nil when generating",
-		)
-	}
-	phontPath, err := PhontPath(*task.PhontName)
-	if err != nil {
-		return nil, err
-	}
 	err = task.Generate(
 		ctx,
-		phontPath,
+		filePathForProg.PhontsDir,
 		filePathForProg.ResultDir,
 	)
 	if err != nil {
@@ -101,24 +92,9 @@ func GenerateByCharacter(
 	if err != nil {
 		return nil, err
 	}
-	if task.CharacterID == nil {
-		return nil, errors.New(
-			"the character ID (character name) cannot be nil",
-		)
-	}
-	phontName, errGetPhontName := GetPhontNameByCharacterName(
-		*task.CharacterID,
-	)
-	if errGetPhontName != nil {
-		return nil, errGetPhontName
-	}
-	phontPath, errGetPhontPath := PhontPath(phontName)
-	if errGetPhontPath != nil {
-		return nil, errGetPhontPath
-	}
 	err = task.Generate(
 		ctx,
-		phontPath,
+		filePathForProg.PhontsDir,
 		filePathForProg.ResultDir,
 	)
 	if err != nil {

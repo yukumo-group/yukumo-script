@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/yukumo-group/yukumo-script/internal/characters"
 	"github.com/yukumo-group/yukumo-script/internal/generator/aquestalk2"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/language"
 )
@@ -111,7 +112,7 @@ func (task *Task) SaveFile(
 // Generate synthesizes the wav file via AquesTalk2.
 func (task *Task) Generate(
 	ctx context.Context,
-	phontPath string,
+	phontsDir string,
 	targetDir string,
 ) error {
 	task.EditTime = time.Now()
@@ -128,6 +129,36 @@ func (task *Task) Generate(
 	)
 	if err != nil {
 		return err
+	}
+	var phontPath string
+	if task.CharacterID != nil {
+		characterList := characters.CharacterList.GetData()
+		character, exists := characterList[*task.CharacterID]
+		if !exists {
+			return fmt.Errorf(
+				"Character %s does not exists",
+				*task.CharacterID,
+			)
+		}
+		phontPath, err = PhontFile(
+			phontsDir,
+			character.PhontName,
+		)
+		if err != nil {
+			return err
+		}
+	} else if task.PhontName != nil {
+		phontPath, err = PhontFile(
+			phontsDir,
+			*task.PhontName,
+		)
+		if err != nil {
+			return err
+		}
+	} else {
+		return errors.New(
+			"phont name and character id cannot both not exists",
+		)
 	}
 	generator := aquestalk2.NewGenerator(
 		task.Speed,

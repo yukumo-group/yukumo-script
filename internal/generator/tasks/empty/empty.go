@@ -53,7 +53,7 @@ func NewEmptyTask(
 // As a file for combining with other files, it is recommended to save it at wav directory
 func (task *Task) Generate(
 	ctx context.Context,
-	phontPath string,
+	phontsDir string,
 	targetDir string,
 ) error {
 	task.EditTime = time.Now()
