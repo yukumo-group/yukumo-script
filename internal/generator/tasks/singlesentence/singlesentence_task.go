@@ -136,7 +136,7 @@ func (task *Task) Generate(
 		character, exists := characterList[*task.CharacterID]
 		if !exists {
 			return fmt.Errorf(
-				"Character %s does not exists",
+				"character %s does not exists",
 				*task.CharacterID,
 			)
 		}
