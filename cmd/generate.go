@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"yukumo-script-cmd/internal/cmdinterface"
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
@@ -45,17 +45,13 @@ generateByFile allows you to generate yukumo audio through phont file directly
 		// Define the format of the texts
 		title := color.New(color.FgGreen).Add(color.Bold)
 		text := color.New(color.Italic)
-		// Print info
-		_, _ = title.Println("Here are the available phonts:")
-		for _, phontName := range api.ListPhonts() {
-			_, _ = text.Println(phontName)
-		}
-		_, _ = title.Println("Input the name of the phont you want to use to generate audio:")
-		// Input
-		var phontName string
-		_, errInput := fmt.Scan(&phontName)
-		if errInput != nil {
-			ProcessError(errInput)
+		// Get Phont Name
+		phontName, err := cmdinterface.ShowPhonts(
+			title,
+			text,
+		)
+		if err != nil {
+			ProcessError(err)
 			return
 		}
 		var taskName string
