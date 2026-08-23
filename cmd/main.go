@@ -76,6 +76,7 @@ func init() {
 	// Add subcommands
 	charactersCMD.AddCommand(
 		addCharacterCMD,
+		listCharactersCMD,
 	)
 	phontsCMD.AddCommand(
 		showAvailablePhontsCMD,

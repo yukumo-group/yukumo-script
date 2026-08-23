@@ -13,6 +13,10 @@ func ShowAllCharacters(
 	characters := api.GetAllCharacters()
 	for _, character := range characters {
 		_, _ = title.Println(character.Name)
-		_, _ = text.Println(character.Name)
+		_, _ = text.Println(character.Description)
+		_, _ = text.Printf(
+			"Phont: %s\n",
+			character.PhontName,
+		)
 	}
 }

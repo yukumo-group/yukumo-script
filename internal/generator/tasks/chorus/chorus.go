@@ -3,6 +3,7 @@ package chorus
 import (
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/language"
 )
 
@@ -17,4 +18,23 @@ type Task struct {
 	EditTime      time.Time         `json:"editTime"`
 	Text          string            `json:"text"`
 	TaskLanguage  language.Language `json:"taskLanguage"`
+}
+
+// NewChorustTask creates new chorus task
+func NewChorustTask(
+	text string,
+	taskName string,
+	taskLanguage language.Language,
+	characterList *[]string,
+) (*Task, error) {
+	id := uuid.NewString()
+	return &Task{
+		ID:            id,
+		Text:          text,
+		TaskLanguage:  taskLanguage,
+		TaskName:      taskName,
+		CharacterList: characterList,
+		CreatedTime:   time.Now(),
+		EditTime:      time.Now(),
+	}, nil
 }
