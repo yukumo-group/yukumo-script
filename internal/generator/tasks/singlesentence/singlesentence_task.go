@@ -88,6 +88,7 @@ func (task *Task) GenerateFileName(
 }
 
 // SaveFile saves the file in the target directory.
+// Returns file path and error.
 func (task *Task) SaveFile(
 	targetDir string,
 ) (string, error) {

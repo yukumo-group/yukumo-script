@@ -58,4 +58,42 @@ func TestTaskManagerJSON(t *testing.T) {
 	if mgr2.HasTask("t1") {
 		t.Fatal("reloaded manager still has deleted task")
 	}
+	characterID := "Remilia Scarlet"
+	// Get file path
+	task, err := singlesentence.NewSingleSentenceTask(
+		"Hello, World",
+		&characterID,
+		nil,
+		100,
+		"a",
+		1,
+	)
+	if err != nil {
+		t.Error(err)
+	}
+	tmpDir := t.TempDir()
+	filePath, err := task.SaveFile(tmpDir)
+	if err != nil {
+		t.Error(err)
+	}
+	err = mgr2.NewTask(
+		task.TaskName,
+		filePath,
+	)
+	if err != nil {
+		t.Error(err)
+	}
+	newTask, err := mgr2.GetTask(
+		task.TaskName,
+	)
+	if err != nil {
+		t.Error(err)
+	}
+	if newTask.TaskName != task.TaskName {
+		t.Errorf(
+			"Expected task name %s, got %s",
+			task.TaskName,
+			newTask.TaskName,
+		)
+	}
 }
