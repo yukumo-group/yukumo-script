@@ -13,7 +13,8 @@ func ShowPhonts(
 ) (string, error) {
 	// Print info
 	_, _ = title.Println("Here are the available phonts:")
-	for _, phontName := range api.ListPhonts() {
+	phontsList := api.ListPhonts()
+	for _, phontName := range phontsList {
 		_, _ = text.Println(phontName)
 	}
 	_, _ = title.Println("Input the name of the phont you want to use to generate audio:")
@@ -23,13 +24,14 @@ func ShowPhonts(
 	if errInput != nil {
 		return "", errInput
 	}
-	for _, iPhontName := range api.ListPhonts() {
-		if iPhontName != phontName {
-			return "", fmt.Errorf(
-				"%s phont name does not exists",
-				phontName,
-			)
+	for i, tmpPhontName := range phontsList {
+		if tmpPhontName == phontName {
+			text.Println(i)
+			return phontName, nil
 		}
 	}
-	return phontName, nil
+	return "", fmt.Errorf(
+		"%s phont name does not exists",
+		phontName,
+	)
 }

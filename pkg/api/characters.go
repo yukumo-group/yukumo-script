@@ -29,7 +29,7 @@ func AddCharacter(
 	phontExists := IsPhontExists(
 		phontName,
 	)
-	if phontExists {
+	if !phontExists {
 		return fmt.Errorf(
 			"phont %s does not exists",
 			phontName,

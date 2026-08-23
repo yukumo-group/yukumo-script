@@ -2,6 +2,7 @@ package main
 
 import (
 	"yukumo-script-cmd/internal/cmdinterface"
+	"yukumo-script-cmd/internal/info"
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
@@ -65,4 +66,12 @@ var listCharactersCMD = &cobra.Command{
 	Use:   "listCharacters",
 	Short: "listCharacters lists all the characters in the character list",
 	Long:  "listCharacters lists all the characters in the character list",
+	Run: func(cmd *cobra.Command, args []string) {
+		title := color.New(color.FgGreen).Add(color.Bold)
+		text := color.New(color.Italic)
+		info.ShowAllCharacters(
+			title,
+			text,
+		)
+	},
 }
