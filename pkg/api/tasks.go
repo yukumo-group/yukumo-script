@@ -50,3 +50,22 @@ func RandomTaskName(
 		time.Now().Unix(),
 	)
 }
+
+// GetResultFileForSingleSentenceTask
+func GetResultFileForSingleSentenceTask(
+	taskName string,
+) (string, error) {
+	thisTask, err := singlesentence.Manager.GetTask(
+		taskName,
+	)
+	if err != nil {
+		return "", err
+	}
+	if thisTask.ResultFile == nil {
+		return "", fmt.Errorf(
+			"task %s does not have result file",
+			taskName,
+		)
+	}
+	return *thisTask.ResultFile, nil
+}

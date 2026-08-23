@@ -136,3 +136,21 @@ func (manager *TaskManager) HasTask(
 	_, exists := manager.Tasks[taskName]
 	return exists
 }
+
+// GetTask gets the task with certain task name
+func (manager *TaskManager) GetTask(
+	taskName string,
+) (*Task, error) {
+	manager.RLock()
+	defer manager.RUnlock()
+	thisTaskfilePath, exists := manager.Tasks[taskName]
+	if !exists {
+		return nil, fmt.Errorf(
+			"task with name %s does not exists",
+			taskName,
+		)
+	}
+	return NewSingleSentenceTaskFromFile(
+		thisTaskfilePath,
+	)
+}

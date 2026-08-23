@@ -59,3 +59,8 @@ var addCharacterCMD = &cobra.Command{
 		}
 	},
 }
+
+// listCharactersCMD lists characters
+var listCharactersCMD = &cobra.Command{
+	Use: "listCharacters",
+}
