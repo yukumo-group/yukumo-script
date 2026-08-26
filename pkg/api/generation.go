@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/yukumo-group/yukumo-script/internal/characters"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/empty"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/audio"
@@ -28,6 +29,7 @@ func PrepareGenerateByPhont(params *GenerateByPhontParams) (*singlesentence.Task
 		params.Speed,
 		params.TaskName,
 		language.ToLanguage(params.Language),
+		characters.CharacterList,
 	)
 }
 
@@ -80,6 +82,7 @@ func PrepareGenerateByCharacter(
 		params.Speed,
 		params.TaskName,
 		language.ToLanguage(params.Language),
+		characters.CharacterList,
 	)
 }
 

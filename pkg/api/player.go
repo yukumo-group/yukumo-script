@@ -6,6 +6,7 @@ import (
 	"github.com/yukumo-group/yukumo-script/internal/example"
 )
 
+// PlayExample plays the example file
 func PlayExample(
 	phontName string,
 ) (*string, error) {

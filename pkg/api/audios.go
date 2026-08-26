@@ -3,7 +3,9 @@ package api
 import (
 	"fmt"
 
+	"github.com/yukumo-group/yukumo-script/pkg/utils/audio"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/audio/edit"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/osoperation"
 )
 
 // SpliceAudios splices the audios.
@@ -26,4 +28,19 @@ func SpliceAudios(
 		return resultFileName, err
 	}
 	return resultFileName, nil
+}
+
+// SaveAudioTo copies file to target directory with certain name
+func SaveAudioTo(
+	originalFilePath string,
+	targetDirectory string,
+	targetFileName string,
+	format audio.Format,
+) error {
+	return osoperation.CopyFile(
+		originalFilePath,
+		targetDirectory,
+		targetFileName,
+		format.ToString(),
+	)
 }

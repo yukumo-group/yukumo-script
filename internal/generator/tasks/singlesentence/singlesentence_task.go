@@ -27,6 +27,7 @@ type Task struct {
 	CharacterID  *string           `json:"characterID"`
 	PhontName    *string           `json:"phontName"`
 	ResultFile   *string           `json:"resultFile"`
+	characters   *characters.Characters
 }
 
 // NewSingleSentenceTask creates new single sentence task
@@ -37,6 +38,7 @@ func NewSingleSentenceTask(
 	speed int,
 	taskName string,
 	taskLanguage language.Language,
+	characters *characters.Characters,
 ) (*Task, error) {
 	if phontName == nil && characterID == nil {
 		return nil, errors.New(
@@ -55,6 +57,7 @@ func NewSingleSentenceTask(
 		ResultFile:   nil,
 		TaskName:     taskName,
 		TaskLanguage: taskLanguage,
+		characters:   characters,
 	}, nil
 }
 
@@ -134,7 +137,12 @@ func (task *Task) Generate(
 	}
 	var phontPath string
 	if task.CharacterID != nil {
-		characterList := characters.CharacterList.GetData()
+		if task.characters == nil {
+			return errors.New(
+				"the character list is nil, which is not allowed",
+			)
+		}
+		characterList := task.characters.GetData()
 		character, exists := characterList[*task.CharacterID]
 		if !exists {
 			return fmt.Errorf(

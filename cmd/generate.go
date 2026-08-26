@@ -81,3 +81,9 @@ generateByFile allows you to generate yukumo audio through phont file directly
 		)
 	},
 }
+
+// generateByCharacterCMD generates the audio using character ID
+var generateByCharacterCMD = &cobra.Command{
+	Use:   "generateByCharacter",
+	Short: "generateByCharacter generates audio through character id",
+}

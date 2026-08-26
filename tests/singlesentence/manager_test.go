@@ -67,6 +67,7 @@ func TestTaskManagerJSON(t *testing.T) {
 		100,
 		"a",
 		1,
+		nil,
 	)
 	if err != nil {
 		t.Error(err)
