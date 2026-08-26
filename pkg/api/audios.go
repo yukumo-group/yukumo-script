@@ -37,9 +37,12 @@ func SaveAudioTo(
 	targetFileName string,
 	format audio.Format,
 ) error {
+	processedTargetDirectory := osoperation.ParseWindowsPath(
+		targetDirectory,
+	)
 	return osoperation.CopyFile(
 		originalFilePath,
-		targetDirectory,
+		processedTargetDirectory,
 		targetFileName,
 		format.ToString(),
 	)

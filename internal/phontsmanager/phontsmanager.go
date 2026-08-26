@@ -37,7 +37,8 @@ func InitializePhontNameToFileName(phontsDir string) error {
 	return nil
 }
 
-// GetPhontFile gets the phont file and check if the file exists
+// GetPhontFile gets the phont file and check if the file exists.
+// Simply a reflection
 func GetPhontFile(phontsDir string, phontName string) (string, error) {
 	// Check if it exists in the PhontNameToFileName
 	phontFile, exists := PhontNameToFileName.GetValue(

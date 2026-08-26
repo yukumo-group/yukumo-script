@@ -17,17 +17,17 @@ import (
 
 // Task defines the task of generating a single sentence
 type Task struct {
-	ID           string            `json:"id"`
-	TaskName     string            `json:"taskName"`
-	Text         string            `json:"text"`
-	TaskLanguage language.Language `json:"taskLanguage"`
-	Speed        int               `json:"speed"`
-	CreateTime   time.Time         `json:"createTime"`
-	EditTime     time.Time         `json:"editTime"`
-	CharacterID  *string           `json:"characterID"`
-	PhontName    *string           `json:"phontName"`
-	ResultFile   *string           `json:"resultFile"`
-	characters   *characters.Characters
+	ID                string            `json:"id"`
+	TaskName          string            `json:"taskName"`
+	Text              string            `json:"text"`
+	TaskLanguage      language.Language `json:"taskLanguage"`
+	Speed             int               `json:"speed"`
+	CreateTime        time.Time         `json:"createTime"`
+	EditTime          time.Time         `json:"editTime"`
+	CharacterID       *string           `json:"characterID"`
+	PhontName         *string           `json:"phontName"`
+	ResultFile        *string           `json:"resultFile"`
+	charactersManager *characters.Characters
 }
 
 // NewSingleSentenceTask creates new single sentence task
@@ -38,7 +38,7 @@ func NewSingleSentenceTask(
 	speed int,
 	taskName string,
 	taskLanguage language.Language,
-	characters *characters.Characters,
+	charactersManager *characters.Characters,
 ) (*Task, error) {
 	if phontName == nil && characterID == nil {
 		return nil, errors.New(
@@ -47,17 +47,17 @@ func NewSingleSentenceTask(
 	}
 	id := uuid.NewString()
 	return &Task{
-		ID:           id,
-		Text:         text,
-		CreateTime:   time.Now(),
-		EditTime:     time.Now(),
-		CharacterID:  characterID,
-		PhontName:    phontName,
-		Speed:        speed,
-		ResultFile:   nil,
-		TaskName:     taskName,
-		TaskLanguage: taskLanguage,
-		characters:   characters,
+		ID:                id,
+		Text:              text,
+		CreateTime:        time.Now(),
+		EditTime:          time.Now(),
+		CharacterID:       characterID,
+		PhontName:         phontName,
+		Speed:             speed,
+		ResultFile:        nil,
+		TaskName:          taskName,
+		TaskLanguage:      taskLanguage,
+		charactersManager: charactersManager,
 	}, nil
 }
 
@@ -87,6 +87,19 @@ func (task *Task) GenerateFileName(
 		task.TaskName,
 		task.ID,
 		task.CreateTime.Unix(),
+	)
+}
+
+// GenerateWavName generates name for the result wav file
+func (task *Task) GenerateWavFileName(
+	targetDir string,
+) string {
+	return fmt.Sprintf(
+		"%s/%s_%s_%d.wav",
+		targetDir,
+		task.TaskName,
+		task.ID,
+		task.EditTime.Unix(),
 	)
 }
 
@@ -121,13 +134,7 @@ func (task *Task) Generate(
 	targetDir string,
 ) error {
 	task.EditTime = time.Now()
-	fileName := fmt.Sprintf(
-		"%s/%s_%s_%d.wav",
-		targetDir,
-		task.TaskName,
-		task.ID,
-		task.EditTime.Unix(),
-	)
+	fileName := task.GenerateWavFileName(targetDir)
 	processedText, err := language.ConvertText(
 		task.Text,
 		task.TaskLanguage,
@@ -137,12 +144,12 @@ func (task *Task) Generate(
 	}
 	var phontPath string
 	if task.CharacterID != nil {
-		if task.characters == nil {
+		if task.charactersManager == nil {
 			return errors.New(
 				"the character list is nil, which is not allowed",
 			)
 		}
-		characterList := task.characters.GetData()
+		characterList := task.charactersManager.GetData()
 		character, exists := characterList[*task.CharacterID]
 		if !exists {
 			return fmt.Errorf(
