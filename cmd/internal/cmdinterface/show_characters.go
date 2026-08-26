@@ -14,6 +14,9 @@ func GetCharacter(
 ) (string, error) {
 	info.ShowAllCharacters(title, text)
 	var targetCharacterID string
-	fmt.Scan(&targetCharacterID)
-	return "", nil
+	_, err := fmt.Scan(&targetCharacterID)
+	if err != nil {
+		return "", err
+	}
+	return targetCharacterID, nil
 }

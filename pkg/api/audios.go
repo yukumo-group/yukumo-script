@@ -47,3 +47,20 @@ func SaveAudioTo(
 		format.ToString(),
 	)
 }
+
+// ConvertStringToFormat converts strings to audio.Format
+func ConvertStringToFormat(
+	originalString string,
+) audio.Format {
+	return audio.ToFormat(originalString)
+}
+
+// GetAllPossibleAudioFormats gets all of the audio formats
+func GetAllPossibleAudioFormats() []string {
+	formats := audio.GetAllFormats()
+	result := []string{}
+	for _, format := range formats {
+		result = append(result, format.ToString())
+	}
+	return result
+}

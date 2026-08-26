@@ -86,4 +86,19 @@ generateByFile allows you to generate yukumo audio through phont file directly
 var generateByCharacterCMD = &cobra.Command{
 	Use:   "generateByCharacter",
 	Short: "generateByCharacter generates audio through character id",
+	Long:  "generateByCharacter generates audio through character id",
+	Run: func(cmd *cobra.Command, args []string) {
+		// Define the format of the texts
+		title := color.New(color.FgGreen).Add(color.Bold)
+		text := color.New(color.Italic)
+		// Get Phont Name
+		_, err := cmdinterface.GetCharacter(
+			title,
+			text,
+		)
+		if err != nil {
+			ProcessError(err)
+			return
+		}
+	},
 }

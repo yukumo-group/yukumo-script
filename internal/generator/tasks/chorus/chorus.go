@@ -235,6 +235,12 @@ func (task *Task) Generate(
 	phontsDir string,
 	targetDir string,
 ) error {
+	task.Lock()
 	task.EditTime = time.Now()
+	task.Unlock()
+	length := 0
+	if task.CharacterList != nil {
+		length += len(*task.CharacterList)
+	}
 	return nil
 }
