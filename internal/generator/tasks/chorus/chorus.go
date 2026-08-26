@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"runtime"
+	"sync"
 	"time"
 
 	"github.com/google/uuid"
@@ -17,6 +18,7 @@ import (
 
 // Task defines the chorus task for multiple characters
 type Task struct {
+	sync.RWMutex
 	ID                string            `json:"id"`
 	TaskName          string            `json:"taskName"`
 	CharacterList     *[]string         `json:"characterList"`
@@ -85,7 +87,10 @@ func (task *Task) GenerateSingleFile(
 	generationMethod string,
 	idx int,
 ) (*string, error) {
+	task.Lock()
 	task.EditTime = time.Now()
+	speed := task.Speed
+	task.Unlock()
 	tmpFilePath := task.GenerateTempFileName(
 		generationMethod,
 		idx,
@@ -98,7 +103,7 @@ func (task *Task) GenerateSingleFile(
 		return nil, err
 	}
 	generator := aquestalk2.NewGenerator(
-		task.Speed,
+		speed,
 		phontFilePath,
 		tmpFilePath,
 		convertedText,
@@ -117,13 +122,16 @@ func (task *Task) GenerateAllAudiosPhonts(
 	phontsDir string,
 	convertedText string,
 ) ([]string, error) {
-	if task.PhontList == nil {
+	task.RLock()
+	phontList := task.PhontList
+	task.RUnlock()
+	if phontList == nil {
 		return nil, nil
 	}
-	resultFilePathChan := make(chan string, len(*task.PhontList))
+	resultFilePathChan := make(chan string, len(*phontList))
 	group, _ := errgroup.WithContext(ctx)
 	group.SetLimit(runtime.NumCPU() * 2)
-	for i, phontName := range *task.PhontList {
+	for i, phontName := range *phontList {
 		tmpIdx := i
 		tmpPhontName := phontName
 		group.Go(
@@ -158,4 +166,75 @@ func (task *Task) GenerateAllAudiosPhonts(
 		result = append(result, resultPath)
 	}
 	return result, nil
+}
+
+// GenerateAllAudiosPhonts generates all the files by characters.
+// Returns the list of generated audios.
+func (task *Task) GenerateAllAudiosCharacters(
+	ctx context.Context,
+	phontsDir string,
+	convertedText string,
+) ([]string, error) {
+	task.RLock()
+	characterList := task.CharacterList
+	task.RUnlock()
+	if characterList == nil {
+		return nil, nil
+	}
+	resultFilePathChan := make(chan string, len(*characterList))
+	group, _ := errgroup.WithContext(ctx)
+	group.SetLimit(runtime.NumCPU() * 2)
+	tmpCharacterList := task.charactersManager.GetData()
+	for i, characterID := range *characterList {
+		tmpIdx := i
+		group.Go(
+			func() error {
+				character, exists := tmpCharacterList[characterID]
+				if !exists {
+					return fmt.Errorf(
+						"character %s does not exists",
+						characterID,
+					)
+				}
+				tmpPhontName := character.PhontName
+				resultFilePath, err := task.GenerateSingleFile(
+					phontsDir,
+					tmpPhontName,
+					convertedText,
+					"Phont",
+					tmpIdx,
+				)
+				if err != nil {
+					return err
+				}
+				if resultFilePath == nil {
+					return fmt.Errorf(
+						"result for phont number %d is nil",
+						tmpIdx,
+					)
+				}
+				resultFilePathChan <- *resultFilePath
+				return nil
+			},
+		)
+	}
+	if err := group.Wait(); err != nil {
+		return nil, err
+	}
+	close(resultFilePathChan)
+	result := []string{}
+	for resultPath := range resultFilePathChan {
+		result = append(result, resultPath)
+	}
+	return result, nil
+}
+
+// Generate generates mixed audio
+func (task *Task) Generate(
+	ctx context.Context,
+	phontsDir string,
+	targetDir string,
+) error {
+	task.EditTime = time.Now()
+	return nil
 }
