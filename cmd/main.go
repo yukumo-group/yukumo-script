@@ -22,7 +22,7 @@ func init() {
 		&SingleSentenceTaskNameByFile,
 		"name",
 		"n",
-		"task",
+		"",
 		"task name of the new generation task",
 	)
 	generateByFileCMD.Flags().StringVarP(
@@ -50,6 +50,41 @@ func init() {
 		panic(err)
 	}
 	if err := generateByFileCMD.MarkFlagRequired("language"); err != nil {
+		panic(err)
+	}
+	// Add flags for generateByCharacter
+	generateByCharacterCMD.Flags().StringVarP(
+		&SingleSentenceTaskNameByCharacter,
+		"name",
+		"n",
+		"",
+		"task name of the new generation task",
+	)
+	generateByCharacterCMD.Flags().StringVarP(
+		&SingleSentenceTaskTextByCharacter,
+		"text",
+		"t",
+		"",
+		"text to generate",
+	)
+	generateByCharacterCMD.Flags().IntVarP(
+		&SingleSentenceTaskLanguageByCharacter,
+		"language",
+		"l",
+		0,
+		"0: Japanese, 1: English, 2: Chinese",
+	)
+	generateByCharacterCMD.Flags().IntVarP(
+		&SingleSentenceTaskSpeedByCharacter,
+		"speed",
+		"s",
+		100,
+		"Speed of the audio(default: 100)",
+	)
+	if err := generateByCharacterCMD.MarkFlagRequired("text"); err != nil {
+		panic(err)
+	}
+	if err := generateByCharacterCMD.MarkFlagRequired("language"); err != nil {
 		panic(err)
 	}
 	// Add Flag for addCharacterCMD
@@ -84,6 +119,7 @@ func init() {
 	)
 	generationCMD.AddCommand(
 		generateByFileCMD,
+		generateByCharacterCMD,
 	)
 	tasksCMD.AddCommand(
 		showAllSingleSentenceTasksCMD,

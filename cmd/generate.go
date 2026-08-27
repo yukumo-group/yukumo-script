@@ -21,6 +21,18 @@ var SingleSentenceTaskSpeedByFile int
 // SingleSentenceTaskLanguageByFile defines the language of the audio
 var SingleSentenceTaskLanguageByFile int
 
+// SingleSentenceTaskNameByCharacter defines the name of the task
+var SingleSentenceTaskNameByCharacter string
+
+// SingleSentenceTaskTextByCharacter defines the text to generate for the task
+var SingleSentenceTaskTextByCharacter string
+
+// SingleSentenceTaskLanguageByCharacter defines the language of the audio
+var SingleSentenceTaskLanguageByCharacter int
+
+// SingleSentenceTaskSpeedByCharacter defines the speed of the audio
+var SingleSentenceTaskSpeedByCharacter int
+
 // generationCommand contains commands for generation
 var generationCMD = &cobra.Command{
 	Use:   "generation",
@@ -55,7 +67,7 @@ generateByFile allows you to generate yukumo audio through phont file directly
 			return
 		}
 		var taskName string
-		if SingleSentenceTaskNameByFile != "" {
+		if SingleSentenceTaskNameByFile == "" {
 			taskName = api.RandomTaskName("SingleSentence")
 		} else {
 			taskName = SingleSentenceTaskNameByFile
@@ -76,9 +88,28 @@ generateByFile allows you to generate yukumo audio through phont file directly
 			return
 		}
 		_, _ = title.Printf(
-			"File saved at %s",
+			"File saved at %s\n",
 			result.ResultFile,
 		)
+		doExport, err := cmdinterface.YesOrNoWithColor(
+			title,
+			"Do you want to export the file?",
+			false,
+		)
+		if err != nil {
+			ProcessError(err)
+			return
+		}
+		if doExport {
+			err := cmdinterface.SaveFileAs(
+				title,
+				text,
+				result.ResultFile,
+			)
+			if err != nil {
+				ProcessError(err)
+			}
+		}
 	},
 }
 
@@ -88,17 +119,62 @@ var generateByCharacterCMD = &cobra.Command{
 	Short: "generateByCharacter generates audio through character id",
 	Long:  "generateByCharacter generates audio through character id",
 	Run: func(cmd *cobra.Command, args []string) {
+		ctx := context.Background()
 		// Define the format of the texts
 		title := color.New(color.FgGreen).Add(color.Bold)
 		text := color.New(color.Italic)
 		// Get Phont Name
-		_, err := cmdinterface.GetCharacter(
+		characterID, err := cmdinterface.GetCharacter(
 			title,
 			text,
 		)
 		if err != nil {
 			ProcessError(err)
 			return
+		}
+		var taskName string
+		if SingleSentenceTaskNameByCharacter == "" {
+			taskName = api.RandomTaskName("SingleSentence")
+		} else {
+			taskName = SingleSentenceTaskNameByCharacter
+		}
+		params := api.NewGenerateByCharacterParams(
+			taskName,
+			SingleSentenceTaskTextByCharacter,
+			SingleSentenceTaskLanguageByCharacter,
+			SingleSentenceTaskSpeedByCharacter,
+			characterID,
+		)
+		result, err := api.GenerateByCharacter(
+			ctx,
+			params,
+		)
+		if err != nil {
+			ProcessError(err)
+			return
+		}
+		_, _ = title.Printf(
+			"File saved at %s\n",
+			result.ResultFile,
+		)
+		doExport, err := cmdinterface.YesOrNoWithColor(
+			title,
+			"Do you want to export the file?",
+			false,
+		)
+		if err != nil {
+			ProcessError(err)
+			return
+		}
+		if doExport {
+			err := cmdinterface.SaveFileAs(
+				title,
+				text,
+				result.ResultFile,
+			)
+			if err != nil {
+				ProcessError(err)
+			}
 		}
 	},
 }

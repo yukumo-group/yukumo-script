@@ -10,9 +10,11 @@ import (
 func ProcessError(
 	err error,
 ) {
-	errMessage := color.New(color.FgRed).Add(color.Bold)
-	cmdLogger.Error(err.Error())
-	_, _ = errMessage.Println(err.Error())
+	if err != nil {
+		errMessage := color.New(color.FgRed).Add(color.Bold)
+		cmdLogger.Error(err.Error())
+		_, _ = errMessage.Println(err.Error())
+	}
 }
 
 // ProcessErrorString processes the error using string

@@ -5,14 +5,14 @@ go 1.25.0
 require (
 	github.com/fatih/color v1.19.0
 	github.com/spf13/cobra v1.10.2
-	github.com/yukumo-group/yukumo-script v0.0.0-20260826015601-2d0bc8f7d4e2
+	github.com/yukumo-group/yukumo-script v0.0.0-20260826132638-3c866b4bbe01
 )
 
 require (
 	github.com/Luigi-Pizzolito/English2KanaTransliteration v1.0.4 // indirect
-	github.com/braheezy/shine-mp3 v0.1.0 // indirect
+	github.com/braheezy/shine-mp3 v0.2.0 // indirect
 	github.com/ebitengine/oto/v3 v3.4.1 // indirect
-	github.com/ebitengine/purego v0.9.0 // indirect
+	github.com/ebitengine/purego v0.10.2 // indirect
 	github.com/go-audio/audio v1.0.0 // indirect
 	github.com/go-audio/riff v1.0.0 // indirect
 	github.com/go-audio/wav v1.1.0 // indirect

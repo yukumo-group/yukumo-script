@@ -2,6 +2,8 @@ github.com/Luigi-Pizzolito/English2KanaTransliteration v1.0.4 h1:IzmZUthpnKCGlKL
 github.com/Luigi-Pizzolito/English2KanaTransliteration v1.0.4/go.mod h1:ZQ7p4kVLY6hl6I6TKYkJ4lSOpehd5CFd9GxcLrd+8kQ=
 github.com/braheezy/shine-mp3 v0.1.0 h1:N2wZhv6ipCFduTSftaPNdDgZ5xFmQAPvB7JcqA4sSi8=
 github.com/braheezy/shine-mp3 v0.1.0/go.mod h1:0H/pmcpFAd+Fnrj6Pc7du7wL36U/HqtfcgPJuCgc1L4=
+github.com/braheezy/shine-mp3 v0.2.0 h1:0OwmbVLfQFe4c5+UjV5FF4NKedxYw0qHnP5rDOs/wjU=
+github.com/braheezy/shine-mp3 v0.2.0/go.mod h1:0H/pmcpFAd+Fnrj6Pc7du7wL36U/HqtfcgPJuCgc1L4=
 github.com/cpuguy83/go-md2man/v2 v2.0.6/go.mod h1:oOW0eioCTA6cOiMLiUPZOpcVxMig6NIQQ7OS05n1F4g=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
@@ -9,6 +11,8 @@ github.com/ebitengine/oto/v3 v3.4.1 h1:uX7B03/P2P8oWiSI5HXjyjSP4besYn3V9nDk3cR+e
 github.com/ebitengine/oto/v3 v3.4.1/go.mod h1:IOleLVD0m+CMak3mRVwsYY8vTctQgOM0iiL6S7Ar7eI=
 github.com/ebitengine/purego v0.9.0 h1:mh0zpKBIXDceC63hpvPuGLiJ8ZAa3DfrFTudmfi8A4k=
 github.com/ebitengine/purego v0.9.0/go.mod h1:iIjxzd6CiRiOG0UyXP+V1+jWqUXVjPKLAI0mRfJZTmQ=
+github.com/ebitengine/purego v0.10.2 h1:W809HbnvzAxgdm+aOvlSekrM16wGCdT/e76+9tS7gzE=
+github.com/ebitengine/purego v0.10.2/go.mod h1:iIjxzd6CiRiOG0UyXP+V1+jWqUXVjPKLAI0mRfJZTmQ=
 github.com/fatih/color v1.19.0 h1:Zp3PiM21/9Ld6FzSKyL5c/BULoe/ONr9KlbYVOfG8+w=
 github.com/fatih/color v1.19.0/go.mod h1:zNk67I0ZUT1bEGsSGyCZYZNrHuTkJJB+r6Q9VuMi0LE=
 github.com/go-audio/audio v1.0.0 h1:zS9vebldgbQqktK4H0lUqWrG8P0NxCJVqcj7ZpNnwd4=
@@ -53,6 +57,8 @@ github.com/yukumo-group/yukumo-script v0.0.0-20260823052014-4613dac00404 h1:hpYi
 github.com/yukumo-group/yukumo-script v0.0.0-20260823052014-4613dac00404/go.mod h1:DTJPHvHdI/ZUBmB3hsK2TMYx5NGYo0NGXQybS1TO5sU=
 github.com/yukumo-group/yukumo-script v0.0.0-20260826015601-2d0bc8f7d4e2 h1:DB1EtM9sAZlHqZj/oORiSUdDnF7PHXyPrOxVFzwmomI=
 github.com/yukumo-group/yukumo-script v0.0.0-20260826015601-2d0bc8f7d4e2/go.mod h1:DTJPHvHdI/ZUBmB3hsK2TMYx5NGYo0NGXQybS1TO5sU=
+github.com/yukumo-group/yukumo-script v0.0.0-20260826132638-3c866b4bbe01 h1:ZI+IMJc97yshFf0Yz1n2jexU2Ae+adzgP7S/A/TM4m8=
+github.com/yukumo-group/yukumo-script v0.0.0-20260826132638-3c866b4bbe01/go.mod h1:DTJPHvHdI/ZUBmB3hsK2TMYx5NGYo0NGXQybS1TO5sU=
 github.com/zeozeozeo/gomplerate v0.0.0-20250404113140-0fbb236df825 h1:rViu1xhQRtdJogc39jF46PS01xHVD736JowXl2qOcPM=
 github.com/zeozeozeo/gomplerate v0.0.0-20250404113140-0fbb236df825/go.mod h1:ASuMFHITnaVdPvMkoDGI4tTwYG9fW7Mxv2j5AuvTo8Q=
 go.yaml.in/yaml/v3 v3.0.4/go.mod h1:DhzuOOF2ATzADvBadXxruRBLzYTpT36CKvDb3+aBEFg=

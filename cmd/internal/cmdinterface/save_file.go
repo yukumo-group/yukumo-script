@@ -10,6 +10,7 @@ import (
 // SaveFileAs saves the audio file to other directory
 func SaveFileAs(
 	title *color.Color,
+	text *color.Color,
 	originalFilePath string,
 ) error {
 	var targetDirectory string
@@ -24,11 +25,31 @@ func SaveFileAs(
 	if err != nil {
 		return err
 	}
+	formatList := api.GetAllPossibleAudioFormats()
+	_, _ = title.Println("Here are the available formats:")
+	for _, format := range formatList {
+		_, _ = text.Println(format)
+	}
+	_, _ = title.Println("Input the format you want for the exported file:")
+	var targetFormat string
+	fmt.Scan(&targetFormat)
+	find := false
+	for _, format := range formatList {
+		if format == targetFormat {
+			find = true
+		}
+	}
+	if !find {
+		return fmt.Errorf(
+			"format %s not supported",
+			targetFormat,
+		)
+	}
 	err = api.SaveAudioTo(
 		originalFilePath,
 		targetDirectory,
 		targetFileName,
-		"wav",
+		api.ConvertStringToFormat(targetFormat),
 	)
 	if err != nil {
 		return err
