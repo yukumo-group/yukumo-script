@@ -110,6 +110,8 @@ func (task *Task) GenerateWavFileName(
 func (task *Task) SaveFile(
 	targetDir string,
 ) (string, error) {
+	task.Lock()
+	defer task.Unlock()
 	// Marshal
 	marshalResult, errMarshal := json.Marshal(task)
 	if errMarshal != nil {
@@ -135,28 +137,36 @@ func (task *Task) Generate(
 	phontsDir string,
 	targetDir string,
 ) error {
+	task.Lock()
 	task.EditTime = time.Now()
 	fileName := task.GenerateWavFileName(targetDir)
+	taskText := task.Text
+	taskLanguage := task.TaskLanguage
+	taskCharacterID := task.CharacterID
+	characterManager := task.charactersManager
+	phontName := task.PhontName
+	speed := task.Speed
+	task.Unlock()
 	processedText, err := language.ConvertText(
-		task.Text,
-		task.TaskLanguage,
+		taskText,
+		taskLanguage,
 	)
 	if err != nil {
 		return err
 	}
 	var phontPath string
-	if task.CharacterID != nil {
-		if task.charactersManager == nil {
+	if taskCharacterID != nil {
+		if characterManager == nil {
 			return errors.New(
 				"the character list is nil, which is not allowed",
 			)
 		}
-		characterList := task.charactersManager.GetData()
-		character, exists := characterList[*task.CharacterID]
+		characterList := characterManager.GetData()
+		character, exists := characterList[*taskCharacterID]
 		if !exists {
 			return fmt.Errorf(
 				"character %s does not exists",
-				*task.CharacterID,
+				*taskCharacterID,
 			)
 		}
 		phontPath, err = tasks.PhontFile(
@@ -166,10 +176,10 @@ func (task *Task) Generate(
 		if err != nil {
 			return err
 		}
-	} else if task.PhontName != nil {
+	} else if phontName != nil {
 		phontPath, err = tasks.PhontFile(
 			phontsDir,
-			*task.PhontName,
+			*phontName,
 		)
 		if err != nil {
 			return err
@@ -180,7 +190,7 @@ func (task *Task) Generate(
 		)
 	}
 	generator := aquestalk2.NewGenerator(
-		task.Speed,
+		speed,
 		phontPath,
 		fileName,
 		processedText,
@@ -189,6 +199,8 @@ func (task *Task) Generate(
 	if err != nil {
 		return err
 	}
+	task.Lock()
 	task.ResultFile = &fileName
+	task.Unlock()
 	return nil
 }
