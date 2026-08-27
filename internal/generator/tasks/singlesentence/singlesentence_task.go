@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"sync"
 	"time"
 
 	"github.com/google/uuid"
@@ -17,6 +18,7 @@ import (
 
 // Task defines the task of generating a single sentence
 type Task struct {
+	sync.RWMutex
 	ID                string            `json:"id"`
 	TaskName          string            `json:"taskName"`
 	Text              string            `json:"text"`

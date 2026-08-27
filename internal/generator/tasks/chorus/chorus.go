@@ -35,8 +35,8 @@ type Task struct {
 	wavDir            string
 }
 
-// NewChorustTask creates new chorus task
-func NewChorustTask(
+// NewChorusTask creates new chorus task
+func NewChorusTask(
 	text string,
 	phontList *[]string,
 	characterList *[]string,
@@ -107,11 +107,11 @@ func (task *Task) GenerateSingleFile(
 	task.Lock()
 	task.EditTime = time.Now()
 	speed := task.Speed
-	task.Unlock()
 	tmpFilePath := task.GenerateTempFileName(
 		generationMethod,
 		idx,
 	)
+	task.Unlock()
 	phontFilePath, err := tasks.PhontFile(
 		phontsDir,
 		phontName,
@@ -194,6 +194,7 @@ func (task *Task) GenerateAllAudiosCharacters(
 ) ([]string, error) {
 	task.RLock()
 	characterList := task.CharacterList
+	characterManager := task.charactersManager
 	task.RUnlock()
 	if characterList == nil {
 		return nil, nil
@@ -201,7 +202,7 @@ func (task *Task) GenerateAllAudiosCharacters(
 	resultFilePathChan := make(chan string, len(*characterList))
 	group, _ := errgroup.WithContext(ctx)
 	group.SetLimit(runtime.NumCPU() * 2)
-	tmpCharacterList := task.charactersManager.GetData()
+	tmpCharacterList := characterManager.GetData()
 	for i, characterID := range *characterList {
 		tmpIdx := i
 		group.Go(
@@ -252,15 +253,23 @@ func (task *Task) Generate(
 	phontsDir string,
 	targetDir string,
 ) error {
-	task.Lock()
+	task.RLock()
 	task.EditTime = time.Now()
-	task.Unlock()
+	fileName := task.GenerateWavFileName(
+		targetDir,
+	)
+	taskLanguage := task.TaskLanguage
+	taskText := task.Text
+	taskMixingConfig := task.MixingConfig
+	characterList := task.CharacterList
+	phontList := task.PhontList
+	task.RUnlock()
 	length := 0
-	if task.CharacterList != nil {
-		length += len(*task.CharacterList)
+	if characterList != nil {
+		length += len(*characterList)
 	}
-	if task.PhontList != nil {
-		length += len(*task.PhontList)
+	if phontList != nil {
+		length += len(*phontList)
 	}
 	if length == 0 {
 		return errors.New(
@@ -270,8 +279,8 @@ func (task *Task) Generate(
 	resultChan := make(chan string, length)
 	// Start generation
 	convertedText, err := language.ConvertText(
-		task.Text,
-		task.TaskLanguage,
+		taskText,
+		taskLanguage,
 	)
 	if err != nil {
 		return err
@@ -314,17 +323,16 @@ func (task *Task) Generate(
 	for res := range resultChan {
 		resultList = append(resultList, res)
 	}
-	fileName := task.GenerateWavFileName(
-		targetDir,
-	)
 	err = edit.MixAudios(
 		resultList,
-		task.MixingConfig,
+		taskMixingConfig,
 		fileName,
 	)
 	if err != nil {
 		return err
 	}
+	task.Lock()
 	task.ResultFile = &fileName
+	task.Unlock()
 	return nil
 }
