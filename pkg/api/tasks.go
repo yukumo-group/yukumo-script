@@ -25,7 +25,7 @@ func RegisterGeneratedTask(task *singlesentence.Task) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	if err := singlesentence.Manager.NewTask(task.TaskName, taskFile); err != nil {
+	if err := singlesentence.Manager.NewTask(task.GetTaskName(), taskFile); err != nil {
 		return "", err
 	}
 	return taskFile, nil
@@ -61,11 +61,12 @@ func GetResultFileForSingleSentenceTask(
 	if err != nil {
 		return "", err
 	}
-	if thisTask.ResultFile == nil {
+	resultFile := thisTask.GetResultFile()
+	if resultFile == nil {
 		return "", fmt.Errorf(
 			"task %s does not have result file",
 			taskName,
 		)
 	}
-	return *thisTask.ResultFile, nil
+	return *resultFile, nil
 }

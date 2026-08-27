@@ -24,10 +24,10 @@ func TestTaskSaveFileRoundTrip(t *testing.T) {
 	if err != nil {
 		t.Fatalf("NewSingleSentenceTask: %v", err)
 	}
-	if task.ID == "" || task.TaskName != "hello" || task.Text != "カナ" || task.Speed != 100 {
+	if task.ID == "" || task.GetTaskName() != "hello" || task.Text != "カナ" || task.Speed != 100 {
 		t.Fatalf("unexpected task: %+v", task)
 	}
-	if task.ResultFile != nil {
+	if task.GetResultFile() != nil {
 		t.Fatal("ResultFile should be nil before generate")
 	}
 

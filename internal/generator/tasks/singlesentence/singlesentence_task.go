@@ -204,3 +204,17 @@ func (task *Task) Generate(
 	task.Unlock()
 	return nil
 }
+
+// GetTaskName gets the name of the task
+func (task *Task) GetTaskName() string {
+	task.RLock()
+	defer task.RUnlock()
+	return task.TaskName
+}
+
+// GetResultFile gets result file for certain task
+func (task *Task) GetResultFile() *string {
+	task.RLock()
+	defer task.RUnlock()
+	return task.ResultFile
+}

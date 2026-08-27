@@ -50,7 +50,8 @@ func GenerateByPhont(
 	if err != nil {
 		return nil, err
 	}
-	if task.ResultFile == nil {
+	resultFile := task.GetResultFile()
+	if resultFile == nil {
 		return nil, errors.New("result file path is nil after generation")
 	}
 	taskFile, err := RegisterGeneratedTask(task)
@@ -58,7 +59,7 @@ func GenerateByPhont(
 		return nil, err
 	}
 	return &GenerateResult{
-		ResultFile: *task.ResultFile,
+		ResultFile: *resultFile,
 		TaskFile:   taskFile,
 	}, nil
 }
@@ -103,7 +104,8 @@ func GenerateByCharacter(
 	if err != nil {
 		return nil, err
 	}
-	if task.ResultFile == nil {
+	resultFile := task.GetResultFile()
+	if resultFile == nil {
 		return nil, fmt.Errorf("result file path is nil after generation")
 	}
 	taskFile, err := RegisterGeneratedTask(task)
@@ -111,7 +113,7 @@ func GenerateByCharacter(
 		return nil, err
 	}
 	return &GenerateResult{
-		ResultFile: *task.ResultFile,
+		ResultFile: *resultFile,
 		TaskFile:   taskFile,
 	}, nil
 }
