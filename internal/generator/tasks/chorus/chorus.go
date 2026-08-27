@@ -242,5 +242,13 @@ func (task *Task) Generate(
 	if task.CharacterList != nil {
 		length += len(*task.CharacterList)
 	}
+	if task.PhontList != nil {
+		length += len(*task.PhontList)
+	}
+	if length == 0 {
+		return errors.New(
+			"the total length of character list and phont list cannot be 0",
+		)
+	}
 	return nil
 }
