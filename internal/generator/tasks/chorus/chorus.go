@@ -12,6 +12,7 @@ import (
 	"github.com/yukumo-group/yukumo-script/internal/characters"
 	"github.com/yukumo-group/yukumo-script/internal/generator/aquestalk2"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/audio/edit"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/language"
 	"golang.org/x/sync/errgroup"
 )
@@ -19,16 +20,17 @@ import (
 // Task defines the chorus task for multiple characters
 type Task struct {
 	sync.RWMutex
-	ID                string            `json:"id"`
-	TaskName          string            `json:"taskName"`
-	CharacterList     *[]string         `json:"characterList"`
-	PhontList         *[]string         `json:"phontList"`
-	ResultFile        *string           `json:"resultFile"`
-	CreateTime        time.Time         `json:"createdTime"`
-	EditTime          time.Time         `json:"editTime"`
-	Text              string            `json:"text"`
-	TaskLanguage      language.Language `json:"taskLanguage"`
-	Speed             int               `json:"speed"`
+	ID                string             `json:"id"`
+	TaskName          string             `json:"taskName"`
+	CharacterList     *[]string          `json:"characterList"`
+	PhontList         *[]string          `json:"phontList"`
+	ResultFile        *string            `json:"resultFile"`
+	CreateTime        time.Time          `json:"createdTime"`
+	EditTime          time.Time          `json:"editTime"`
+	Text              string             `json:"text"`
+	TaskLanguage      language.Language  `json:"taskLanguage"`
+	Speed             int                `json:"speed"`
+	MixingConfig      *edit.MixingConfig `json:"mixingConfig"`
 	charactersManager *characters.Characters
 	wavDir            string
 }
@@ -41,6 +43,7 @@ func NewChorustTask(
 	speed int,
 	taskName string,
 	taskLanguage language.Language,
+	mixingConfig *edit.MixingConfig,
 	charactersManager *characters.Characters,
 	wavDir string,
 ) (*Task, error) {
@@ -58,6 +61,7 @@ func NewChorustTask(
 		CharacterList:     characterList,
 		CreateTime:        time.Now(),
 		EditTime:          time.Now(),
+		MixingConfig:      mixingConfig,
 		charactersManager: charactersManager,
 		wavDir:            wavDir,
 	}, nil
@@ -76,6 +80,19 @@ func (task *Task) GenerateTempFileName(
 		task.EditTime.Unix(),
 		generationMethod,
 		idx,
+	)
+}
+
+// GenerateWavName generates name for the result wav file
+func (task *Task) GenerateWavFileName(
+	targetDir string,
+) string {
+	return fmt.Sprintf(
+		"%s/%s_%s_%d.wav",
+		targetDir,
+		task.TaskName,
+		task.ID,
+		task.EditTime.Unix(),
 	)
 }
 
@@ -250,5 +267,64 @@ func (task *Task) Generate(
 			"the total length of character list and phont list cannot be 0",
 		)
 	}
+	resultChan := make(chan string, length)
+	// Start generation
+	convertedText, err := language.ConvertText(
+		task.Text,
+		task.TaskLanguage,
+	)
+	if err != nil {
+		return err
+	}
+	group, ctx := errgroup.WithContext(ctx)
+	group.Go(
+		func() error {
+			results, err := task.GenerateAllAudiosCharacters(
+				ctx,
+				phontsDir,
+				convertedText,
+			)
+			if err != nil {
+				return err
+			}
+			for _, result := range results {
+				resultChan <- result
+			}
+			return nil
+		},
+	)
+	group.Go(
+		func() error {
+			results, err := task.GenerateAllAudiosPhonts(
+				ctx,
+				phontsDir,
+				convertedText,
+			)
+			if err != nil {
+				return err
+			}
+			for _, result := range results {
+				resultChan <- result
+			}
+			return nil
+		},
+	)
+	close(resultChan)
+	resultList := []string{}
+	for res := range resultChan {
+		resultList = append(resultList, res)
+	}
+	fileName := task.GenerateWavFileName(
+		targetDir,
+	)
+	err = edit.MixAudios(
+		resultList,
+		task.MixingConfig,
+		fileName,
+	)
+	if err != nil {
+		return err
+	}
+	task.ResultFile = &fileName
 	return nil
 }
