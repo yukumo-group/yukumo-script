@@ -13,23 +13,26 @@ import (
 	"github.com/yukumo-group/yukumo-script/internal/characters"
 	"github.com/yukumo-group/yukumo-script/internal/generator/aquestalk2"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/audio/edit"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/language"
 )
 
 // Task defines the task of generating a single sentence
 type Task struct {
-	sync.RWMutex      `json:"-"`
-	ID                string            `json:"id"`
-	TaskName          string            `json:"taskName"`
-	Text              string            `json:"text"`
-	TaskLanguage      language.Language `json:"taskLanguage"`
-	Speed             int               `json:"speed"`
-	CreateTime        time.Time         `json:"createTime"`
-	EditTime          time.Time         `json:"editTime"`
-	CharacterID       *string           `json:"characterID"`
-	PhontName         *string           `json:"phontName"`
-	ResultFile        *string           `json:"resultFile"`
-	charactersManager *characters.Characters
+	sync.RWMutex         `json:"-"`
+	ID                   string              `json:"id"`
+	TaskName             string              `json:"taskName"`
+	Text                 string              `json:"text"`
+	TaskLanguage         language.Language   `json:"taskLanguage"`
+	Speed                int                 `json:"speed"`
+	CreateTime           time.Time           `json:"createTime"`
+	EditTime             time.Time           `json:"editTime"`
+	CharacterID          *string             `json:"characterID"`
+	PhontName            *string             `json:"phontName"`
+	ResultFile           *string             `json:"resultFile"`
+	EffectUsedResultFile *string             `json:"effectUsedResultFile"`
+	EffectList           []*edit.AudioEffect `json:"effectList"`
+	charactersManager    *characters.Characters
 }
 
 // NewSingleSentenceTask creates new single sentence task
@@ -98,12 +101,31 @@ func (task *Task) GenerateFileName(
 func (task *Task) GenerateWavFileName(
 	targetDir string,
 ) string {
+	tmpID := uuid.NewString()
 	return fmt.Sprintf(
-		"%s/%s_%s_%d.wav",
+		"%s/%s_%s_%d_%s.wav",
 		targetDir,
 		task.TaskName,
 		task.ID,
 		task.EditTime.UnixNano(),
+		tmpID,
+	)
+}
+
+// GenerateTempWavFile genereats name for temporary wav file
+func (task *Task) GenerateTempWavFile(
+	tempFileDir string,
+	processMethod edit.Process,
+) string {
+	tmpID := uuid.NewString()
+	return fmt.Sprintf(
+		"%s/%s_%s_%d_%s_%s.wav",
+		tempFileDir,
+		task.TaskName,
+		task.ID,
+		task.EditTime.UnixNano(),
+		processMethod,
+		tmpID,
 	)
 }
 
@@ -226,10 +248,37 @@ func (task *Task) GetResultFile() *string {
 	return task.ResultFile
 }
 
+// IsGenerated checks if the task already generated the file
+func (task *Task) IsGenerated() bool {
+	task.RLock()
+	defer task.RUnlock()
+	if task.ResultFile == nil {
+		return false
+	}
+	return true
+}
+
 // UseEffect is just to be with the interface
 func (task *Task) UseEffect(
 	ctx context.Context,
 	targetDir string,
+	tempDir string,
 ) error {
+	task.Lock()
+	defer task.Unlock()
+	if task.ResultFile == nil {
+		return errors.New(
+			"you have to generate the file first",
+		)
+	}
+	_, err := os.Stat(*task.ResultFile)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return errors.New(
+				"the result file might be deleted, please regenerate the audio",
+			)
+		}
+		return err
+	}
 	return nil
 }

@@ -72,14 +72,16 @@ func (task *Task) GenerateTempFileName(
 	generationMethod string,
 	idx int,
 ) string {
+	tmpID := uuid.NewString()
 	return fmt.Sprintf(
-		"%s/%s_%s_%d_%s_%d.wav",
+		"%s/%s_%s_%d_%s_%d_%s.wav",
 		task.wavDir,
 		task.TaskName,
 		task.ID,
 		task.EditTime.UnixNano(),
 		generationMethod,
 		idx,
+		tmpID,
 	)
 }
 
@@ -87,12 +89,14 @@ func (task *Task) GenerateTempFileName(
 func (task *Task) GenerateWavFileName(
 	targetDir string,
 ) string {
+	tmpID := uuid.NewString()
 	return fmt.Sprintf(
-		"%s/%s_%s_%d.wav",
+		"%s/%s_%s_%d_%s.wav",
 		targetDir,
 		task.TaskName,
 		task.ID,
 		task.EditTime.UnixNano(),
+		tmpID,
 	)
 }
 
@@ -346,6 +350,7 @@ func (task *Task) Generate(
 func (task *Task) UseEffect(
 	ctx context.Context,
 	targetDir string,
+	tempDir string,
 ) error {
 	return nil
 }

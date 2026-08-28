@@ -55,3 +55,50 @@ func TestInterface(t *testing.T) {
 		t.Error("singlesentence.Task does not support task interface")
 	}
 }
+
+func TestGenerateFileName(t *testing.T) {
+	t.Parallel()
+	cid := "Reimu"
+	testTask, err := singlesentence.NewSingleSentenceTask(
+		"text",
+		&cid,
+		nil,
+		100,
+		"t",
+		language.Japanese,
+		nil,
+	)
+	if err != nil {
+		t.Error(err)
+	}
+	chan1 := make(chan string)
+	chan2 := make(chan string)
+	var result1 string
+	var result2 string
+	tmpDir := t.TempDir()
+	func1 := func() {
+		chan1 <- testTask.GenerateWavFileName(
+			tmpDir,
+		)
+	}
+	func2 := func() {
+		chan2 <- testTask.GenerateWavFileName(
+			tmpDir,
+		)
+	}
+	go func1()
+	go func2()
+	for i := 0; i < 2; i++ {
+		select {
+		case result1 = <-chan1:
+		case result2 = <-chan2:
+		}
+	}
+	if result1 == result2 {
+		t.Errorf(
+			"expected two result %s and %s not to be the same",
+			result1,
+			result2,
+		)
+	}
+}

@@ -58,11 +58,13 @@ func (task *Task) Generate(
 ) error {
 	task.EditTime = time.Now()
 	// Create file
+	tmpID := uuid.NewString()
 	targetFileDir := fmt.Sprintf(
-		"%s/empty_%s_%d.wav",
+		"%s/empty_%s_%d_%s.wav",
 		targetDir,
 		task.ID,
 		task.EditTime.UnixNano(),
+		tmpID,
 	)
 	file, errCreateFile := os.Create(targetFileDir)
 	if errCreateFile != nil {
@@ -97,6 +99,7 @@ func (task *Task) Generate(
 func (task *Task) UseEffect(
 	ctx context.Context,
 	targetDir string,
+	tempDir string,
 ) error {
 	return nil
 }

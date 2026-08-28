@@ -16,5 +16,6 @@ type Task interface {
 	UseEffect(
 		ctx context.Context,
 		targetDir string,
+		tempDir string,
 	) error
 }
