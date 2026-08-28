@@ -252,10 +252,8 @@ func (task *Task) GetResultFile() *string {
 func (task *Task) IsGenerated() bool {
 	task.RLock()
 	defer task.RUnlock()
-	if task.ResultFile == nil {
-		return false
-	}
-	return true
+	result := task.ResultFile != nil
+	return result
 }
 
 // UseEffect is just to be with the interface
