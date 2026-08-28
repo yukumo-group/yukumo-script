@@ -167,7 +167,7 @@ func (task *Task) Generate(
 		character, exists := characterList[*taskCharacterID]
 		if character == nil {
 			return errors.New(
-				"The charaacter cannot be nil",
+				"the charaacter cannot be nil",
 			)
 		}
 		if !exists {

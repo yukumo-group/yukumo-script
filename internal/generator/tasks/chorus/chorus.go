@@ -216,7 +216,7 @@ func (task *Task) GenerateAllAudiosCharacters(
 				}
 				if character == nil {
 					return errors.New(
-						"The charaacter cannot be nil",
+						"the charaacter cannot be nil",
 					)
 				}
 				tmpPhontName := character.PhontName

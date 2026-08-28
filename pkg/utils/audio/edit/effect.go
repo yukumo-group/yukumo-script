@@ -31,7 +31,7 @@ func (effect *AudioEffect) UseEffect(
 	case Resample:
 		resampleData, ok := effect.Data.(ResampleData)
 		if !ok {
-			return errors.New("data type not supported!")
+			return errors.New("data type not supported")
 		}
 		err := UpdateResampledFile(
 			originalFilePath,
