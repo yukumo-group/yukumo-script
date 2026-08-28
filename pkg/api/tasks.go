@@ -6,6 +6,7 @@ import (
 	"slices"
 	"time"
 
+	"github.com/yukumo-group/yukumo-script/internal/characters"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
 )
 
@@ -47,7 +48,7 @@ func RandomTaskName(
 	return fmt.Sprintf(
 		"New_%s_Task_%d",
 		taskType,
-		time.Now().Unix(),
+		time.Now().UnixNano(),
 	)
 }
 
@@ -57,6 +58,7 @@ func GetResultFileForSingleSentenceTask(
 ) (string, error) {
 	thisTask, err := singlesentence.Manager.GetTask(
 		taskName,
+		characters.CharacterList,
 	)
 	if err != nil {
 		return "", err

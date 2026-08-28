@@ -62,7 +62,7 @@ func (task *Task) Generate(
 		"%s/empty_%s_%d.wav",
 		targetDir,
 		task.ID,
-		task.EditTime.Unix(),
+		task.EditTime.UnixNano(),
 	)
 	file, errCreateFile := os.Create(targetFileDir)
 	if errCreateFile != nil {
@@ -90,5 +90,13 @@ func (task *Task) Generate(
 		return errEncode
 	}
 	task.ResultFile = &targetFileDir
+	return nil
+}
+
+// UseEffect is just to be with the interface
+func (task *Task) UseEffect(
+	ctx context.Context,
+	targetDir string,
+) error {
 	return nil
 }

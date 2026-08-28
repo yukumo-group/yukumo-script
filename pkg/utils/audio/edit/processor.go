@@ -32,7 +32,7 @@ func ResampleWAV(
 func UpdateResampledFile(
 	wavFileName string,
 	targetSampleRate int,
-	targetFileDir string,
+	targetFilePath string,
 ) error {
 	// Read wav data
 	wavBytes, errReadWavFile := os.ReadFile(wavFileName)
@@ -60,7 +60,7 @@ func UpdateResampledFile(
 		return errResample
 	}
 	// Open file
-	file, err := os.Create(targetFileDir)
+	file, err := os.Create(targetFilePath)
 	if err != nil {
 		return err
 	}

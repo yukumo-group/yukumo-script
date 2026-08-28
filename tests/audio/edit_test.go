@@ -276,3 +276,30 @@ func TestMixAudio(
 		t.Error(err)
 	}
 }
+
+func TestIntegratedEffectMethod(t *testing.T) {
+	t.Parallel()
+	effect := edit.NewAudioEffect(
+		edit.Resample,
+		edit.ResampleData{
+			TargetSampleRate: 16000,
+		},
+	)
+	targetFilePath := fmt.Sprintf(
+		"%s/%s",
+		t.TempDir(),
+		"test.wav",
+	)
+	err := effect.UseEffect(
+		"testdata/example_aq_f1c.wav",
+		targetFilePath,
+	)
+	if err != nil {
+		t.Error(err)
+	}
+	info, err := audio.GetAudioInfo(targetFilePath)
+	if err != nil {
+		t.Error(err)
+	}
+	t.Log(info.Length)
+}

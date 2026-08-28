@@ -35,3 +35,10 @@ func ToProcess(
 		return NotAvailable
 	}
 }
+
+// GetAllAudioProcesses gets all the audio processes
+func GetAllAudioProcesses() []Process {
+	return []Process{
+		Resample,
+	}
+}

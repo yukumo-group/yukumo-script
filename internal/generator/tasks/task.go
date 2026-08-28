@@ -12,4 +12,9 @@ type Task interface {
 		phontsDir string,
 		targetDir string,
 	) error
+	// UseEffect uses effects on the generated audio file
+	UseEffect(
+		ctx context.Context,
+		targetDir string,
+	) error
 }

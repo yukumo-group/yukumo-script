@@ -77,7 +77,7 @@ func (task *Task) GenerateTempFileName(
 		task.wavDir,
 		task.TaskName,
 		task.ID,
-		task.EditTime.Unix(),
+		task.EditTime.UnixNano(),
 		generationMethod,
 		idx,
 	)
@@ -92,7 +92,7 @@ func (task *Task) GenerateWavFileName(
 		targetDir,
 		task.TaskName,
 		task.ID,
-		task.EditTime.Unix(),
+		task.EditTime.UnixNano(),
 	)
 }
 
@@ -212,6 +212,11 @@ func (task *Task) GenerateAllAudiosCharacters(
 					return fmt.Errorf(
 						"character %s does not exists",
 						characterID,
+					)
+				}
+				if character == nil {
+					return errors.New(
+						"The charaacter cannot be nil",
 					)
 				}
 				tmpPhontName := character.PhontName
@@ -334,5 +339,13 @@ func (task *Task) Generate(
 	task.Lock()
 	task.ResultFile = &fileName
 	task.Unlock()
+	return nil
+}
+
+// UseEffect is just to be with the interface
+func (task *Task) UseEffect(
+	ctx context.Context,
+	targetDir string,
+) error {
 	return nil
 }

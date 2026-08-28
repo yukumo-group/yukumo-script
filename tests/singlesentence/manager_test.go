@@ -86,6 +86,7 @@ func TestTaskManagerJSON(t *testing.T) {
 	}
 	newTask, err := mgr2.GetTask(
 		task.TaskName,
+		nil,
 	)
 	if err != nil {
 		t.Error(err)

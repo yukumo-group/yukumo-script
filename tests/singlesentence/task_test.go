@@ -36,7 +36,7 @@ func TestTaskSaveFileRoundTrip(t *testing.T) {
 		t.Fatalf("SaveFile: %v", err)
 	}
 
-	loaded, err := singlesentence.NewSingleSentenceTaskFromFile(path)
+	loaded, err := singlesentence.NewSingleSentenceTaskFromFile(path, nil)
 	if err != nil {
 		t.Fatalf("NewSingleSentenceTaskFromFile: %v", err)
 	}

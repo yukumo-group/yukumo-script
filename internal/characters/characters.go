@@ -4,15 +4,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"maps"
 	"os"
 	"sync"
 )
 
 // Characters stores the list of characters
 type Characters struct {
-	sync.RWMutex
-	Data     map[string]*Character `json:"data"`
-	fileName string
+	sync.RWMutex `json:"-"`
+	Data         map[string]*Character `json:"data"`
+	fileName     string
 }
 
 // NewCharacters creates new Characters
@@ -172,5 +173,5 @@ func (characters *Characters) SaveData() error {
 func (characters *Characters) GetData() map[string]*Character {
 	characters.RLock()
 	defer characters.RUnlock()
-	return characters.Data
+	return maps.Clone(characters.Data)
 }

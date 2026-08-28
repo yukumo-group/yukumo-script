@@ -5,14 +5,18 @@ import (
 	"fmt"
 	"os"
 	"sync"
+
+	"maps"
+
+	"github.com/yukumo-group/yukumo-script/internal/characters"
 )
 
 // TaskManager creates new task.
 // This links task metadata to the task name.
 type TaskManager struct {
-	sync.RWMutex
-	Tasks    map[string]string `json:"tasks"`
-	fileName string
+	sync.RWMutex `json:"-"`
+	Tasks        map[string]string `json:"tasks"`
+	fileName     string
 }
 
 // NewTaskManager creates new task manager
@@ -124,7 +128,7 @@ func (manager *TaskManager) NewTask(
 func (manager *TaskManager) GetAllTasks() map[string]string {
 	manager.RLock()
 	defer manager.RUnlock()
-	return manager.Tasks
+	return maps.Clone(manager.Tasks)
 }
 
 // HasTask checks if certain task with task name exists
@@ -140,6 +144,7 @@ func (manager *TaskManager) HasTask(
 // GetTask gets the task with certain task name
 func (manager *TaskManager) GetTask(
 	taskName string,
+	charactersManager *characters.Characters,
 ) (*Task, error) {
 	manager.RLock()
 	defer manager.RUnlock()
@@ -152,5 +157,6 @@ func (manager *TaskManager) GetTask(
 	}
 	return NewSingleSentenceTaskFromFile(
 		thisTaskfilePath,
+		charactersManager,
 	)
 }

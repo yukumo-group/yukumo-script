@@ -59,6 +59,8 @@ github.com/yukumo-group/yukumo-script v0.0.0-20260826015601-2d0bc8f7d4e2 h1:DB1E
 github.com/yukumo-group/yukumo-script v0.0.0-20260826015601-2d0bc8f7d4e2/go.mod h1:DTJPHvHdI/ZUBmB3hsK2TMYx5NGYo0NGXQybS1TO5sU=
 github.com/yukumo-group/yukumo-script v0.0.0-20260826132638-3c866b4bbe01 h1:ZI+IMJc97yshFf0Yz1n2jexU2Ae+adzgP7S/A/TM4m8=
 github.com/yukumo-group/yukumo-script v0.0.0-20260826132638-3c866b4bbe01/go.mod h1:DTJPHvHdI/ZUBmB3hsK2TMYx5NGYo0NGXQybS1TO5sU=
+github.com/yukumo-group/yukumo-script v0.0.0-20260827062743-5cdf1d7562ee h1:VCSUilqO8pc8X2M9Ej/EM4H5szeAfFAKyfOCmoDycZQ=
+github.com/yukumo-group/yukumo-script v0.0.0-20260827062743-5cdf1d7562ee/go.mod h1:DTJPHvHdI/ZUBmB3hsK2TMYx5NGYo0NGXQybS1TO5sU=
 github.com/zeozeozeo/gomplerate v0.0.0-20250404113140-0fbb236df825 h1:rViu1xhQRtdJogc39jF46PS01xHVD736JowXl2qOcPM=
 github.com/zeozeozeo/gomplerate v0.0.0-20250404113140-0fbb236df825/go.mod h1:ASuMFHITnaVdPvMkoDGI4tTwYG9fW7Mxv2j5AuvTo8Q=
 go.yaml.in/yaml/v3 v3.0.4/go.mod h1:DhzuOOF2ATzADvBadXxruRBLzYTpT36CKvDb3+aBEFg=

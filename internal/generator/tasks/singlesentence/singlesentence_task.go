@@ -18,7 +18,7 @@ import (
 
 // Task defines the task of generating a single sentence
 type Task struct {
-	sync.RWMutex
+	sync.RWMutex      `json:"-"`
 	ID                string            `json:"id"`
 	TaskName          string            `json:"taskName"`
 	Text              string            `json:"text"`
@@ -66,6 +66,7 @@ func NewSingleSentenceTask(
 // NewSingleSentenceTaskFromFile gets single sentence task from file
 func NewSingleSentenceTaskFromFile(
 	fileName string,
+	charactersManager *characters.Characters,
 ) (*Task, error) {
 	var result Task
 	data, errRead := os.ReadFile(fileName)
@@ -76,6 +77,7 @@ func NewSingleSentenceTaskFromFile(
 	if errJSON != nil {
 		return nil, errJSON
 	}
+	result.charactersManager = charactersManager
 	return &result, nil
 }
 
@@ -88,7 +90,7 @@ func (task *Task) GenerateFileName(
 		targetDir,
 		task.TaskName,
 		task.ID,
-		task.CreateTime.Unix(),
+		task.CreateTime.UnixNano(),
 	)
 }
 
@@ -101,7 +103,7 @@ func (task *Task) GenerateWavFileName(
 		targetDir,
 		task.TaskName,
 		task.ID,
-		task.EditTime.Unix(),
+		task.EditTime.UnixNano(),
 	)
 }
 
@@ -163,6 +165,11 @@ func (task *Task) Generate(
 		}
 		characterList := characterManager.GetData()
 		character, exists := characterList[*taskCharacterID]
+		if character == nil {
+			return errors.New(
+				"The charaacter cannot be nil",
+			)
+		}
 		if !exists {
 			return fmt.Errorf(
 				"character %s does not exists",
@@ -217,4 +224,12 @@ func (task *Task) GetResultFile() *string {
 	task.RLock()
 	defer task.RUnlock()
 	return task.ResultFile
+}
+
+// UseEffect is just to be with the interface
+func (task *Task) UseEffect(
+	ctx context.Context,
+	targetDir string,
+) error {
+	return nil
 }
