@@ -1,7 +1,11 @@
 package api
 
 import (
+	"time"
+
+	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/audio"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/audio/edit"
 )
 
 // filePathForProg stores the file path needed
@@ -85,4 +89,34 @@ type FilePathes struct {
 	ConfDir                 string
 	CharactersFile          string
 	EnglishTexts            string
+}
+
+// TaskInfo defines the information for task
+type TaskInfo struct {
+	TaskName    string
+	CreateTime  time.Time
+	EditTime    time.Time
+	Generated   bool
+	EffectsUsed bool
+	Text        string
+	Effects     []*edit.AudioEffect
+}
+
+// SingleSentenceTaskToTaskInfo converts single sentence task to task info
+func SingleSentenceTaskToTaskInfo(
+	task *singlesentence.Task,
+) *TaskInfo {
+	generated := task.IsGenerated()
+	effectUsed := task.IsEffectUsed()
+	task.RLock()
+	defer task.RUnlock()
+	return &TaskInfo{
+		TaskName:    task.TaskName,
+		CreateTime:  task.CreateTime,
+		EditTime:    task.EditTime,
+		Generated:   generated,
+		Text:        task.Text,
+		EffectsUsed: effectUsed,
+		Effects:     task.EffectList,
+	}
 }

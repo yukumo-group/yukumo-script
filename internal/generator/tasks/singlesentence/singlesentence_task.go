@@ -256,6 +256,14 @@ func (task *Task) IsGenerated() bool {
 	return result
 }
 
+// IsEffectUsed checks if the effect is used on this task
+func (task *Task) IsEffectUsed() bool {
+	task.RLock()
+	defer task.RUnlock()
+	result := task.EffectUsedResultFile != nil
+	return result
+}
+
 // UseEffect is just to be with the interface
 func (task *Task) UseEffect(
 	ctx context.Context,
@@ -278,5 +286,27 @@ func (task *Task) UseEffect(
 		}
 		return err
 	}
+	currentFilePath := *task.ResultFile
+	for i, effect := range task.EffectList {
+		if effect == nil {
+			return fmt.Errorf(
+				"%d of the effect list for this task is nil",
+				i,
+			)
+		}
+		newFilePath := task.GenerateTempWavFile(
+			tempDir,
+			effect.ProcessType,
+		)
+		err := effect.UseEffect(
+			currentFilePath,
+			newFilePath,
+		)
+		if err != nil {
+			return err
+		}
+		currentFilePath = newFilePath
+	}
+	task.EffectUsedResultFile = &currentFilePath
 	return nil
 }
