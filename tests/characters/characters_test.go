@@ -75,3 +75,17 @@ func TestCharactersCRUDAndJSON(t *testing.T) {
 		)
 	}
 }
+
+func TestCharacterDataClean(t *testing.T) {
+	t.Parallel()
+	newCharacter := characters.NewCharacters()
+	newCharacter.Data = map[string]*characters.Character{
+		"a": nil,
+	}
+	newCharacter.CleanData()
+	characters := newCharacter.GetData()
+	_, exists := characters["a"]
+	if exists {
+		t.Error("expect this one to get cleaned")
+	}
+}

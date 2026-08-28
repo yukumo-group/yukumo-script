@@ -40,6 +40,7 @@ func Init() error {
 	if err := characters.CharacterList.ReadData(); err != nil {
 		return err
 	}
+	characters.CharacterList.CleanData()
 	return InitTaskManager()
 }
 

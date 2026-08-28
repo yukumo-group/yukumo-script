@@ -175,3 +175,18 @@ func (characters *Characters) GetData() map[string]*Character {
 	defer characters.RUnlock()
 	return maps.Clone(characters.Data)
 }
+
+// CleanData cleans all the data
+func (characters *Characters) CleanData() {
+	characterData := characters.GetData()
+	characters.Lock()
+	defer characters.Unlock()
+	for characterID := range characterData {
+		data, exists := characterData[characterID]
+		if exists {
+			if data == nil {
+				delete(characters.Data, characterID)
+			}
+		}
+	}
+}
