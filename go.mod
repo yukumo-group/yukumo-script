@@ -10,6 +10,7 @@ require (
 	github.com/jonchammer/audio-io v0.3.0
 	github.com/unitoftime/beep v0.0.0-20260407205258-62236bbd2ba3
 	github.com/zeozeozeo/gomplerate v0.0.0-20250404113140-0fbb236df825
+	go.yaml.in/yaml/v4 v4.0.0-rc.6
 	golang.org/x/sync v0.22.0
 )
 

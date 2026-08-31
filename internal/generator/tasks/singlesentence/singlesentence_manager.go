@@ -84,7 +84,8 @@ func (manager *TaskManager) ReadData() error {
 	if errRead != nil {
 		return errRead
 	}
-	return json.Unmarshal(data, manager)
+	err := json.Unmarshal(data, manager)
+	return err
 }
 
 // DeleteTask deletes certain task

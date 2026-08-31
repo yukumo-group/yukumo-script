@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"os"
 	"runtime"
 	"sync"
 	"time"
@@ -20,19 +21,21 @@ import (
 // Task defines the chorus task for multiple characters
 type Task struct {
 	sync.RWMutex
-	ID                string             `json:"id"`
-	TaskName          string             `json:"taskName"`
-	CharacterList     *[]string          `json:"characterList"`
-	PhontList         *[]string          `json:"phontList"`
-	ResultFile        *string            `json:"resultFile"`
-	CreateTime        time.Time          `json:"createdTime"`
-	EditTime          time.Time          `json:"editTime"`
-	Text              string             `json:"text"`
-	TaskLanguage      language.Language  `json:"taskLanguage"`
-	Speed             int                `json:"speed"`
-	MixingConfig      *edit.MixingConfig `json:"mixingConfig"`
-	charactersManager *characters.Characters
-	wavDir            string
+	ID                   string              `json:"id"`
+	TaskName             string              `json:"taskName"`
+	CharacterList        *[]string           `json:"characterList"`
+	PhontList            *[]string           `json:"phontList"`
+	EffectUsedResultFile *string             `json:"effectUsedResultFile"`
+	ResultFile           *string             `json:"resultFile"`
+	CreateTime           time.Time           `json:"createdTime"`
+	EditTime             time.Time           `json:"editTime"`
+	Text                 string              `json:"text"`
+	TaskLanguage         language.Language   `json:"taskLanguage"`
+	Speed                int                 `json:"speed"`
+	MixingConfig         *edit.MixingConfig  `json:"mixingConfig"`
+	EffectList           []*edit.AudioEffect `json:"effectList"`
+	charactersManager    *characters.Characters
+	wavDir               string
 }
 
 // NewChorusTask creates new chorus task
@@ -81,21 +84,6 @@ func (task *Task) GenerateTempFileName(
 		task.EditTime.UnixNano(),
 		generationMethod,
 		idx,
-		tmpID,
-	)
-}
-
-// GenerateWavName generates name for the result wav file
-func (task *Task) GenerateWavFileName(
-	targetDir string,
-) string {
-	tmpID := uuid.NewString()
-	return fmt.Sprintf(
-		"%s/%s_%s_%d_%s.wav",
-		targetDir,
-		task.TaskName,
-		task.ID,
-		task.EditTime.UnixNano(),
 		tmpID,
 	)
 }
@@ -352,5 +340,43 @@ func (task *Task) UseEffect(
 	targetDir string,
 	tempDir string,
 ) error {
+	task.Lock()
+	defer task.Unlock()
+	if task.ResultFile == nil {
+		return errors.New(
+			"you have to generate the file first",
+		)
+	}
+	_, err := os.Stat(*task.ResultFile)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return errors.New(
+				"the result file might be deleted, please regenerate the audio",
+			)
+		}
+		return err
+	}
+	currentFilePath := *task.ResultFile
+	for i, effect := range task.EffectList {
+		if effect == nil {
+			return fmt.Errorf(
+				"%d of the effect list for this task is nil",
+				i,
+			)
+		}
+		newFilePath := task.GenerateTempWavFile(
+			tempDir,
+			effect.ProcessType,
+		)
+		err := effect.UseEffect(
+			currentFilePath,
+			newFilePath,
+		)
+		if err != nil {
+			return err
+		}
+		currentFilePath = newFilePath
+	}
+	task.EffectUsedResultFile = &currentFilePath
 	return nil
 }

@@ -72,3 +72,20 @@ func GetResultFileForSingleSentenceTask(
 	}
 	return *resultFile, nil
 }
+
+// GetTask gets task from manager
+func GetTask(
+	taskName string,
+) (*TaskInfo, error) {
+	task, err := singlesentence.Manager.GetTask(
+		taskName,
+		characters.CharacterList,
+	)
+	if err != nil {
+		return nil, err
+	}
+	result := SingleSentenceTaskToTaskInfo(
+		task,
+	)
+	return result, nil
+}
