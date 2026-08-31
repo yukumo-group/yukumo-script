@@ -21,9 +21,11 @@ type Task struct {
 
 // NewTask chreates new task
 func NewSequenceTask(
-	TaskName string,
+	taskName string,
+	config *characters.Characters,
 ) *Task {
 	return &Task{
-		TaskName: TaskName,
+		TaskName:   taskName,
+		characters: config,
 	}
 }
