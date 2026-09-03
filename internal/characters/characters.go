@@ -59,6 +59,19 @@ func (characters *Characters) AddCharacter(
 	)
 }
 
+// AddMultipleCharacters adds many characters
+func (characters *Characters) AddMultipleCharacters(
+	character ...*Character,
+) error {
+	for _, singleCharacter := range character {
+		err := characters.AddCharacter(singleCharacter)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // UpdateCharacter change the info inside a character
 func (characters *Characters) ChangeCharacter(
 	newCharacter *Character,
@@ -189,4 +202,22 @@ func (characters *Characters) CleanData() {
 			}
 		}
 	}
+}
+
+// SetProfileImage sets the profile image
+func (characters *Characters) SetProfileImage(
+	imagePath string,
+	characterName string,
+) error {
+	characters.Lock()
+	defer characters.Unlock()
+	_, exists := characters.Data[characterName]
+	if !exists {
+		return fmt.Errorf(
+			"%s character does not exists",
+			characterName,
+		)
+	}
+	characters.Data[characterName].ProfileImagePath = &imagePath
+	return nil
 }

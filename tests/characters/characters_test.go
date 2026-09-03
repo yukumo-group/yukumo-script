@@ -89,3 +89,34 @@ func TestCharacterDataClean(t *testing.T) {
 		t.Error("expect this one to get cleaned")
 	}
 }
+
+func TestSetProfileImage(t *testing.T) {
+	t.Parallel()
+	img := "img.png"
+	c := characters.NewCharacter("Yukumo", "f1", "desc", nil)
+	c2 := characters.NewCharacter("A", "b", "c", nil)
+	cs := characters.NewCharacters()
+	cs.AddMultipleCharacters(c, c2)
+	err := cs.SetProfileImage(
+		img,
+		"A",
+	)
+	if err != nil {
+		t.Error(err)
+	}
+	res := cs.GetData()
+	data, exists := res["A"]
+	if !exists {
+		t.Error("A is not added")
+	}
+	if data.ProfileImagePath == nil {
+		t.Error("Profile image not set")
+	}
+	if *data.ProfileImagePath != img {
+		t.Errorf(
+			"profile image expected %s, got %s",
+			img,
+			*data.ProfileImagePath,
+		)
+	}
+}

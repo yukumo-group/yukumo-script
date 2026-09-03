@@ -1,5 +1,3 @@
-use_predefined_characters: true
-config_name: test1
 raw_characters:
 - phont_name: aq_rm
   character_name: Remilia Scarlet
