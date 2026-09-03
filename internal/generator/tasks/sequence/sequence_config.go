@@ -96,7 +96,10 @@ func (config *RawConfig) ToTaskConfig() (*TaskConfig, error) {
 		}
 		for _, rawCharacter := range *config.Characters {
 			newProcessedCharacter := rawCharacter.ToCharacter()
-			thisCharacterList.AddCharacter(newProcessedCharacter)
+			err := thisCharacterList.AddCharacter(newProcessedCharacter)
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 	// Set Default Speed

@@ -96,8 +96,11 @@ func TestSetProfileImage(t *testing.T) {
 	c := characters.NewCharacter("Yukumo", "f1", "desc", nil)
 	c2 := characters.NewCharacter("A", "b", "c", nil)
 	cs := characters.NewCharacters()
-	cs.AddMultipleCharacters(c, c2)
-	err := cs.SetProfileImage(
+	err := cs.AddMultipleCharacters(c, c2)
+	if err != nil {
+		t.Error(err)
+	}
+	err = cs.SetProfileImage(
 		img,
 		"A",
 	)
