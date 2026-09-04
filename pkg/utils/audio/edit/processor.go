@@ -31,7 +31,7 @@ func ResampleWAV(
 // UpdateResampledFile updates a file
 func UpdateResampledFile(
 	wavFileName string,
-	targetSampleRate int,
+	targetSampleRate SupportedSampleRate,
 	targetFilePath string,
 ) error {
 	// Read wav data
@@ -50,11 +50,15 @@ func UpdateResampledFile(
 	for i, data := range wavBuffer.Data {
 		decodedData[i] = int16(data)
 	}
+	processedSampleRate, err := targetSampleRate.ToInt()
+	if err != nil {
+		return err
+	}
 	resampledDecodedData, errResample := ResampleWAV(
 		decodedData,
 		wavBuffer.Format.NumChannels,
 		wavBuffer.Format.SampleRate,
-		targetSampleRate,
+		processedSampleRate,
 	)
 	if errResample != nil {
 		return errResample

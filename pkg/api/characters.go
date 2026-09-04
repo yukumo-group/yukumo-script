@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/yukumo-group/yukumo-script/internal/characters"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/osoperation"
 )
 
 // GetAllCharacters gets all the data
@@ -25,6 +26,31 @@ func AddCharacter(
 	description string,
 	profileImagePath *string,
 ) error {
+	// Check if profile image is supported
+	if profileImagePath != nil {
+		_, supported := osoperation.IsSuffixSupported(
+			*profileImagePath,
+			osoperation.SupportedImageSuffix,
+		)
+		if !supported {
+			return fmt.Errorf(
+				"%s file path not supported",
+				*profileImagePath,
+			)
+		}
+		exists, err := CheckImageExists(
+			*profileImagePath,
+		)
+		if err != nil {
+			return err
+		}
+		if !exists {
+			return fmt.Errorf(
+				"%s file not exists",
+				*profileImagePath,
+			)
+		}
+	}
 	// Check if phont exists
 	phontExists := IsPhontExists(
 		phontName,
@@ -59,6 +85,31 @@ func ChangeCharacter(
 	description string,
 	profileImagePath *string,
 ) error {
+	// Check if profile image is supported
+	if profileImagePath != nil {
+		_, supported := osoperation.IsSuffixSupported(
+			*profileImagePath,
+			osoperation.SupportedImageSuffix,
+		)
+		if !supported {
+			return fmt.Errorf(
+				"%s file path not supported",
+				*profileImagePath,
+			)
+		}
+		exists, err := CheckImageExists(
+			*profileImagePath,
+		)
+		if err != nil {
+			return err
+		}
+		if !exists {
+			return fmt.Errorf(
+				"%s file not exists",
+				*profileImagePath,
+			)
+		}
+	}
 	// Check if phont exists
 	phontExists := IsPhontExists(
 		phontName,

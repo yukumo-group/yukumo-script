@@ -89,6 +89,7 @@ type FilePathes struct {
 	ConfDir                 string
 	CharactersFile          string
 	EnglishTexts            string
+	SequenceDir             string
 }
 
 // TaskInfo defines the information for task

@@ -17,8 +17,10 @@ const (
 	ImagesDir string = "runtime/data/images"
 	// TaskDir define the directory to store task data
 	TaskDir string = "runtime/data/tasks"
-	// SingleSentenceDir defines the directory to store tasks of single sentences
+	// SingleSentenceDir defines the directory to store task files of single sentences
 	SingleSentenceDir string = "runtime/data/tasks/single_sentence"
+	// SequenceDir defines the directory to store task files of sequence task
+	SequenceDir string = "runtime/data/tasks/sequence"
 	// SingleSentenceTasksFile defines the file to store the info of tasks to make task management easier
 	SingleSentenceTasksFile string = "single_sentence_tasks.json"
 	// ConfDir defines the path of the conf file

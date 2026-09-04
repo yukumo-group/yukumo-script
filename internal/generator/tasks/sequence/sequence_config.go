@@ -2,6 +2,7 @@ package sequence
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -121,4 +122,23 @@ func (config *RawConfig) ToTaskConfig() (*TaskConfig, error) {
 		DefaultSpeed: speed,
 		ConfigName:   *config.ConfigName,
 	}, nil
+}
+
+// GenerateYAMLFileName generates name for the YAML file.
+// This is used for the file saved by the program
+func (config *RawConfig) GenerateYAMLFileName(
+	targetDir string,
+) string {
+	return fmt.Sprintf(
+		"%s/%s.yaml",
+		targetDir,
+		*config.ConfigName,
+	)
+}
+
+// ToYAML converts raw config to yaml
+func (config *RawConfig) ToYAML(
+	targetDir string,
+) error {
+	return nil
 }
