@@ -56,6 +56,7 @@ func InitRuntimeDirs() {
 	utils.InitializeDirectory(filePathForProg.TaskDir)
 	utils.InitializeDirectory(filePathForProg.SingleSentenceDir)
 	utils.InitializeDirectory(filePathForProg.SequenceDir)
+	utils.InitializeDirectory(filePathForProg.ConfigDir)
 }
 
 // InitializePathesByConst initializes the pathes according to the constants in utils
@@ -71,8 +72,9 @@ func InitializePathesByConst() {
 	filePathForProg.SingleSentenceDir = utils.SingleSentenceDir
 	filePathForProg.SingleSentenceTasksFile = utils.SingleSentenceTasksFile
 	filePathForProg.CharactersFile = utils.CharactersFile
-	filePathForProg.ConfDir = utils.ConfDir
+	filePathForProg.ConfPath = utils.ConfPath
 	filePathForProg.SequenceDir = utils.SequenceDir
+	filePathForProg.ConfigDir = utils.ConfigDir
 }
 
 // InitializePathesByCostum allows the user to use their own file structure
@@ -88,8 +90,9 @@ func InitializePathesByCostum(
 	singleSentenceDir string,
 	singleSentenceTasksFile string,
 	charactersFile string,
-	confDir string,
+	confPath string,
 	sequenceDir string,
+	configDir string,
 ) {
 	filePathForProg.RuntimeDir = runtimeDir
 	filePathForProg.PhontsDir = phontsDir
@@ -102,6 +105,7 @@ func InitializePathesByCostum(
 	filePathForProg.SingleSentenceDir = singleSentenceDir
 	filePathForProg.SingleSentenceTasksFile = singleSentenceTasksFile
 	filePathForProg.CharactersFile = charactersFile
-	filePathForProg.ConfDir = confDir
+	filePathForProg.ConfPath = confPath
 	filePathForProg.SequenceDir = sequenceDir
+	filePathForProg.ConfigDir = configDir
 }

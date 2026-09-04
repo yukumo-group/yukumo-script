@@ -46,6 +46,23 @@ type TaskConfig struct {
 	TaskLanguage language.Language
 }
 
+// NewRawConfig creates new RawConfig struct
+func NewRawConfig(
+	configName string,
+	configLanguage int,
+	usePredefinedCharacters *bool,
+	defaultSpeed *int,
+	charactersList *[]RawCharacter,
+) *RawConfig {
+	return &RawConfig{
+		UsePredefinedCharacters: usePredefinedCharacters,
+		ConfigName:              &configName,
+		Language:                configLanguage,
+		DefaultSpeed:            defaultSpeed,
+		Characters:              charactersList,
+	}
+}
+
 // ReadRawConfig reads the raw config yaml file
 func ReadRawConfig(
 	filePath string,
@@ -126,19 +143,36 @@ func (config *RawConfig) ToTaskConfig() (*TaskConfig, error) {
 
 // GenerateYAMLFileName generates name for the YAML file.
 // This is used for the file saved by the program
-func (config *RawConfig) GenerateYAMLFileName(
-	targetDir string,
-) string {
+func (config *RawConfig) GenerateYAMLFileName() (string, error) {
+	if config.ConfigName == nil {
+		return "", errors.New(
+			"the name of the config cannot be nil",
+		)
+	}
 	return fmt.Sprintf(
-		"%s/%s.yaml",
-		targetDir,
+		"%s.yaml",
 		*config.ConfigName,
-	)
+	), nil
 }
 
 // ToYAML converts raw config to yaml
 func (config *RawConfig) ToYAML(
 	targetDir string,
+	fileName string,
 ) error {
-	return nil
+	targetFilePath := fmt.Sprintf(
+		"%s/%s",
+		targetDir,
+		fileName,
+	)
+	data, err := yaml.Marshal(config)
+	if err != nil {
+		return err
+	}
+	err = os.WriteFile(
+		targetFilePath,
+		data,
+		0644,
+	)
+	return err
 }

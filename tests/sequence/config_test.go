@@ -85,3 +85,27 @@ func TestToTaskConfig(t *testing.T) {
 		)
 	}
 }
+
+func TestWriteFile(t *testing.T) {
+	t.Parallel()
+	res := true
+	newRawConfig := sequence.NewRawConfig(
+		"ass",
+		2,
+		&res,
+		nil,
+		nil,
+	)
+	tmpDir := t.TempDir()
+	fileName, err := newRawConfig.GenerateYAMLFileName()
+	if err != nil {
+		t.Error(err)
+	}
+	err = newRawConfig.ToYAML(
+		tmpDir,
+		fileName,
+	)
+	if err != nil {
+		t.Error(err)
+	}
+}

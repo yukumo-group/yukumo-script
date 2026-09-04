@@ -4,7 +4,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/yukumo-group/yukumo-script/internal/characters"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks"
 )
 
@@ -16,16 +15,22 @@ type Task struct {
 	CreatedTime time.Time          `json:"createdTime"`
 	EditTime    time.Time          `json:"editTime"`
 	AllTasks    map[int]tasks.Task `json:"allTasks"`
-	characters  *characters.Characters
+	Config      *RawConfig         `json:"config"`
+	taskConfig  *TaskConfig
 }
 
 // NewTask chreates new task
 func NewSequenceTask(
 	taskName string,
-	config *characters.Characters,
-) *Task {
+	config *RawConfig,
+) (*Task, error) {
+	processedConfig, err := config.ToTaskConfig()
+	if err != nil {
+		return nil, err
+	}
 	return &Task{
 		TaskName:   taskName,
-		characters: config,
-	}
+		Config:     config,
+		taskConfig: processedConfig,
+	}, nil
 }

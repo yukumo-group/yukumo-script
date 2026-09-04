@@ -13,6 +13,8 @@ const (
 	WavsDir string = "runtime/wav"
 	// DataDir defines the directory to store data such as characters
 	DataDir string = "runtime/data"
+	// ConfigDir defines the directory to store configurations
+	ConfigDir string = "runtime/data/config"
 	// ImagesDir define the directory to store images such as profiles
 	ImagesDir string = "runtime/data/images"
 	// TaskDir define the directory to store task data
@@ -23,8 +25,8 @@ const (
 	SequenceDir string = "runtime/data/tasks/sequence"
 	// SingleSentenceTasksFile defines the file to store the info of tasks to make task management easier
 	SingleSentenceTasksFile string = "single_sentence_tasks.json"
-	// ConfDir defines the path of the conf file
-	ConfDir string = "conf.ini"
+	// ConfPath defines the path of the conf file
+	ConfPath string = "conf.ini"
 	// CharactersFile defines the name of the file for storing characters
 	CharactersFile string = "characters.json"
 	// EnglishTexts defines the path of the english texts file

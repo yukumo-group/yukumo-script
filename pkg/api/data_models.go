@@ -86,10 +86,11 @@ type FilePathes struct {
 	TaskDir                 string
 	SingleSentenceDir       string
 	SingleSentenceTasksFile string
-	ConfDir                 string
+	ConfPath                string
 	CharactersFile          string
 	EnglishTexts            string
 	SequenceDir             string
+	ConfigDir               string
 }
 
 // TaskInfo defines the information for task
