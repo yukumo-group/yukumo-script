@@ -9,7 +9,7 @@ import (
 func TestReadConfig(t *testing.T) {
 	t.Parallel()
 	testConf, err := sequence.ReadRawConfig(
-		"test_data/test1.yaml",
+		"testdata/test1.yaml",
 	)
 	if err != nil {
 		t.Error(err)
@@ -31,7 +31,7 @@ func TestReadConfig(t *testing.T) {
 func TestTaskNameParsing(t *testing.T) {
 	t.Parallel()
 	testConf, err := sequence.ReadRawConfig(
-		"test_data/test2.yaml",
+		"testdata/test2.yaml",
 	)
 	if err != nil {
 		t.Error(err)
@@ -51,7 +51,7 @@ func TestTaskNameParsing(t *testing.T) {
 func TestToTaskConfig(t *testing.T) {
 	t.Parallel()
 	testConf, err := sequence.ReadRawConfig(
-		"test_data/test3.yaml",
+		"testdata/test3.yaml",
 	)
 	if err != nil {
 		t.Error(err)
@@ -101,7 +101,7 @@ func TestWriteFile(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	err = newRawConfig.ToYAML(
+	_, err = newRawConfig.ToYAML(
 		tmpDir,
 		fileName,
 	)

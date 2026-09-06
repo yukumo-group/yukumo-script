@@ -113,8 +113,8 @@ func (characters *Characters) DeleteCharacter(
 
 // saveTo saves to the target file
 func (characters *Characters) saveTo(target string) error {
-	characters.RLock()
-	defer characters.RUnlock()
+	characters.Lock()
+	defer characters.Unlock()
 	jsonData, errJSON := json.Marshal(characters)
 	if errJSON != nil {
 		return errJSON

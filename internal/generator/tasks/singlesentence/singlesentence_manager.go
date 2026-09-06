@@ -45,8 +45,8 @@ func (manager *TaskManager) SetTargetFile(
 
 // Save saves the manager file
 func (manager *TaskManager) Save() error {
-	manager.RLock()
-	defer manager.RUnlock()
+	manager.Lock()
+	defer manager.Unlock()
 	data, errMarshal := json.Marshal(manager)
 	if errMarshal != nil {
 		return errMarshal

@@ -155,24 +155,33 @@ func (config *RawConfig) GenerateYAMLFileName() (string, error) {
 	), nil
 }
 
-// ToYAML converts raw config to yaml
+// ToYAML converts raw config to yaml.
+// No need to add .yaml suffix
 func (config *RawConfig) ToYAML(
 	targetDir string,
 	fileName string,
-) error {
+) (string, error) {
 	targetFilePath := fmt.Sprintf(
-		"%s/%s",
+		"%s/%s.yaml",
 		targetDir,
 		fileName,
 	)
 	data, err := yaml.Marshal(config)
 	if err != nil {
-		return err
+		return targetFilePath, err
 	}
 	err = os.WriteFile(
 		targetFilePath,
 		data,
 		0644,
 	)
-	return err
+	return targetFilePath, err
+}
+
+// GetConfigName gets the config name and whether it exists
+func (config *RawConfig) GetConfigName() (string, bool) {
+	if config.ConfigName == nil {
+		return "", false
+	}
+	return *config.ConfigName, true
 }
