@@ -9,7 +9,8 @@ import (
 	"github.com/yukumo-group/yukumo-script/pkg/utils/syncutils"
 )
 
-// PhontNameToFileName creates mapping of phont name and file
+// PhontNameToFileName creates mapping of phont name and file.
+// No need to add .phont suffix for phont name
 var PhontNameToFileName = syncutils.NewMap()
 
 // GetAllPhonts gets all the phonts
