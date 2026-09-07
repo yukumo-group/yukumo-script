@@ -19,10 +19,10 @@ func TestReadConfig(t *testing.T) {
 			"failed to read the configuration of characters",
 		)
 	}
-	if len(*testConf.Characters) != 1 {
+	if len(*testConf.Characters) != 2 {
 		t.Errorf(
 			"expected length of characters in conf is %d, got %d",
-			1,
+			2,
 			len(*testConf.Characters),
 		)
 	}

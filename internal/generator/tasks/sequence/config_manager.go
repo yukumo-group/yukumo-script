@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"maps"
 	"os"
 	"sync"
 
@@ -73,6 +74,13 @@ func (manager *ConfigManager) AddRawConfig(
 			"you cannot directly add a raw config without config name",
 		)
 	}
+	_, exists = manager.Data[configName]
+	if exists {
+		return fmt.Errorf(
+			"config named %s already exists",
+			configName,
+		)
+	}
 	fileName, err := rawTask.GenerateYAMLFileName()
 	if err != nil {
 		return err
@@ -105,6 +113,13 @@ func (manager *ConfigManager) AddFile(
 	if !exists {
 		return errors.New(
 			"no task name is included in this config",
+		)
+	}
+	_, exists = manager.Data[configName]
+	if exists {
+		return fmt.Errorf(
+			"config named %s already exists",
+			configName,
 		)
 	}
 	err = osoperation.CopyFile(
@@ -145,4 +160,40 @@ func (manager *ConfigManager) SaveFile() error {
 		return err
 	}
 	return nil
+}
+
+// GetConfig gets the config from file managed by this manager
+func (manager *ConfigManager) GetConfig(
+	configName string,
+) (*RawConfig, error) {
+	yamlFileName, exists := manager.Data[configName]
+	if !exists {
+		return nil, fmt.Errorf(
+			"%s config name does not exists",
+			configName,
+		)
+	}
+	resultRawConfig, err := ReadRawConfig(yamlFileName)
+	if err != nil {
+		return nil, err
+	}
+	return resultRawConfig, nil
+}
+
+// GetData gets the data from config manager
+func (manager *ConfigManager) GetData() map[string]string {
+	manager.RLock()
+	defer manager.RUnlock()
+	return maps.Clone(manager.Data)
+}
+
+// GetAllConfigNames gets all the config names
+func (manager *ConfigManager) GetAllConfigNames() []string {
+	manager.RLock()
+	defer manager.RUnlock()
+	configNamesList := []string{}
+	for configName := range manager.Data {
+		configNamesList = append(configNamesList, configName)
+	}
+	return configNamesList
 }

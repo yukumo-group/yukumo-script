@@ -31,4 +31,6 @@ const (
 	CharactersFile string = "characters.json"
 	// EnglishTexts defines the path of the english texts file
 	EnglishTexts string = "text_en.properties"
+	// ConfigManagerFile defines the file name of the config manager
+	ConfigManagerFile string = "config_manager.json"
 )

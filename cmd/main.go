@@ -37,7 +37,11 @@ func init() {
 		"language",
 		"l",
 		0,
-		"0: Japanese, 1: English, 2: Chinese",
+		`0: Japanese
+1: English 
+2: Chinese 
+Note that the English option supports both English and Japanese and the Chinese option supports English, Chinese and Japanese. 
+However we still recommend not to use Chinese option when generating audio for English or Chinese as it cost more time to convert text in Chinese mode`,
 	)
 	generateByFileCMD.Flags().IntVarP(
 		&SingleSentenceTaskSpeedByFile,

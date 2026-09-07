@@ -33,6 +33,8 @@ func Init() error {
 		return err
 	}
 
+	InitSequenceTaskConfigManager()
+
 	characters.CharacterList.SetTargetFile(
 		filePathForProg.DataDir,
 		filePathForProg.CharactersFile,
@@ -75,6 +77,7 @@ func InitializePathesByConst() {
 	filePathForProg.ConfPath = utils.ConfPath
 	filePathForProg.SequenceDir = utils.SequenceDir
 	filePathForProg.ConfigDir = utils.ConfigDir
+	filePathForProg.ConfigManagerFile = utils.ConfigManagerFile
 }
 
 // InitializePathesByCostum allows the user to use their own file structure
@@ -93,6 +96,7 @@ func InitializePathesByCostum(
 	confPath string,
 	sequenceDir string,
 	configDir string,
+	configManagerFile string,
 ) {
 	filePathForProg.RuntimeDir = runtimeDir
 	filePathForProg.PhontsDir = phontsDir
@@ -108,4 +112,5 @@ func InitializePathesByCostum(
 	filePathForProg.ConfPath = confPath
 	filePathForProg.SequenceDir = sequenceDir
 	filePathForProg.ConfigDir = configDir
+	filePathForProg.ConfigManagerFile = configManagerFile
 }

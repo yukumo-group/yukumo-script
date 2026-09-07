@@ -91,6 +91,7 @@ type FilePathes struct {
 	EnglishTexts            string
 	SequenceDir             string
 	ConfigDir               string
+	ConfigManagerFile       string
 }
 
 // TaskInfo defines the information for task

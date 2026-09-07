@@ -41,7 +41,7 @@ func TestConfigManager(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	_, err = sequence.NewConfigManagerFromFile(
+	reloadedManager, err := sequence.NewConfigManagerFromFile(
 		fmt.Sprintf(
 			"%s/%s",
 			tmpDir,
@@ -50,5 +50,39 @@ func TestConfigManager(t *testing.T) {
 	)
 	if err != nil {
 		t.Error(err)
+	}
+	allConfigs := reloadedManager.GetAllConfigNames()
+	finded114 := false
+	findedtest1 := false
+	for _, configName := range allConfigs {
+		if configName == "114" {
+			finded114 = true
+		}
+		if configName == "test1" {
+			findedtest1 = true
+		}
+	}
+	if !finded114 {
+		t.Error("114 config not found")
+	}
+	if !findedtest1 {
+		t.Error("test1 config not found")
+	}
+	configtest1, err := reloadedManager.GetConfig(
+		"test1",
+	)
+	if err != nil {
+		t.Error(err)
+	}
+	if configtest1.Characters == nil {
+		t.Error("failed to read character list")
+	}
+	length := len(*configtest1.Characters)
+	if length != 2 {
+		t.Errorf(
+			"expected length of character list to be %d, got %d",
+			2,
+			length,
+		)
 	}
 }

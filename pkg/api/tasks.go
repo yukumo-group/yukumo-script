@@ -7,10 +7,19 @@ import (
 	"time"
 
 	"github.com/yukumo-group/yukumo-script/internal/characters"
+	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/sequence"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
 )
 
-// GetAllTasks gets all the tasks
+// InitSequenceTaskConfigManager intialises config manager for sequence task
+func InitSequenceTaskConfigManager() {
+	sequence.ConfManager.SetConfigFilePath(
+		filePathForProg.TaskDir,
+		filePathForProg.ConfigManagerFile,
+	)
+}
+
+// GetAllTasks gets all the single sentence tasks
 func GetAllTasks() map[string]string {
 	return singlesentence.Manager.GetAllTasks()
 }
@@ -20,7 +29,7 @@ func ListTasks() []string {
 	return slices.Collect(maps.Keys(singlesentence.Manager.GetAllTasks()))
 }
 
-// RegisterGeneratedTask saves task metadata and registers it in the manager.
+// RegisterGeneratedTask saves single sentence task metadata and registers it in the manager.
 func RegisterGeneratedTask(task *singlesentence.Task) (string, error) {
 	taskFile, err := task.SaveFile(filePathForProg.SingleSentenceDir)
 	if err != nil {
@@ -73,7 +82,7 @@ func GetResultFileForSingleSentenceTask(
 	return *resultFile, nil
 }
 
-// GetTask gets task from manager
+// GetTask gets single sentence task from manager
 func GetTask(
 	taskName string,
 ) (*TaskInfo, error) {
@@ -88,4 +97,34 @@ func GetTask(
 		task,
 	)
 	return result, nil
+}
+
+// AddSequenceTaskConfigFromFile adds config for sequence task from file.
+// The fileName can be any path in the computer as it will be copied to conf manager
+func AddSequenceTaskConfigFromFile(
+	fileName string,
+) error {
+	err := sequence.ConfManager.AddFile(
+		fileName,
+		filePathForProg.ConfigDir,
+	)
+	return err
+}
+
+// GetAllConfigs gets all the configurations for sequence task
+func GetAllConfigs() []string {
+	return sequence.ConfManager.GetAllConfigNames()
+}
+
+// GetConfig gets certain configuration for sequence task
+func GetConfig(
+	configName string,
+) (*sequence.RawConfig, error) {
+	configuration, err := sequence.ConfManager.GetConfig(
+		configName,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return configuration, nil
 }
