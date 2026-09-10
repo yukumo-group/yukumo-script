@@ -137,8 +137,8 @@ func (sentence *Sentence) ToTask(
 		if err != nil {
 			return nil, err
 		}
-		var characterName *string = nil
-		var phontName *string = nil
+		var characterName *string
+		var phontName *string
 		// Check if it is character name or phont name
 		switch isCharacter {
 		case -1:
