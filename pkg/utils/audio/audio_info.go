@@ -14,6 +14,13 @@ type Info struct {
 	Precision     int
 }
 
+// DefaultAudioInfo defines the default audio info for generated wav file
+var DefaultAudioInfo *Info = &Info{
+	ChannelNumber: 1,
+	SampleRate:    8000,
+	Precision:     2,
+}
+
 // GetAudioInfo gets the information of an audio
 func GetAudioInfo(
 	fileName string,

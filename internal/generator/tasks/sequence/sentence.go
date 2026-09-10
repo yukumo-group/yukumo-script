@@ -6,6 +6,7 @@ import (
 
 	"github.com/yukumo-group/yukumo-script/internal/characters"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks"
+	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/chorus"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/empty"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
 	"github.com/yukumo-group/yukumo-script/internal/phontsmanager"
@@ -34,6 +35,7 @@ type Sentence struct {
 	Speed                  *int                `json:"speed"`
 	CharacterNamesIncluded []string            `json:"characterNameIncluded"`
 	EffectList             []*edit.AudioEffect `json:"effectList"`
+	MixingConfig           *edit.MixingConfig  `json:"mixing_config"`
 }
 
 // NewEmptySentence creates new sentence with type empty
@@ -48,13 +50,34 @@ func NewEmptySentence(
 
 // NewSingleSentence creates sentence with a single speaker
 func NewSingleSentence(
+	text string,
 	characterName string,
+	speed *int,
 	effectList []*edit.AudioEffect,
 ) *Sentence {
 	return &Sentence{
 		TypeSentence:           SingleSentence,
 		EffectList:             effectList,
 		CharacterNamesIncluded: []string{characterName},
+		Speed:                  speed,
+		Text:                   text,
+	}
+}
+
+// NewChorus creates new chorus task
+func NewChorus(
+	text string,
+	charactersNames []string,
+	speed *int,
+	effectList []*edit.AudioEffect,
+	mixingConfig *edit.MixingConfig,
+) *Sentence {
+	return &Sentence{
+		TypeSentence:           Chorus,
+		CharacterNamesIncluded: charactersNames,
+		Text:                   text,
+		Speed:                  speed,
+		MixingConfig:           mixingConfig,
 	}
 }
 
@@ -85,6 +108,7 @@ func IsCharacterOrPhont(
 
 // ToTask converts Sentence to task
 func (sentence *Sentence) ToTask(
+	tmpDir string,
 	taskName string,
 	audioInfo *audio.Info,
 	speed int,
@@ -125,8 +149,8 @@ func (sentence *Sentence) ToTask(
 			phontName = &id
 		default:
 			return nil, fmt.Errorf(
-				"%d is not character or phont",
-				isCharacter,
+				"%s is not character or phont",
+				id,
 			)
 		}
 		return singlesentence.NewSingleSentenceTask(
@@ -142,6 +166,45 @@ func (sentence *Sentence) ToTask(
 		return empty.NewEmptyTask(
 			*sentence.RestTime,
 			audioInfo,
+		)
+	case Chorus:
+		if len(sentence.CharacterNamesIncluded) < 1 {
+			return nil, errors.New(
+				"the CharacterNamesIncluded cannot be empty ",
+			)
+		}
+		phontList := []string{}
+		characterNamesList := []string{}
+		for _, characterName := range sentence.CharacterNamesIncluded {
+			isCharacter, err := IsCharacterOrPhont(
+				characterName,
+				characterList,
+			)
+			if err != nil {
+				return nil, err
+			}
+			switch isCharacter {
+			case 1:
+				phontList = append(phontList, characterName)
+			case -1:
+				characterNamesList = append(characterNamesList, characterName)
+			default:
+				return nil, fmt.Errorf(
+					"%s is not character or phont",
+					characterName,
+				)
+			}
+		}
+		return chorus.NewChorusTask(
+			sentence.Text,
+			&phontList,
+			&characterNamesList,
+			speedUsed,
+			taskName,
+			taskLanguage,
+			sentence.MixingConfig,
+			characterList,
+			tmpDir,
 		)
 	default:
 		return nil, fmt.Errorf(
