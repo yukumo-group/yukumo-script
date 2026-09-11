@@ -62,7 +62,7 @@ func TestConvertText(t *testing.T) {
 	}
 
 	_, err = language.ConvertText("你好", language.Chinese)
-	if err == nil {
-		t.Fatal("ConvertText Chinese: want error, got nil")
+	if err != nil {
+		t.Fatalf("ConvertText Chinese: %v", err)
 	}
 }
