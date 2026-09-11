@@ -1,6 +1,8 @@
 package sequence
 
 import (
+	"encoding/json"
+	"os"
 	"sync"
 	"time"
 
@@ -38,6 +40,27 @@ func NewSequenceTask(
 		EditTime:     time.Now(),
 		AllSentences: []Sentence{},
 	}, nil
+}
+
+// LoadSequenceTaskFromFile loads sequence task from file
+func LoadSequenceTaskFromFile(
+	fileName string,
+) (*Task, error) {
+	var Result Task
+	data, err := os.ReadFile(
+		fileName,
+	)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(
+		data,
+		&Result,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &Result, nil
 }
 
 // AddSentence adds one single sentence

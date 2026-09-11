@@ -16,6 +16,8 @@ func ConvertText(
 		return all2jap.EngToKana(text), nil
 	case Japanese:
 		return all2jap.JPToKana(text), nil
+	case Chinese:
+		return all2jap.CnToKana(text)
 	default:
 		return "", errors.New("Language not supported")
 	}

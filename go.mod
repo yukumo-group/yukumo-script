@@ -9,6 +9,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/jonchammer/audio-io v0.3.0
 	github.com/unitoftime/beep v0.0.0-20260407205258-62236bbd2ba3
+	github.com/yukumo-group/Chinese2KanaConverter v0.1.1
 	github.com/zeozeozeo/gomplerate v0.0.0-20250404113140-0fbb236df825
 	go.yaml.in/yaml/v4 v4.0.0-rc.6
 	golang.org/x/sync v0.22.0
@@ -19,7 +20,10 @@ require (
 	github.com/ebitengine/purego v0.9.0 // indirect
 	github.com/go-audio/audio v1.0.0 // indirect
 	github.com/go-audio/riff v1.0.0 // indirect
+	github.com/go-ego/gpy v0.42.1 // indirect
+	github.com/go-ego/gse v1.0.2 // indirect
 	github.com/gojp/kana v0.1.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/vcaesar/cedar v0.30.0 // indirect
 	golang.org/x/sys v0.47.0 // indirect
 )

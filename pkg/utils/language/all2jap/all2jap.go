@@ -4,6 +4,7 @@ import (
 	"regexp"
 
 	kanatrans "github.com/Luigi-Pizzolito/English2KanaTransliteration"
+	"github.com/yukumo-group/Chinese2KanaConverter/pkg/converter"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/language/convertnums"
 )
 
@@ -26,4 +27,23 @@ func EngToKana(text string) string {
 func JPToKana(text string) string {
 	numResult := convertnums.ConverNumToJP(text)
 	return AllToKana(numResult)
+}
+
+// CnToKana converts chinese to kana with only words
+func CnToKana(
+	text string,
+) (string, error) {
+	replacedText := convertnums.ConverNumToCN(
+		text,
+	)
+	convertResult, err := converter.SingleChinesePieceToKana(
+		replacedText,
+		true,
+	)
+	if err != nil {
+		return "", err
+	}
+	re := regexp.MustCompile(`[^\p{Katakana}]+`)
+	result := re.ReplaceAllString(convertResult, "")
+	return result, nil
 }

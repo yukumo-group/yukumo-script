@@ -32,6 +32,20 @@ var jpList = map[string]string{
 	"0": " ゼロ ",
 }
 
+// cnList defines the transition from numbers to Chinese
+var cnList = map[string]string{
+	"1": " 一 ",
+	"2": " 二 ",
+	"3": " 三 ",
+	"4": " 四 ",
+	"5": " 五 ",
+	"6": " 六 ",
+	"7": " 七 ",
+	"8": " 八 ",
+	"9": " 九 ",
+	"0": " 零 ",
+}
+
 // ConvertNumToEnglish converts numbers to English vocabularies
 func ConvertNumToEnglish(text string) string {
 	result := text
@@ -45,6 +59,15 @@ func ConvertNumToEnglish(text string) string {
 func ConverNumToJP(text string) string {
 	result := text
 	for num, vocab := range jpList {
+		result = strings.ReplaceAll(result, num, vocab)
+	}
+	return result
+}
+
+// ConverNumToCN converts numbers to Chinese
+func ConverNumToCN(text string) string {
+	result := text
+	for num, vocab := range cnList {
 		result = strings.ReplaceAll(result, num, vocab)
 	}
 	return result
