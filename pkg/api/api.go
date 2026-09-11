@@ -78,6 +78,7 @@ func InitializePathesByConst() {
 	filePathForProg.SequenceDir = utils.SequenceDir
 	filePathForProg.ConfigDir = utils.ConfigDir
 	filePathForProg.ConfigManagerFile = utils.ConfigManagerFile
+	filePathForProg.PolyphonicsManagerFile = utils.PolyphonicsManagerFile
 }
 
 // InitializePathesByCostum allows the user to use their own file structure
@@ -97,6 +98,7 @@ func InitializePathesByCostum(
 	sequenceDir string,
 	configDir string,
 	configManagerFile string,
+	polyphonicsManagerFile string,
 ) {
 	filePathForProg.RuntimeDir = runtimeDir
 	filePathForProg.PhontsDir = phontsDir
@@ -113,4 +115,5 @@ func InitializePathesByCostum(
 	filePathForProg.SequenceDir = sequenceDir
 	filePathForProg.ConfigDir = configDir
 	filePathForProg.ConfigManagerFile = configManagerFile
+	filePathForProg.PolyphonicsManagerFile = polyphonicsManagerFile
 }

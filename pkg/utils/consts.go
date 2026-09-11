@@ -33,4 +33,6 @@ const (
 	EnglishTexts string = "text_en.properties"
 	// ConfigManagerFile defines the file name of the config manager
 	ConfigManagerFile string = "config_manager.json"
+	// PolyphonicsManagerFile defines the file name of the polyphonic manager
+	PolyphonicsManagerFile string = "polyphonics_manager.json"
 )
