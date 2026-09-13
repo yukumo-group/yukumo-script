@@ -18,4 +18,6 @@ type Task interface {
 		targetDir string,
 		tempDir string,
 	) error
+	// GetResultFile gets the result file
+	GetResultFile() *string
 }

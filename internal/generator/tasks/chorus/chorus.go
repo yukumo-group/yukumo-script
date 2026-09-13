@@ -380,3 +380,10 @@ func (task *Task) UseEffect(
 	task.EffectUsedResultFile = &currentFilePath
 	return nil
 }
+
+// GetResultFile gets result file for certain task
+func (task *Task) GetResultFile() *string {
+	task.RLock()
+	defer task.RUnlock()
+	return task.ResultFile
+}

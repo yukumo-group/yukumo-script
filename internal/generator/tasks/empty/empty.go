@@ -103,3 +103,8 @@ func (task *Task) UseEffect(
 ) error {
 	return nil
 }
+
+// GetResultFile gets result file for certain task
+func (task *Task) GetResultFile() *string {
+	return task.ResultFile
+}

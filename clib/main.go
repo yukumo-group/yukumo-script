@@ -126,4 +126,7 @@ func YukumoFreeErrorMessage(msg C.ErrorMessage) {
 	}
 }
 
+//export SetPathes
+func SetPathes()
+
 func main() {}
