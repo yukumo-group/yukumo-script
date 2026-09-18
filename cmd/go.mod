@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	github.com/fatih/color v1.19.0
 	github.com/spf13/cobra v1.10.2
-	github.com/yukumo-group/yukumo-script v0.0.0-20260828034924-839197e26bb7
+	github.com/yukumo-group/yukumo-script v0.0.0-20260911034017-ce1eb22dbc8c
 )
 
 require (
@@ -16,6 +16,8 @@ require (
 	github.com/go-audio/audio v1.0.0 // indirect
 	github.com/go-audio/riff v1.0.0 // indirect
 	github.com/go-audio/wav v1.1.0 // indirect
+	github.com/go-ego/gpy v0.42.1 // indirect
+	github.com/go-ego/gse v1.0.2 // indirect
 	github.com/gojp/kana v0.1.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
@@ -25,7 +27,10 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/unitoftime/beep v0.0.0-20260407205258-62236bbd2ba3 // indirect
+	github.com/vcaesar/cedar v0.30.0 // indirect
+	github.com/yukumo-group/Chinese2KanaConverter v0.1.1 // indirect
 	github.com/zeozeozeo/gomplerate v0.0.0-20250404113140-0fbb236df825 // indirect
+	go.yaml.in/yaml/v4 v4.0.0-rc.6 // indirect
 	golang.org/x/sync v0.22.0 // indirect
 	golang.org/x/sys v0.47.0 // indirect
 )

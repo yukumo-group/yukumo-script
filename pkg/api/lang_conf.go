@@ -24,6 +24,7 @@ func InitializeLanguageConfig() error {
 	_, err := os.Stat(filePath)
 	if err != nil {
 		if os.IsNotExist(err) {
+			language.PolyphonicsManager.Initialize()
 			language.PolyphonicsManager.SetTargetFile(
 				filePath,
 			)
@@ -38,6 +39,7 @@ func InitializeLanguageConfig() error {
 	if err != nil {
 		return err
 	}
+	language.PolyphonicsManager.Initialize()
 	language.PolyphonicsManager = newManager
 	return nil
 }

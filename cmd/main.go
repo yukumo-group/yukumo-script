@@ -133,6 +133,7 @@ However we still recommend not to use Chinese option when generating audio for E
 		generationCMD,
 		tasksCMD,
 		charactersCMD,
+		languageCMD,
 	)
 }
 

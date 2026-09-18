@@ -1,6 +1,7 @@
 package edit
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 )
@@ -49,4 +50,15 @@ func (effect *AudioEffect) UseEffect(
 			effect.ProcessType,
 		)
 	}
+}
+
+// ToString converts audio effect to string to show it to the user
+func (effect *AudioEffect) ToString() (string, error) {
+	data, err := json.Marshal(
+		effect,
+	)
+	if err != nil {
+		return "", err
+	}
+	return string(data), nil
 }

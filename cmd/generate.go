@@ -33,7 +33,7 @@ var SingleSentenceTaskLanguageByCharacter int
 // SingleSentenceTaskSpeedByCharacter defines the speed of the audio
 var SingleSentenceTaskSpeedByCharacter int
 
-// generationCommand contains commands for generation
+// generationCMD contains commands for generation
 var generationCMD = &cobra.Command{
 	Use:   "generation",
 	Short: "generation command contains subcommands that can generate audio through pre-defined characters or phont files",
@@ -45,7 +45,7 @@ subcommands of generation command allow you to generate your audio
 	},
 }
 
-// generateByFile generates wav by file
+// generateByFileCMD generates wav by file
 var generateByFileCMD = &cobra.Command{
 	Use:   "generateByFile",
 	Short: "Generate yukumo audio through the file",

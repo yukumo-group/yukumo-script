@@ -10,6 +10,11 @@ This part follows the YAML file style so you can just provide the script file wi
 Here is an example template of the front matter yaml file:
 
 ```yaml
+# language defines the language to use. 
+# 0: Japanese
+# 1: English
+# 2: Chinese
+language: 2
 # use_predefined_characters decide whether to use the predefined characters stored in the application. 
 # It is recommended not to set it if you want the script to be used by others
 # If this is set to false, the characters defined in the raw_characters will not be loaded and you can left it empty. 
