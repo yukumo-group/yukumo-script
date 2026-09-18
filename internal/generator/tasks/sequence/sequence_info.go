@@ -7,5 +7,5 @@ import (
 // SequenceInfo defines the info shows to the user when showing info
 type SequenceInfo struct {
 	Language     language.Language
-	AllSentences []Sentence
+	AllSentences []*Sentence
 }

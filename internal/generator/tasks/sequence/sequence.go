@@ -3,6 +3,7 @@ package sequence
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"runtime"
@@ -21,13 +22,13 @@ import (
 // Task defines the list of the task
 type Task struct {
 	sync.RWMutex
-	TaskName       string     `json:"taskName"`
-	ID             string     `json:"id"`
-	CreateTime     time.Time  `json:"createdTime"`
-	EditTime       time.Time  `json:"editTime"`
-	AllSentences   []Sentence `json:"allSentences"`
-	Config         *RawConfig `json:"config"`
-	SentenceAudios []string   `json:"sentenceAudios"`
+	TaskName       string      `json:"taskName"`
+	ID             string      `json:"id"`
+	CreateTime     time.Time   `json:"createdTime"`
+	EditTime       time.Time   `json:"editTime"`
+	AllSentences   []*Sentence `json:"allSentences"`
+	Config         *RawConfig  `json:"config"`
+	SentenceAudios []string    `json:"sentenceAudios"`
 	taskConfig     *TaskConfig
 	wavDir         string
 }
@@ -39,6 +40,11 @@ func NewSequenceTask(
 	wavDir string,
 ) (*Task, error) {
 	newTaskID := uuid.NewString()
+	if config == nil {
+		return nil, errors.New(
+			"you cannot pass the config as nil",
+		)
+	}
 	processedConfig, err := config.ToTaskConfig()
 	if err != nil {
 		return nil, err
@@ -50,7 +56,7 @@ func NewSequenceTask(
 		ID:             newTaskID,
 		CreateTime:     time.Now(),
 		EditTime:       time.Now(),
-		AllSentences:   []Sentence{},
+		AllSentences:   []*Sentence{},
 		SentenceAudios: []string{},
 		wavDir:         wavDir,
 	}, nil
@@ -135,7 +141,7 @@ func (task *Task) ConvertToTasks() ([]tasks.Task, error) {
 
 // AddSentence adds one single sentence
 func (task *Task) AddSentence(
-	sentence Sentence,
+	sentence *Sentence,
 ) {
 	task.Lock()
 	defer task.Unlock()
@@ -145,7 +151,7 @@ func (task *Task) AddSentence(
 
 // InsertSentence inserts one sentence after the idx index into the task
 func (task *Task) InsertSentence(
-	sentence Sentence,
+	sentence *Sentence,
 	idx int,
 ) {
 	task.Lock()
@@ -155,7 +161,7 @@ func (task *Task) InsertSentence(
 		task.AllSentences = append(
 			task.AllSentences[:idx+1],
 			append(
-				[]Sentence{
+				[]*Sentence{
 					sentence,
 				},
 				task.AllSentences[idx+1:]...,
@@ -248,7 +254,7 @@ func (task *Task) GetTaskName() string {
 }
 
 // GetAllSentences gets all sentences
-func (task *Task) GetAllSentences() []Sentence {
+func (task *Task) GetAllSentences() []*Sentence {
 	task.RLock()
 	defer task.RUnlock()
 	result := slices.Clone(

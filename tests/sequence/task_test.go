@@ -3,32 +3,30 @@ package sequence
 import (
 	"testing"
 
-	"github.com/yukumo-group/yukumo-script/internal/characters"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/sequence"
 )
 
 func TestInsertSentence(t *testing.T) {
 	t.Parallel()
 	tmpDir := t.TempDir()
-	tmpCharacters := characters.NewCharacters()
-	err := tmpCharacters.AddCharacter(
-		characters.NewCharacter(
-			"Remilia Scarlet",
-			"aq_f1c",
-			"",
-			nil,
-		),
+	config, err := sequence.ReadRawConfig(
+		"testdata/test1.yaml",
 	)
 	if err != nil {
 		t.Error(err)
 	}
 	task, err := sequence.NewSequenceTask(
 		"test",
-		nil,
+		config,
 		tmpDir,
 	)
 	task.AddSentence(
-		*sequence.NewEmptySentence(
+		sequence.NewEmptySentence(
+			114.514,
+		),
+	)
+	task.AddSentence(
+		sequence.NewEmptySentence(
 			114.514,
 		),
 	)
