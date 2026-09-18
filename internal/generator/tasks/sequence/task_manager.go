@@ -50,6 +50,7 @@ func (manager *TaskManager) Load(
 				data,
 				0644,
 			)
+			return err
 		}
 		return err
 	}

@@ -3,9 +3,11 @@ package sequence
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"runtime"
+	"slices"
 	"sync"
 	"time"
 
@@ -38,6 +40,11 @@ func NewSequenceTask(
 	wavDir string,
 ) (*Task, error) {
 	newTaskID := uuid.NewString()
+	if config != nil {
+		return nil, errors.New(
+			"you cannot pass the config as nil",
+		)
+	}
 	processedConfig, err := config.ToTaskConfig()
 	if err != nil {
 		return nil, err
@@ -215,4 +222,22 @@ func (task *Task) Generate(
 		resultPath,
 	)
 	return err
+}
+
+// GetTaskName gets task name
+func (task *Task) GetTaskName() string {
+	task.RLock()
+	defer task.RUnlock()
+	result := task.TaskName
+	return result
+}
+
+// GetAllSentences gets all sentences
+func (task *Task) GetAllSentences() []Sentence {
+	task.RLock()
+	defer task.RUnlock()
+	result := slices.Clone(
+		task.AllSentences,
+	)
+	return result
 }

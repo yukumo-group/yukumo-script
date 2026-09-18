@@ -19,7 +19,7 @@ import (
 
 // Task defines the task of generating a single sentence
 type Task struct {
-	sync.RWMutex         `json:"-"`
+	sync.RWMutex
 	ID                   string              `json:"id"`
 	TaskName             string              `json:"taskName"`
 	Text                 string              `json:"text"`
