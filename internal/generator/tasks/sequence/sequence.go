@@ -3,7 +3,6 @@ package sequence
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"os"
 	"runtime"
@@ -40,11 +39,6 @@ func NewSequenceTask(
 	wavDir string,
 ) (*Task, error) {
 	newTaskID := uuid.NewString()
-	if config != nil {
-		return nil, errors.New(
-			"you cannot pass the config as nil",
-		)
-	}
 	processedConfig, err := config.ToTaskConfig()
 	if err != nil {
 		return nil, err
@@ -147,6 +141,27 @@ func (task *Task) AddSentence(
 	defer task.Unlock()
 	task.EditTime = time.Now()
 	task.AllSentences = append(task.AllSentences, sentence)
+}
+
+// InsertSentence inserts one sentence after the idx index into the task
+func (task *Task) InsertSentence(
+	sentence Sentence,
+	idx int,
+) {
+	task.Lock()
+	defer task.Unlock()
+	task.EditTime = time.Now()
+	if idx < len(task.AllSentences)-1 {
+		task.AllSentences = append(
+			task.AllSentences[:idx+1],
+			append(
+				[]Sentence{
+					sentence,
+				},
+				task.AllSentences[idx+1:]...,
+			)...,
+		)
+	}
 }
 
 // GenerateWavName generates name for the result wav file
