@@ -20,4 +20,6 @@ func NewWorkSpace() *WorkSpace {
 // LoadFileToWorkSpace loads file to work space
 func LoadFileToWorkSpace(
 	fileName string,
-)
+) error {
+	return nil
+}
