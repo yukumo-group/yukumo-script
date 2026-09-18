@@ -20,6 +20,9 @@ func TestInsertSentence(t *testing.T) {
 		config,
 		tmpDir,
 	)
+	if err != nil {
+		t.Error(err)
+	}
 	task.AddSentence(
 		sequence.NewEmptySentence(
 			114.514,
