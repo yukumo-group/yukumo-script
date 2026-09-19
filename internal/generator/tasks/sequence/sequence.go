@@ -15,6 +15,7 @@ import (
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/audio"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/audio/edit"
+	"github.com/yukumo-group/yukumo-script/pkg/utils/language"
 
 	"golang.org/x/sync/errgroup"
 )
@@ -99,12 +100,12 @@ func (task *Task) GenerateFileName(
 // SaveFile saves the task into file
 func (task *Task) SaveFile(
 	targetDir string,
-) error {
+) (string, error) {
 	task.Lock()
 	defer task.Unlock()
 	data, err := json.Marshal(task)
 	if err != nil {
-		return err
+		return "", err
 	}
 	filePath := task.GenerateFileName(
 		targetDir,
@@ -114,7 +115,7 @@ func (task *Task) SaveFile(
 		data,
 		0644,
 	)
-	return err
+	return filePath, err
 }
 
 // ConvertToTasks converts sentence to tasks of this task
@@ -272,8 +273,14 @@ func (task *Task) GetAllSentences() []*Sentence {
 func (task *Task) ToPreviewInfo() *SequenceInfo {
 	task.RLock()
 	defer task.RUnlock()
+	var languageSet language.Language
+	if task.taskConfig == nil {
+		languageSet = language.Chinese
+	} else {
+		languageSet = task.taskConfig.TaskLanguage
+	}
 	result := &SequenceInfo{
-		Language: task.taskConfig.TaskLanguage,
+		Language: languageSet,
 		AllSentences: slices.Clone(
 			task.AllSentences,
 		),
