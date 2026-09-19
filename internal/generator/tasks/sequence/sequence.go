@@ -167,6 +167,11 @@ func (task *Task) InsertSentence(
 				task.AllSentences[idx+1:]...,
 			)...,
 		)
+	} else {
+		task.AllSentences = append(
+			task.AllSentences,
+			sentence,
+		)
 	}
 }
 
@@ -260,5 +265,18 @@ func (task *Task) GetAllSentences() []*Sentence {
 	result := slices.Clone(
 		task.AllSentences,
 	)
+	return result
+}
+
+// ToPreviewInfo converts sequence to info that can be previewed
+func (task *Task) ToPreviewInfo() *SequenceInfo {
+	task.RLock()
+	defer task.RUnlock()
+	result := &SequenceInfo{
+		Language: task.taskConfig.TaskLanguage,
+		AllSentences: slices.Clone(
+			task.AllSentences,
+		),
+	}
 	return result
 }

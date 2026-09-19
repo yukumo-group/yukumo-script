@@ -43,7 +43,12 @@ func Init() error {
 		return err
 	}
 	characters.CharacterList.CleanData()
-	return InitTaskManager()
+	err = InitializeLanguageConfig()
+	if err != nil {
+		return err
+	}
+	err = InitTaskManager()
+	return err
 }
 
 // InitRuntimeDirs creates the runtime directories used by CLI and clib.

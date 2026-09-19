@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	github.com/fatih/color v1.19.0
 	github.com/spf13/cobra v1.10.2
-	github.com/yukumo-group/yukumo-script v0.0.0-20260911034017-ce1eb22dbc8c
+	github.com/yukumo-group/yukumo-script v0.0.0-20260918013143-2067f632f70a
 )
 
 require (
@@ -28,7 +28,7 @@ require (
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/unitoftime/beep v0.0.0-20260407205258-62236bbd2ba3 // indirect
 	github.com/vcaesar/cedar v0.30.0 // indirect
-	github.com/yukumo-group/Chinese2KanaConverter v0.1.1 // indirect
+	github.com/yukumo-group/Chinese2KanaConverter v0.1.2 // indirect
 	github.com/zeozeozeo/gomplerate v0.0.0-20250404113140-0fbb236df825 // indirect
 	go.yaml.in/yaml/v4 v4.0.0-rc.6 // indirect
 	golang.org/x/sync v0.22.0 // indirect

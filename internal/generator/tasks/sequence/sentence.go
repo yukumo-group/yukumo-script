@@ -27,6 +27,20 @@ const (
 	Empty
 )
 
+// ToString converts to string for info
+func (sentenceType SentenceType) ToString() string {
+	switch sentenceType {
+	case SingleSentence:
+		return "SingleSentence"
+	case Chorus:
+		return "Chorus"
+	case Empty:
+		return "Empty"
+	default:
+		return "NotSupported"
+	}
+}
+
 // Sentence defines a single sentence component for the sequence task
 type Sentence struct {
 	TypeSentence           SentenceType        `json:"sentenceTtpe"`

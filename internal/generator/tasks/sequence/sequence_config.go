@@ -29,6 +29,14 @@ func (rawCharacter RawCharacter) ToCharacter() *characters.Character {
 	)
 }
 
+// TaskConfig defines the config for sequence tasks
+type TaskConfig struct {
+	ConfigName   string
+	Characters   *characters.Characters
+	DefaultSpeed int
+	TaskLanguage language.Language
+}
+
 // RawConfig defines the raw config read from yaml
 type RawConfig struct {
 	UsePredefinedCharacters *bool           `yaml:"use_predefined_characters"`
@@ -36,14 +44,6 @@ type RawConfig struct {
 	DefaultSpeed            *int            `yaml:"default_speed"`
 	Characters              *[]RawCharacter `yaml:"raw_characters"`
 	Language                int             `yaml:"language"`
-}
-
-// TaskConfig defines the config for sequence tasks
-type TaskConfig struct {
-	ConfigName   string
-	Characters   *characters.Characters
-	DefaultSpeed int
-	TaskLanguage language.Language
 }
 
 // NewRawConfig creates new RawConfig struct

@@ -18,26 +18,38 @@ func NewWorkSpace() *WorkSpace {
 	}
 }
 
-// LoadFileToWorkSpace loads file to work space
+// LoadFileToWorkSpace loads file to work space.
+// Returns ID of this task and error.
 func (workspace *WorkSpace) LoadFileToWorkSpace(
 	fileName string,
-) error {
+) (string, error) {
 	workspace.Lock()
 	defer workspace.Unlock()
 	task, err := LoadSequenceTaskFromFile(
 		fileName,
 	)
 	if err != nil {
-		return err
+		return "", err
 	}
 	id := task.GetTaskName()
 	_, exists := workspace.tasks[id]
 	if exists {
-		return fmt.Errorf(
+		return "", fmt.Errorf(
 			"%s task already exists in the workspace",
 			id,
 		)
 	}
 	workspace.tasks[id] = task
-	return nil
+	return id, nil
+}
+
+// ShowAllTasks shows all the tasks
+func (workspace *WorkSpace) ShowAllTasks() map[string]*SequenceInfo {
+	workspace.RLock()
+	defer workspace.RUnlock()
+	result := map[string]*SequenceInfo{}
+	for id, task := range workspace.tasks {
+		result[id] = task.ToPreviewInfo()
+	}
+	return result
 }

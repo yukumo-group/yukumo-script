@@ -112,6 +112,27 @@ However we still recommend not to use Chinese option when generating audio for E
 	if err := addCharacterCMD.MarkFlagRequired("description"); err != nil {
 		panic(err)
 	}
+	// Add Flag for addPolyphonicCMD
+	addPolyphonicCMD.Flags().StringVarP(
+		&PolyphonicChinese,
+		"chinese",
+		"c",
+		"大都会",
+		"The original Chinese of the word",
+	)
+	if err := addPolyphonicCMD.MarkFlagRequired("chinese"); err != nil {
+		panic(err)
+	}
+	addPolyphonicCMD.Flags().StringVarP(
+		&PolyphonicPinyin,
+		"pinyin",
+		"p",
+		"da du hui",
+		"The pinyin of the Chinese phrase",
+	)
+	if err := addPolyphonicCMD.MarkFlagRequired("pinyin"); err != nil {
+		panic(err)
+	}
 	// Add subcommands
 	charactersCMD.AddCommand(
 		addCharacterCMD,
@@ -127,6 +148,10 @@ However we still recommend not to use Chinese option when generating audio for E
 	)
 	tasksCMD.AddCommand(
 		showAllSingleSentenceTasksCMD,
+	)
+	languageCMD.AddCommand(
+		showAllPolyphonicsCMD,
+		addPolyphonicCMD,
 	)
 	rootCMD.AddCommand(
 		phontsCMD,
