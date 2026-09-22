@@ -55,6 +55,8 @@ github.com/yukumo-group/Chinese2KanaConverter v0.1.2 h1:I16GEGEtnyROJfyB8WJP6ejI
 github.com/yukumo-group/Chinese2KanaConverter v0.1.2/go.mod h1:I4dxHZEv+vHyRYaVgjm50FZmV633O6br2rF7ESj29GA=
 github.com/yukumo-group/yukumo-script v0.0.0-20260918013143-2067f632f70a h1:JXQ6ymJnHaJ4t277UVbzgx5aDwkU8QrEcqH32fhhqgY=
 github.com/yukumo-group/yukumo-script v0.0.0-20260918013143-2067f632f70a/go.mod h1:UhUflBJU3Mx3RlO7Py3MtzcsYGNW2oTx/KhoQyS0QIc=
+github.com/yukumo-group/yukumo-script v0.0.0-20260919140706-c3cce988661f h1:e39DXAlH42+flBZ8ySK6N3NJUg0wCVuZEEFefQ3me80=
+github.com/yukumo-group/yukumo-script v0.0.0-20260919140706-c3cce988661f/go.mod h1:UhUflBJU3Mx3RlO7Py3MtzcsYGNW2oTx/KhoQyS0QIc=
 github.com/zeozeozeo/gomplerate v0.0.0-20250404113140-0fbb236df825 h1:rViu1xhQRtdJogc39jF46PS01xHVD736JowXl2qOcPM=
 github.com/zeozeozeo/gomplerate v0.0.0-20250404113140-0fbb236df825/go.mod h1:ASuMFHITnaVdPvMkoDGI4tTwYG9fW7Mxv2j5AuvTo8Q=
 go.yaml.in/yaml/v3 v3.0.4/go.mod h1:DhzuOOF2ATzADvBadXxruRBLzYTpT36CKvDb3+aBEFg=

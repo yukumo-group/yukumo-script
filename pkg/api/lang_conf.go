@@ -39,8 +39,8 @@ func InitializeLanguageConfig() error {
 	if err != nil {
 		return err
 	}
-	language.PolyphonicsManager.Initialize()
 	language.PolyphonicsManager = newManager
+	language.PolyphonicsManager.Initialize()
 	return nil
 }
 

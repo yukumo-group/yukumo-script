@@ -77,6 +77,16 @@ func (manager *TaskManager) AddNewTask(
 	manager.Tasks[taskName] = fileName
 }
 
+// GetFileName gets the file name for task from task name
+func (manager *TaskManager) GetFileName(
+	taskName string,
+) string {
+	manager.RLock()
+	defer manager.RUnlock()
+	result := manager.Tasks[taskName]
+	return result
+}
+
 // GetAllTasks gets all the tasks for manager
 func (manager *TaskManager) GetAllTasks() map[string]string {
 	manager.RLock()

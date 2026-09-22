@@ -7,17 +7,8 @@ import (
 	"time"
 
 	"github.com/yukumo-group/yukumo-script/internal/characters"
-	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/sequence"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
 )
-
-// InitSequenceTaskConfigManager intialises config manager for sequence task
-func InitSequenceTaskConfigManager() {
-	sequence.ConfManager.SetConfigFilePath(
-		filePathForProg.TaskDir,
-		filePathForProg.ConfigManagerFile,
-	)
-}
 
 // GetAllTasks gets all the single sentence tasks
 func GetAllTasks() map[string]string {
@@ -97,34 +88,4 @@ func GetTask(
 		task,
 	)
 	return result, nil
-}
-
-// AddSequenceTaskConfigFromFile adds config for sequence task from file.
-// The fileName can be any path in the computer as it will be copied to conf manager
-func AddSequenceTaskConfigFromFile(
-	fileName string,
-) error {
-	err := sequence.ConfManager.AddFile(
-		fileName,
-		filePathForProg.ConfigDir,
-	)
-	return err
-}
-
-// GetAllConfigs gets all the configurations for sequence task
-func GetAllConfigs() []string {
-	return sequence.ConfManager.GetAllConfigNames()
-}
-
-// GetConfig gets certain configuration for sequence task
-func GetConfig(
-	configName string,
-) (*sequence.RawConfig, error) {
-	configuration, err := sequence.ConfManager.GetConfig(
-		configName,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return configuration, nil
 }

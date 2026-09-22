@@ -238,14 +238,16 @@ func (task *Task) Generate(
 func (task *Task) GetTaskName() string {
 	task.RLock()
 	defer task.RUnlock()
-	return task.TaskName
+	result := task.TaskName
+	return result
 }
 
 // GetResultFile gets result file for certain task
 func (task *Task) GetResultFile() *string {
 	task.RLock()
 	defer task.RUnlock()
-	return task.ResultFile
+	result := task.ResultFile
+	return result
 }
 
 // IsGenerated checks if the task already generated the file

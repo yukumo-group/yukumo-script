@@ -93,6 +93,7 @@ type FilePathes struct {
 	ConfigDir               string
 	ConfigManagerFile       string
 	PolyphonicsManagerFile  string
+	SequenceTaskManagerFile string
 }
 
 // TaskInfo defines the information for task

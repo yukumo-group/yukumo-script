@@ -35,4 +35,6 @@ const (
 	ConfigManagerFile string = "config_manager.json"
 	// PolyphonicsManagerFile defines the file name of the polyphonic manager
 	PolyphonicsManagerFile string = "polyphonics_manager.json"
+	// SequenceTaskManagerFile defines the file name of the manager for sequence tasks
+	SequenceTaskManagerFile string = "sequence_tasks.json"
 )

@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	github.com/fatih/color v1.19.0
 	github.com/spf13/cobra v1.10.2
-	github.com/yukumo-group/yukumo-script v0.0.0-20260918013143-2067f632f70a
+	github.com/yukumo-group/yukumo-script v0.0.0-20260919140706-c3cce988661f
 )
 
 require (

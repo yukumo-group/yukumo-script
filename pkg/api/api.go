@@ -47,6 +47,10 @@ func Init() error {
 	if err != nil {
 		return err
 	}
+	err = InitSequenceTaskManager()
+	if err != nil {
+		return err
+	}
 	err = InitTaskManager()
 	return err
 }
@@ -84,6 +88,7 @@ func InitializePathesByConst() {
 	filePathForProg.ConfigDir = utils.ConfigDir
 	filePathForProg.ConfigManagerFile = utils.ConfigManagerFile
 	filePathForProg.PolyphonicsManagerFile = utils.PolyphonicsManagerFile
+	filePathForProg.SequenceTaskManagerFile = utils.SequenceTaskManagerFile
 }
 
 // InitializePathesByCostum allows the user to use their own file structure
@@ -104,6 +109,7 @@ func InitializePathesByCostum(
 	configDir string,
 	configManagerFile string,
 	polyphonicsManagerFile string,
+	sequenceTaskManagerFile string,
 ) {
 	filePathForProg.RuntimeDir = runtimeDir
 	filePathForProg.PhontsDir = phontsDir
@@ -121,4 +127,5 @@ func InitializePathesByCostum(
 	filePathForProg.ConfigDir = configDir
 	filePathForProg.ConfigManagerFile = configManagerFile
 	filePathForProg.PolyphonicsManagerFile = polyphonicsManagerFile
+	filePathForProg.SequenceTaskManagerFile = sequenceTaskManagerFile
 }

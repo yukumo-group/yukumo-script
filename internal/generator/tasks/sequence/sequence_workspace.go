@@ -1,6 +1,7 @@
 package sequence
 
 import (
+	"context"
 	"fmt"
 	"sync"
 )
@@ -12,9 +13,7 @@ type WorkSpace struct {
 }
 
 // NewWorkSpace creates new work space
-func NewWorkSpace(
-	manager *TaskManager,
-) *WorkSpace {
+func NewWorkSpace() *WorkSpace {
 	return &WorkSpace{
 		tasks: map[string]*Task{},
 	}
@@ -96,4 +95,25 @@ func (workspace *WorkSpace) FinishAndSave(
 	}
 	delete(workspace.tasks, taskID)
 	return path, nil
+}
+
+// Generate generates audio for certain task inside workspace
+func (workspace *WorkSpace) Generate(
+	ctx context.Context,
+	taskID string,
+	phontsDir string,
+	targetDir string,
+) (*string, error) {
+	workspace.Lock()
+	defer workspace.Unlock()
+	err := workspace.tasks[taskID].Generate(
+		ctx,
+		phontsDir,
+		targetDir,
+	)
+	if err != nil {
+		return nil, err
+	}
+	resultFile := workspace.tasks[taskID].GetResultFile()
+	return resultFile, nil
 }

@@ -31,6 +31,7 @@ type Task struct {
 	Config         *RawConfig  `json:"config"`
 	SentenceAudios []string    `json:"sentenceAudios"`
 	taskConfig     *TaskConfig
+	ResultFile     *string
 	wavDir         string
 }
 
@@ -248,6 +249,7 @@ func (task *Task) Generate(
 		wavFileName,
 		resultPath,
 	)
+	task.ResultFile = &wavFileName
 	return err
 }
 
@@ -286,4 +288,12 @@ func (task *Task) ToPreviewInfo() *SequenceInfo {
 		),
 	}
 	return result
+}
+
+// GetResultFile gets result file for certain task
+func (task *Task) GetResultFile() *string {
+	task.RLock()
+	defer task.RUnlock()
+	resultFile := task.ResultFile
+	return resultFile
 }
