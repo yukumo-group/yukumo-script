@@ -1,4 +1,4 @@
-package sequence
+package sequence_test
 
 import (
 	"testing"

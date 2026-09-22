@@ -1,6 +1,7 @@
 package api
 
 import (
+	"errors"
 	"time"
 
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
@@ -72,6 +73,34 @@ func NewGenerateByCharacterParams(
 // GenerateEmptyParams defines the parameters for generating empty audio
 type GenerateEmptyParams struct {
 	AudioInfo *audio.Info
+}
+
+// ConfigLoadParam defines how to load config
+type ConfigLoadParam struct {
+	Method              LoadConfigMethod
+	ConfigFilePath      *string
+	ConfigNameInManager *string
+}
+
+// NewConfigLoadParam defines the param to load config
+func NewConfigLoadParam(
+	loadMethod LoadConfigMethod,
+	configFilePath *string,
+) (*ConfigLoadParam, error) {
+	if loadMethod == FromFile && configFilePath == nil {
+		return nil, errors.New(
+			"you cannot pass a nil path for config file if load method is from file",
+		)
+	}
+	return &ConfigLoadParam{
+		Method:         loadMethod,
+		ConfigFilePath: configFilePath,
+	}, nil
+}
+
+// GenerateSequenceParams defines the parameters for generating sequence task
+type GenerateSequenceParams struct {
+	TaskName string
 }
 
 // FilePathes stores the pathes needed by the program
