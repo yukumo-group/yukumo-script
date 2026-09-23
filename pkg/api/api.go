@@ -51,6 +51,10 @@ func Init() error {
 	if err != nil {
 		return err
 	}
+	err = InitializeDefaultSequenceConfig()
+	if err != nil {
+		return err
+	}
 	err = InitTaskManager()
 	return err
 }

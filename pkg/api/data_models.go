@@ -4,6 +4,7 @@ import (
 	"errors"
 	"time"
 
+	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/sequence"
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/singlesentence"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/audio"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/audio/edit"
@@ -86,16 +87,53 @@ type ConfigLoadParam struct {
 func NewConfigLoadParam(
 	loadMethod LoadConfigMethod,
 	configFilePath *string,
+	configNameInManager *string,
 ) (*ConfigLoadParam, error) {
 	if loadMethod == FromFile && configFilePath == nil {
 		return nil, errors.New(
 			"you cannot pass a nil path for config file if load method is from file",
 		)
 	}
+	if loadMethod == FromManager && configNameInManager == nil {
+		return nil, errors.New(
+			"you cannot pass a nil config name if load method is from manager",
+		)
+	}
 	return &ConfigLoadParam{
-		Method:         loadMethod,
-		ConfigFilePath: configFilePath,
+		Method:              loadMethod,
+		ConfigFilePath:      configFilePath,
+		ConfigNameInManager: configNameInManager,
 	}, nil
+}
+
+// ToRawConfig converts load param to config
+func (param *ConfigLoadParam) ToRawConfig() (*sequence.RawConfig, error) {
+	switch param.Method {
+	case FromFile:
+		if param.ConfigFilePath == nil {
+			return nil, errors.New(
+				"you cannot load config from file when the file path pased is nil",
+			)
+		}
+		return sequence.ReadRawConfig(
+			*param.ConfigFilePath,
+		)
+	case FromManager:
+		if param.ConfigNameInManager == nil {
+			return nil, errors.New(
+				"you cannot load config from file when the config name pased is nil",
+			)
+		}
+		return sequence.ConfManager.GetConfig(
+			*param.ConfigNameInManager,
+		)
+	case Default:
+		return sequence.DefaultConfig, nil
+	default:
+		return nil, errors.New(
+			"method not supported",
+		)
+	}
 }
 
 // GenerateSequenceParams defines the parameters for generating sequence task

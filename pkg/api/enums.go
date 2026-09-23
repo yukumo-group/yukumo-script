@@ -10,7 +10,7 @@ const (
 	// FromManager loads config from the manager.
 	// 1
 	FromManager
-	// Default loads default manager.
+	// Default loads default config.
 	// 2
 	Default
 )
@@ -28,5 +28,19 @@ func ToLoadConfigMethod(
 		return Default
 	default:
 		return Default
+	}
+}
+
+// ToString converts load config method to string
+func (method LoadConfigMethod) ToString() string {
+	switch method {
+	case FromFile:
+		return "FromFile"
+	case FromManager:
+		return "FromManager"
+	case Default:
+		return "Default"
+	default:
+		return "NotSupported"
 	}
 }

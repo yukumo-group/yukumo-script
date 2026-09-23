@@ -2,6 +2,8 @@ package api
 
 import (
 	"errors"
+	"fmt"
+	"os"
 
 	"github.com/yukumo-group/yukumo-script/internal/generator/tasks/sequence"
 )
@@ -52,6 +54,37 @@ func GetSequenceConfig(
 	return configuration, nil
 }
 
+// ExportConfig exports certain configuration for sequence task.
+// You do not need to add suffix in fileName
+func ExportConfig(
+	configName string,
+	targetDir string,
+	fileName *string,
+) (string, error) {
+	configuration, err := sequence.ConfManager.GetConfig(
+		configName,
+	)
+	if err != nil {
+		return "", err
+	}
+	var resultFileName string
+	if fileName == nil {
+		fetchedFileName, exists := configuration.GetConfigName()
+		if !exists {
+			return "", errors.New(
+				"you cannot export a config without setting config name",
+			)
+		}
+		resultFileName = fetchedFileName
+	} else {
+		resultFileName = *fileName
+	}
+	return configuration.ToYAML(
+		targetDir,
+		resultFileName,
+	)
+}
+
 // ListAllTasks lists all the tasks stored
 // This shows all the task ids
 func ListAllTasks() []string {
@@ -97,4 +130,38 @@ func AddOrInsertSentenceTo(
 // You can use this function to refresh the workspace.
 func ListAllTasksInWorkspace() map[string]*sequence.SequenceInfo {
 	return sequence.MainWorkSpace.ShowAllTasks()
+}
+
+// InitializeDefaultSequenceConfig initializes default config for sequences
+func InitializeDefaultSequenceConfig() error {
+	name, err := sequence.DefaultConfig.GenerateYAMLFileName()
+	if err != nil {
+		return err
+	}
+	filePath := fmt.Sprintf(
+		"%s/%s",
+		filePathForProg.ConfigDir,
+		name,
+	)
+	_, err = os.Stat(filePath)
+	if err != nil {
+		if os.IsNotExist(err) {
+			configName, exists := sequence.DefaultConfig.GetConfigName()
+			if !exists {
+				return errors.New(
+					"default config must have a config name",
+				)
+			}
+			_, err = sequence.DefaultConfig.ToYAML(
+				filePathForProg.ConfigDir,
+				configName,
+			)
+			return err
+		}
+		return err
+	}
+	sequence.DefaultConfig, err = sequence.ReadRawConfig(
+		filePath,
+	)
+	return err
 }
