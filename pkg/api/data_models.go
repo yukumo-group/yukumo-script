@@ -161,6 +161,7 @@ type FilePathes struct {
 	ConfigManagerFile       string
 	PolyphonicsManagerFile  string
 	SequenceTaskManagerFile string
+	AssetsDir               string
 }
 
 // TaskInfo defines the information for task

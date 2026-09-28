@@ -66,3 +66,36 @@ func TestConvertText(t *testing.T) {
 		t.Fatalf("ConvertText Chinese: %v", err)
 	}
 }
+
+// TestToChinese tests converting language to Chinese
+/*
+func TestToChinese(t *testing.T) {
+	t.Parallel()
+	language.PolyphonicsManager.AddPolyphonic(
+		"都市",
+		"du shi",
+	)
+	language.PolyphonicsManager.AddPolyphonic(
+		"银行",
+		"yin hang",
+	)
+	language.PolyphonicsManager.Initialize()
+	result, err := language.ConvertText(
+		"都市银行",
+		language.Chinese,
+	)
+	if err != nil {
+		t.Error(
+			err,
+		)
+	}
+	const expecteResult string = "トゥーホイチュイインハン"
+	if result != expecteResult {
+		t.Errorf(
+			"expected %s, got %s",
+			expecteResult,
+			result,
+		)
+	}
+}
+*/

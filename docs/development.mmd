@@ -1,0 +1,63 @@
+stateDiagram-v2
+    direction LR
+    GUI内置api --> GUI
+    核心逻辑api --> GUI内置api
+    核心逻辑api --> CLI
+    兼容层 --> 核心逻辑api
+    aq1 --> 兼容层
+    aq2 --> 兼容层
+    aq10 --> 兼容层
+    核心逻辑api --> clib
+    %% 定义标签
+    %% gui
+    note right of GUI
+    VUE/ts
+    end note
+    note right of GUI
+    用户交互
+    提示说明
+    信息显示(头像等)
+    end note
+    %% gui api
+    note left of GUI内置api
+    音轨编辑
+    end note
+    note left of GUI内置api
+    ts/go/js(wails)
+    end note
+    %% 核心逻辑
+    note left of 核心逻辑api
+    任务管理
+    任务生成
+    角色管理
+    语言翻译相关
+    script解析
+    生成文件管理
+    end note
+    note left of 核心逻辑api
+    go
+    end note
+    %% CLI
+    note right of CLI
+    go(cobra)
+    end note
+    note right of CLI
+    用户交互
+    提示说明
+    信息显示(终端显示)
+    end note
+    %% 兼容层
+    note right of 兼容层
+    C
+    end note
+    note right of 兼容层
+    管理生成方式
+    end note
+    %% clib
+    note right of clib
+    C/go(cgo)
+    end note
+    note right of clib
+    暴露核心逻辑api给其他语言使用(如blender插件开发)
+    end note
+    

@@ -3,10 +3,12 @@ package utils
 const (
 	// RuntimeDir defines the directory to store the file generated when running
 	RuntimeDir string = "runtime"
+	// AssetsDir defines the assets
+	AssetsDir string = "assets"
 	// ExampleDir defines the directory to store the example audios
 	ExampleDir string = "runtime/examples"
 	// PhontsDir defines the directory to store the phont files
-	PhontsDir string = "runtime/phonts"
+	PhontsDir string = "assets/phonts"
 	// ResultDir defines the directory to store the generated result files
 	ResultDir string = "runtime/result"
 	// WavsDir defines the directory to store the generated temporary wav files
@@ -37,4 +39,6 @@ const (
 	PolyphonicsManagerFile string = "polyphonics_manager.json"
 	// SequenceTaskManagerFile defines the file name of the manager for sequence tasks
 	SequenceTaskManagerFile string = "sequence_tasks.json"
+	// DictZhSFile defines the name of the gse dict for simplifed chinese
+	DictZhSFile string = "dict_zh_s.txt"
 )

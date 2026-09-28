@@ -48,7 +48,7 @@ subcommands of generation command allow you to generate your audio
 // generateByFileCMD generates wav by file
 var generateByFileCMD = &cobra.Command{
 	Use:   "generateByFile",
-	Short: "Generate yukumo audio through the file",
+	Short: "Generate yukumo audio through phont file",
 	Long: `
 generateByFile allows you to generate yukumo audio through phont file directly
 	`,

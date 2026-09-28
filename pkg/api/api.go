@@ -62,6 +62,7 @@ func Init() error {
 // InitRuntimeDirs creates the runtime directories used by CLI and clib.
 func InitRuntimeDirs() {
 	utils.InitializeDirectory(filePathForProg.RuntimeDir)
+	utils.InitializeDirectory(filePathForProg.AssetsDir)
 	utils.InitializeDirectory(filePathForProg.PhontsDir)
 	utils.InitializeDirectory(filePathForProg.ResultDir)
 	utils.InitializeDirectory(filePathForProg.WavsDir)
@@ -93,6 +94,7 @@ func InitializePathesByConst() {
 	filePathForProg.ConfigManagerFile = utils.ConfigManagerFile
 	filePathForProg.PolyphonicsManagerFile = utils.PolyphonicsManagerFile
 	filePathForProg.SequenceTaskManagerFile = utils.SequenceTaskManagerFile
+	filePathForProg.AssetsDir = utils.AssetsDir
 }
 
 // InitializePathesByCostum allows the user to use their own file structure
@@ -114,6 +116,7 @@ func InitializePathesByCostum(
 	configManagerFile string,
 	polyphonicsManagerFile string,
 	sequenceTaskManagerFile string,
+	assetsDir string,
 ) {
 	filePathForProg.RuntimeDir = runtimeDir
 	filePathForProg.PhontsDir = phontsDir
@@ -132,4 +135,5 @@ func InitializePathesByCostum(
 	filePathForProg.ConfigManagerFile = configManagerFile
 	filePathForProg.PolyphonicsManagerFile = polyphonicsManagerFile
 	filePathForProg.SequenceTaskManagerFile = sequenceTaskManagerFile
+	filePathForProg.AssetsDir = assetsDir
 }
