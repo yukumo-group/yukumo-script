@@ -42,6 +42,9 @@ go.work.sum
 
 third_party/*
 
+# aqtk-shim Release staged by `just init <platform>`
+/third-party/
+
 # Runtime I/O (phonts, wav, result, data, examples)
 runtime/
 
