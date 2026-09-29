@@ -1,0 +1,4 @@
+[submodule "aqtk-shim"]
+	path = aqtk-shim
+	url = https://github.com/yukumo-group/aqtk-shim.git
+	branch = main
