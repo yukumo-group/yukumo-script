@@ -39,8 +39,9 @@ clean:
     if (Test-Path coverage.out) { Remove-Item -Force coverage.out }
     if (Test-Path coverage.html) { Remove-Item -Force coverage.html }
     if (Test-Path aqtk-shim/build) { Remove-Item -Recurse -Force aqtk-shim/build }
-    foreach ($ver in 'aq1','aq2','aq10') { $dest = Join-Path 'third-party' $ver; if (Test-Path $dest) { Remove-Item -Recurse -Force $dest } }
+    foreach ($name in 'aq1','aq2','aq10','win64','win32','linux64','linux32','macos') { $dest = Join-Path 'third-party' $name; if (Test-Path $dest) { Remove-Item -Recurse -Force $dest } }
+    if (Test-Path 'third-party/Aqsh.h') { Remove-Item -Force 'third-party/Aqsh.h' }
 
 [unix]
 clean:
-    rm -rf dist build coverage.out coverage.html aqtk-shim/build third-party/aq1 third-party/aq2 third-party/aq10
+    rm -rf dist build coverage.out coverage.html aqtk-shim/build third-party/aq1 third-party/aq2 third-party/aq10 third-party/win64 third-party/win32 third-party/linux64 third-party/linux32 third-party/macos third-party/Aqsh.h

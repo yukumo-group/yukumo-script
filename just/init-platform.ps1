@@ -34,11 +34,9 @@ finally {
     Pop-Location
 }
 
-foreach ($ver in 'aq1', 'aq2', 'aq10') {
-    $dest = Join-Path $Prefix (Join-Path $ver $Platform)
-    if (Test-Path $dest) {
-        Remove-Item -Recurse -Force $dest
-    }
+$dest = Join-Path $Prefix $Platform
+if (Test-Path $dest) {
+    Remove-Item -Recurse -Force $dest
 }
 
 cmake --install (Join-Path $Shim "build/$dir") --config Release --prefix $Prefix

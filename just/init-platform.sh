@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build aqtk-shim Release for one platform and install it under third-party/aq{1,2,10}/<platform>/.
+# Build aqtk-shim Release for one platform and install it under third-party/<platform>/.
 set -euo pipefail
 
 platform="${1:?platform}"
@@ -44,8 +44,6 @@ esac
     cmake --build --preset "$build"
 )
 
-for ver in aq1 aq2 aq10; do
-    rm -rf "$prefix/$ver/$platform"
-done
+rm -rf "$prefix/$platform"
 
 cmake --install "$shim/build/$dir" --config Release --prefix "$prefix"

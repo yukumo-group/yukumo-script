@@ -1,5 +1,5 @@
 # yukumo-script
-#   just init <platform>   aqtk-shim Release -> third-party/aq{1,2,10}/<platform>/
+#   just init <platform>   aqtk-shim Release -> third-party/<platform>/
 #   just build             Go CLI + clib (just/clib.just, just/cli.just)
 
 set windows-shell := ["powershell.exe", "-NoProfile", "-Command"]
