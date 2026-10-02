@@ -1,25 +1,30 @@
 package all2jap_test
 
 import (
-	"regexp"
 	"testing"
 	"unicode"
+
+	"github.com/dlclark/regexp2"
 
 	"github.com/yukumo-group/yukumo-script/pkg/utils/language/all2jap"
 )
 
-var nonKatakana = regexp.MustCompile(`[^\p{Katakana}]+`)
+var nonKatakana = regexp2.MustCompile(`[^\p{Katakana}\u30FC]+`, 0)
 
 func assertOnlyKatakana(t *testing.T, label, s string) {
 	t.Helper()
 	if s == "" {
 		t.Fatalf("%s: expected non-empty katakana output", label)
 	}
-	if nonKatakana.MatchString(s) {
+	matchRes, err := nonKatakana.MatchString(s)
+	if err != nil {
+		t.Error(err)
+	}
+	if matchRes {
 		t.Fatalf("%s: got non-katakana runes in %q", label, s)
 	}
 	for _, r := range s {
-		if !unicode.In(r, unicode.Katakana) {
+		if !unicode.In(r, unicode.Katakana) && (string(r) != "ー") {
 			t.Fatalf("%s: rune %q is not katakana in %q", label, r, s)
 		}
 	}

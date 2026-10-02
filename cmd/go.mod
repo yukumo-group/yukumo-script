@@ -5,12 +5,13 @@ go 1.25.0
 require (
 	github.com/fatih/color v1.19.0
 	github.com/spf13/cobra v1.10.2
-	github.com/yukumo-group/yukumo-script v0.0.0-20260923072743-92e3aee6078e
+	github.com/yukumo-group/yukumo-script v0.0.0-20261002083149-0ac218c777e8
 )
 
 require (
 	github.com/Luigi-Pizzolito/English2KanaTransliteration v1.0.4 // indirect
 	github.com/braheezy/shine-mp3 v0.2.0 // indirect
+	github.com/dlclark/regexp2 v1.12.0 // indirect
 	github.com/ebitengine/oto/v3 v3.4.1 // indirect
 	github.com/ebitengine/purego v0.10.2 // indirect
 	github.com/go-audio/audio v1.0.0 // indirect
@@ -28,7 +29,7 @@ require (
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/unitoftime/beep v0.0.0-20260407205258-62236bbd2ba3 // indirect
 	github.com/vcaesar/cedar v0.30.0 // indirect
-	github.com/yukumo-group/Chinese2KanaConverter v0.1.2 // indirect
+	github.com/yukumo-group/Chinese2KanaConverter v0.1.5 // indirect
 	github.com/zeozeozeo/gomplerate v0.0.0-20250404113140-0fbb236df825 // indirect
 	go.yaml.in/yaml/v4 v4.0.0-rc.6 // indirect
 	golang.org/x/sync v0.22.0 // indirect
