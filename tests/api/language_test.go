@@ -11,7 +11,8 @@ func TestLanguageConfig(
 	t *testing.T,
 ) {
 	t.Parallel()
-	err := api.Init()
+	api.InitRuntimeDirs()
+	err := api.InitializeLanguageConfig()
 	if err != nil {
 		t.Error(err)
 	}
