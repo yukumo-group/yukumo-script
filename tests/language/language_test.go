@@ -1,8 +1,10 @@
 package language_test
 
 import (
+	"fmt"
 	"testing"
 
+	"github.com/yukumo-group/Chinese2KanaConverter/pkg/polyphonic"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/language"
 )
 
@@ -68,18 +70,38 @@ func TestConvertText(t *testing.T) {
 }
 
 // TestToChinese tests converting language to Chinese
-/*
 func TestToChinese(t *testing.T) {
 	t.Parallel()
-	language.PolyphonicsManager.AddPolyphonic(
+	tmpDir := t.TempDir()
+	targetFilePath := fmt.Sprintf(
+		"%s/%s",
+		tmpDir,
+		"test.json",
+	)
+	dictFilePath := fmt.Sprintf(
+		"%s/%s",
+		tmpDir,
+		"test.txt",
+	)
+	newPolyphonicManager, err := polyphonic.NewManagerFromFile(
+		targetFilePath,
+		dictFilePath,
+	)
+	if err != nil {
+		t.Error(err)
+	}
+	newPolyphonicManager.AddPolyphonic(
 		"都市",
 		"du shi",
 	)
-	language.PolyphonicsManager.AddPolyphonic(
+	newPolyphonicManager.AddPolyphonic(
 		"银行",
 		"yin hang",
 	)
-	language.PolyphonicsManager.Initialize()
+	err = newPolyphonicManager.SaveGSEDict()
+	if err != nil {
+		t.Error(err)
+	}
 	result, err := language.ConvertText(
 		"都市银行",
 		language.Chinese,
@@ -89,7 +111,7 @@ func TestToChinese(t *testing.T) {
 			err,
 		)
 	}
-	const expecteResult string = "トゥーホイチュイインハン"
+	const expecteResult string = "トゥーシーインハン"
 	if result != expecteResult {
 		t.Errorf(
 			"expected %s, got %s",
@@ -98,4 +120,3 @@ func TestToChinese(t *testing.T) {
 		)
 	}
 }
-*/

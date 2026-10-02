@@ -5,11 +5,12 @@ go 1.25.0
 require (
 	github.com/Luigi-Pizzolito/English2KanaTransliteration v1.0.4
 	github.com/braheezy/shine-mp3 v0.1.0
+	github.com/dlclark/regexp2 v1.12.0
 	github.com/go-audio/wav v1.1.0
 	github.com/google/uuid v1.6.0
 	github.com/jonchammer/audio-io v0.3.0
 	github.com/unitoftime/beep v0.0.0-20260407205258-62236bbd2ba3
-	github.com/yukumo-group/Chinese2KanaConverter v0.1.2
+	github.com/yukumo-group/Chinese2KanaConverter v0.1.5
 	github.com/zeozeozeo/gomplerate v0.0.0-20250404113140-0fbb236df825
 	go.yaml.in/yaml/v4 v4.0.0-rc.6
 	golang.org/x/sync v0.22.0

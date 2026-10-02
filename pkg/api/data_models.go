@@ -162,6 +162,7 @@ type FilePathes struct {
 	PolyphonicsManagerFile  string
 	SequenceTaskManagerFile string
 	AssetsDir               string
+	DictFilePath            string
 }
 
 // SetPathes sets the pathes
@@ -175,6 +176,15 @@ func (pathes *FilePathes) SetPathes(
 
 // Option defines the option for setting the pathes
 type Option func(*FilePathes)
+
+// WithDictFilePath defines the setting of file path for dict file
+func WithDictFilePath(
+	dictFilePath string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.DictFilePath = dictFilePath
+	}
+}
 
 // WithConfigDir defines the setting of config dir
 func WithConfigDir(

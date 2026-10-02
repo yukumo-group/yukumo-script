@@ -13,9 +13,9 @@ func ConvertText(
 ) (string, error) {
 	switch lang {
 	case English:
-		return all2jap.EngToKana(text), nil
+		return all2jap.EngToKana(text)
 	case Japanese:
-		return all2jap.JPToKana(text), nil
+		return all2jap.JPToKana(text)
 	case Chinese:
 		return all2jap.CnToKana(text)
 	default:

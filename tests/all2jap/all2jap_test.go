@@ -27,24 +27,39 @@ func assertOnlyKatakana(t *testing.T, label, s string) {
 
 func TestEngToKana(t *testing.T) {
 	t.Parallel()
-	got := all2jap.EngToKana("hello")
+	got, err := all2jap.EngToKana("hello")
+	if err != nil {
+		t.Error(err)
+	}
 	assertOnlyKatakana(t, "EngToKana(hello)", got)
 
-	withNum := all2jap.EngToKana("a1")
+	withNum, err := all2jap.EngToKana("a1")
+	if err != nil {
+		t.Error(err)
+	}
 	assertOnlyKatakana(t, "EngToKana(a1)", withNum)
 }
 
 func TestJPToKana(t *testing.T) {
 	t.Parallel()
-	got := all2jap.JPToKana("こんにちは")
+	got, err := all2jap.JPToKana("こんにちは")
+	if err != nil {
+		t.Error(err)
+	}
 	assertOnlyKatakana(t, "JPToKana", got)
 
-	withNum := all2jap.JPToKana("あ1")
+	withNum, err := all2jap.JPToKana("あ1")
+	if err != nil {
+		t.Error(err)
+	}
 	assertOnlyKatakana(t, "JPToKana(あ1)", withNum)
 }
 
 func TestAllToKana(t *testing.T) {
 	t.Parallel()
-	got := all2jap.AllToKana("Gopher")
+	got, err := all2jap.AllToKana("Gopher")
+	if err != nil {
+		t.Error(err)
+	}
 	assertOnlyKatakana(t, "AllToKana(Gopher)", got)
 }

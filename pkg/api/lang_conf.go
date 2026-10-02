@@ -2,7 +2,6 @@ package api
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/yukumo-group/Chinese2KanaConverter/pkg/polyphonic"
 	"github.com/yukumo-group/yukumo-script/pkg/utils/language"
@@ -17,24 +16,33 @@ func GetPolyphonicsFilePath() string {
 	)
 }
 
+// GetDictFilePath gets the path for directory
+func GetDictFilePath() string {
+	return fmt.Sprintf(
+		"%s/%s",
+		filePathForProg.AssetsDir,
+		filePathForProg.DictFilePath,
+	)
+}
+
+// ConvertText converts text to kana
+func ConvertText(
+	originalText string,
+	lang language.Language,
+) (string, error) {
+	return language.ConvertText(
+		originalText,
+		lang,
+	)
+}
+
 // InitializeLanguageConfig initializes the polyphonic manager
 func InitializeLanguageConfig() error {
 	filePath := GetPolyphonicsFilePath()
-	// Check if file exists
-	_, err := os.Stat(filePath)
-	if err != nil {
-		if os.IsNotExist(err) {
-			language.PolyphonicsManager.Initialize()
-			language.PolyphonicsManager.SetTargetFile(
-				filePath,
-			)
-			return nil
-		} else {
-			return err
-		}
-	}
+	dictPath := GetDictFilePath()
 	newManager, err := polyphonic.NewManagerFromFile(
 		filePath,
+		dictPath,
 	)
 	if err != nil {
 		return err
@@ -58,5 +66,9 @@ func AddPolyphonic(
 		chinese,
 		pinyin,
 	)
+	err := language.PolyphonicsManager.SaveGSEDict()
+	if err != nil {
+		return err
+	}
 	return language.PolyphonicsManager.Save()
 }

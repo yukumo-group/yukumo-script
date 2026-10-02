@@ -11,7 +11,7 @@ import (
 // InitSequenceTaskConfigManager intialises config manager for sequence task
 func InitSequenceTaskConfigManager() {
 	sequence.ConfManager.SetConfigFilePath(
-		filePathForProg.TaskDir,
+		filePathForProg.ConfigDir,
 		filePathForProg.ConfigManagerFile,
 	)
 }
@@ -19,7 +19,7 @@ func InitSequenceTaskConfigManager() {
 // InitSequenceTaskManager initialises the task manager for sequence tasks
 func InitSequenceTaskManager() error {
 	return sequence.TasksManager.Load(
-		filePathForProg.SequenceDir,
+		filePathForProg.TaskDir,
 		filePathForProg.SequenceTaskManagerFile,
 	)
 }

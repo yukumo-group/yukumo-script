@@ -132,6 +132,9 @@ func InitializePathesByConst() {
 		WithAssetsDir(
 			utils.AssetsDir,
 		),
+		WithDictFilePath(
+			utils.DictZhSFile,
+		),
 	)
 }
 

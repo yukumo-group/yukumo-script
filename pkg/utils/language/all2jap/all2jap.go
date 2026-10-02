@@ -1,7 +1,7 @@
 package all2jap
 
 import (
-	"regexp"
+	"github.com/dlclark/regexp2"
 
 	kanatrans "github.com/Luigi-Pizzolito/English2KanaTransliteration"
 	"github.com/yukumo-group/Chinese2KanaConverter/pkg/converter"
@@ -9,22 +9,33 @@ import (
 )
 
 // AllToKana converts English and Japanese characters to Kana
-func AllToKana(text string) string {
+func AllToKana(text string) (string, error) {
 	allToKana := kanatrans.NewAllToKana(true)
 	convertResult := allToKana.Convert(text)
-	re := regexp.MustCompile(`[^\p{Katakana}]+`)
-	result := re.ReplaceAllString(convertResult, "")
-	return result
+	re := regexp2.MustCompile(
+		`[^\p{Katakana}\u30FC]+`,
+		0,
+	)
+	result, err := re.Replace(
+		convertResult,
+		"",
+		-1,
+		-1,
+	)
+	if err != nil {
+		return "", err
+	}
+	return result, err
 }
 
 // EngToKana converts English to Kana
-func EngToKana(text string) string {
+func EngToKana(text string) (string, error) {
 	numResult := convertnums.ConvertNumToEnglish(text)
 	return AllToKana(numResult)
 }
 
 // JPToKana converts japanese to Kana
-func JPToKana(text string) string {
+func JPToKana(text string) (string, error) {
 	numResult := convertnums.ConverNumToJP(text)
 	return AllToKana(numResult)
 }
@@ -43,7 +54,15 @@ func CnToKana(
 	if err != nil {
 		return "", err
 	}
-	re := regexp.MustCompile(`[^\p{Katakana}]+`)
-	result := re.ReplaceAllString(convertResult, "")
+	re := regexp2.MustCompile(
+		`[^\p{Katakana}\u30FC]+`,
+		0,
+	)
+	result, err := re.Replace(
+		convertResult,
+		"",
+		-1,
+		-1,
+	)
 	return result, nil
 }

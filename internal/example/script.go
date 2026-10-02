@@ -56,13 +56,17 @@ func GenerateExamples(
 						)
 						return nil
 					} else if os.IsNotExist(errStat) {
+						convertRes, err := all2jap.AllToKana("僕はGopherです。")
+						if err != nil {
+							return err
+						}
 						generator := aquestalk2.NewGenerator(
 							100,
 							phontFile,
 							targetFile,
-							all2jap.AllToKana("僕はGopherです。"),
+							convertRes,
 						)
-						err := generator.GenerateWav()
+						err = generator.GenerateWav()
 						if err == nil {
 							examplesMap.SetKV(
 								phontName,
