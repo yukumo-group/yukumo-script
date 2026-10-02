@@ -1,3 +1,5 @@
+//go:build !initindependent
+
 package api_test
 
 import (

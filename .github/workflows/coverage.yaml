@@ -31,7 +31,7 @@ jobs:
         # tests/ are external packages (*_test); -coverpkg is required to attribute
         # coverage to the production packages they exercise (see just coverage).
         run: >
-          go test -tags "test noaudio"
+          go test -tags "test noaudio initindependent"
           -coverpkg=./pkg/...,./internal/...
           -coverprofile=coverage.txt
           ./tests/...
