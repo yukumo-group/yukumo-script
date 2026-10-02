@@ -77,63 +77,69 @@ func InitRuntimeDirs() {
 
 // InitializePathesByConst initializes the pathes according to the constants in utils
 func InitializePathesByConst() {
-	filePathForProg.RuntimeDir = utils.RuntimeDir
-	filePathForProg.PhontsDir = utils.PhontsDir
-	filePathForProg.ResultDir = utils.ResultDir
-	filePathForProg.WavsDir = utils.WavsDir
-	filePathForProg.DataDir = utils.DataDir
-	filePathForProg.ExampleDir = utils.ExampleDir
-	filePathForProg.ImagesDir = utils.ImagesDir
-	filePathForProg.TaskDir = utils.TaskDir
-	filePathForProg.SingleSentenceDir = utils.SingleSentenceDir
-	filePathForProg.SingleSentenceTasksFile = utils.SingleSentenceTasksFile
-	filePathForProg.CharactersFile = utils.CharactersFile
-	filePathForProg.ConfPath = utils.ConfPath
-	filePathForProg.SequenceDir = utils.SequenceDir
-	filePathForProg.ConfigDir = utils.ConfigDir
-	filePathForProg.ConfigManagerFile = utils.ConfigManagerFile
-	filePathForProg.PolyphonicsManagerFile = utils.PolyphonicsManagerFile
-	filePathForProg.SequenceTaskManagerFile = utils.SequenceTaskManagerFile
-	filePathForProg.AssetsDir = utils.AssetsDir
+	filePathForProg.SetPathes(
+		WithRuntimeDir(
+			utils.RuntimeDir,
+		),
+		WithPhontsDir(
+			utils.PhontsDir,
+		),
+		WithResultDir(
+			utils.ResultDir,
+		),
+		WithWavsDir(
+			utils.WavsDir,
+		),
+		WithDataDir(
+			utils.DataDir,
+		),
+		WithExampleDir(
+			utils.ExampleDir,
+		),
+		WithImagesDir(
+			utils.ImagesDir,
+		),
+		WithTaskDir(
+			utils.TaskDir,
+		),
+		WithSingleSentenceDir(
+			utils.SingleSentenceDir,
+		),
+		WithSingleSentenceTasksFile(
+			utils.SingleSentenceTasksFile,
+		),
+		WithCharactersFile(
+			utils.CharactersFile,
+		),
+		WithConfPath(
+			utils.ConfPath,
+		),
+		WithSequenceDir(
+			utils.SequenceDir,
+		),
+		WithConfigDir(
+			utils.ConfigDir,
+		),
+		WithConfigManagerFile(
+			utils.ConfigManagerFile,
+		),
+		WithPolyphonicsManagerFile(
+			utils.PolyphonicsManagerFile,
+		),
+		WithSequenceTaskManagerFile(
+			utils.SequenceTaskManagerFile,
+		),
+		WithAssetsDir(
+			utils.AssetsDir,
+		),
+	)
 }
 
 // InitializePathesByCostum allows the user to use their own file structure
 func InitializePathesByCostum(
-	runtimeDir string,
-	phontsDir string,
-	resultDir string,
-	wavsDir string,
-	dataDir string,
-	exampleDir string,
-	imagesDir string,
-	taskDir string,
-	singleSentenceDir string,
-	singleSentenceTasksFile string,
-	charactersFile string,
-	confPath string,
-	sequenceDir string,
-	configDir string,
-	configManagerFile string,
-	polyphonicsManagerFile string,
-	sequenceTaskManagerFile string,
-	assetsDir string,
+	opts ...Option,
 ) {
-	filePathForProg.RuntimeDir = runtimeDir
-	filePathForProg.PhontsDir = phontsDir
-	filePathForProg.ResultDir = resultDir
-	filePathForProg.WavsDir = wavsDir
-	filePathForProg.DataDir = dataDir
-	filePathForProg.ExampleDir = exampleDir
-	filePathForProg.ImagesDir = imagesDir
-	filePathForProg.TaskDir = taskDir
-	filePathForProg.SingleSentenceDir = singleSentenceDir
-	filePathForProg.SingleSentenceTasksFile = singleSentenceTasksFile
-	filePathForProg.CharactersFile = charactersFile
-	filePathForProg.ConfPath = confPath
-	filePathForProg.SequenceDir = sequenceDir
-	filePathForProg.ConfigDir = configDir
-	filePathForProg.ConfigManagerFile = configManagerFile
-	filePathForProg.PolyphonicsManagerFile = polyphonicsManagerFile
-	filePathForProg.SequenceTaskManagerFile = sequenceTaskManagerFile
-	filePathForProg.AssetsDir = assetsDir
+	filePathForProg.SetPathes(
+		opts...,
+	)
 }

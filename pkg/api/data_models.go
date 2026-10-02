@@ -11,7 +11,7 @@ import (
 )
 
 // filePathForProg stores the file path needed
-var filePathForProg = FilePathes{}
+var filePathForProg = &FilePathes{}
 
 // GenerateByPhontParams holds inputs for GenerateByPhont.
 type GenerateByPhontParams struct {
@@ -162,6 +162,180 @@ type FilePathes struct {
 	PolyphonicsManagerFile  string
 	SequenceTaskManagerFile string
 	AssetsDir               string
+}
+
+// SetPathes sets the pathes
+func (pathes *FilePathes) SetPathes(
+	opts ...Option,
+) {
+	for _, opt := range opts {
+		opt(pathes)
+	}
+}
+
+// Option defines the option for setting the pathes
+type Option func(*FilePathes)
+
+// WithConfigDir defines the setting of config dir
+func WithConfigDir(
+	configDir string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.ConfigDir = configDir
+	}
+}
+
+// WithSequenceDir defines the setting of sequence dir
+func WithSequenceDir(
+	sequenceDir string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.SequenceDir = sequenceDir
+	}
+}
+
+// WithRuntimeDir defines the setting of runtime dir
+func WithRuntimeDir(
+	runtimeDir string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.RuntimeDir = runtimeDir
+	}
+}
+
+// WithExampleDir defines the setting of example dir
+func WithExampleDir(
+	exampleDir string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.ExampleDir = exampleDir
+	}
+}
+
+// WithPhontsDir defines the setting of example dir
+func WithPhontsDir(
+	phontsDir string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.PhontsDir = phontsDir
+	}
+}
+
+// WithResultDir defines the setting of example dir
+func WithResultDir(
+	resultDir string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.ResultDir = resultDir
+	}
+}
+
+// WithWavsDir defines the setting of wavs dir
+func WithWavsDir(
+	wavsDir string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.WavsDir = wavsDir
+	}
+}
+
+// WithDataDir defines the setting of data dir
+func WithDataDir(
+	dataDir string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.DataDir = dataDir
+	}
+}
+
+// WithImagesDir defines the setting of images dir
+func WithImagesDir(
+	imagesDir string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.ImagesDir = imagesDir
+	}
+}
+
+// WithTaskDir defines the setting of task dir
+func WithTaskDir(
+	taskDir string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.TaskDir = taskDir
+	}
+}
+
+// WithSingleSentenceDir defines the setting of single sentence dir
+func WithSingleSentenceDir(
+	singleSentenceDir string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.SingleSentenceDir = singleSentenceDir
+	}
+}
+
+// WithSingleSentenceTasksFile defines the setting of task file for managing single sentence tasks
+func WithSingleSentenceTasksFile(
+	singleSentenceTasksFile string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.SingleSentenceTasksFile = singleSentenceTasksFile
+	}
+}
+
+// WithConfPath defines the setting of directory for storing configuration
+func WithConfPath(
+	confPath string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.ConfPath = confPath
+	}
+}
+
+// WithCharactersFile defines the setting of file for storing characters
+func WithCharactersFile(
+	charactersFile string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.CharactersFile = charactersFile
+	}
+}
+
+// WithConfigManagerFile defines the file of config manager
+func WithConfigManagerFile(
+	configManagerFile string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.ConfigManagerFile = configManagerFile
+	}
+}
+
+// WithPolyphonicsManagerFile defines the file of polyphonics manager
+func WithPolyphonicsManagerFile(
+	polyphonicsManagerFile string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.PolyphonicsManagerFile = polyphonicsManagerFile
+	}
+}
+
+// WithSequenceTaskManagerFile defines the file for storing sequence tasks
+func WithSequenceTaskManagerFile(
+	sequenceTaskManagerFile string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.SequenceTaskManagerFile = sequenceTaskManagerFile
+	}
+}
+
+// WithAssetsDir defines the directory for storing assets such as phont file
+func WithAssetsDir(
+	assetsDir string,
+) Option {
+	return func(pathes *FilePathes) {
+		pathes.AssetsDir = assetsDir
+	}
 }
 
 // TaskInfo defines the information for task
