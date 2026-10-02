@@ -22,9 +22,6 @@ func AllToKana(text string) (string, error) {
 		-1,
 		-1,
 	)
-	if err != nil {
-		return "", err
-	}
 	return result, err
 }
 
@@ -64,5 +61,5 @@ func CnToKana(
 		-1,
 		-1,
 	)
-	return result, nil
+	return result, err
 }
