@@ -62,6 +62,14 @@ func AddPolyphonic(
 	chinese string,
 	pinyin string,
 ) error {
+	data := language.PolyphonicsManager.GetData()
+	_, exists := data[chinese]
+	if exists {
+		return fmt.Errorf(
+			"pinyin for %s is already recorded",
+			chinese,
+		)
+	}
 	language.PolyphonicsManager.AddPolyphonic(
 		chinese,
 		pinyin,

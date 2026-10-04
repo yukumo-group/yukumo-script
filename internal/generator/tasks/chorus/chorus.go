@@ -315,6 +315,10 @@ func (task *Task) Generate(
 			return nil
 		},
 	)
+	err = group.Wait()
+	if err != nil {
+		return err
+	}
 	close(resultChan)
 	resultList := []string{}
 	for res := range resultChan {
